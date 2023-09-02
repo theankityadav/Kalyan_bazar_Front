@@ -81,16 +81,10 @@ const Navbar = () => {
                   <a href="#">Users Bid History</a>
                 </li>
                 <li>
-                  <a href="#">Customer Sell Report</a>
-                </li>
-                <li>
                   <a href="#">Winning Report</a>
                 </li>
                 <li>
                   <a href="#">Transfer Point Report</a>
-                </li>
-                <li>
-                  <a href="#">CarBid Win Reportds</a>
                 </li>
                 <li>
                   <a href="#">Withdraw Report</a>
@@ -119,9 +113,6 @@ const Navbar = () => {
                 className="sidenav-second-level collapse"
                 id="WalletManagement"
               >
-                <li>
-                  <a href="login.html">Fund Request</a>
-                </li>
                 <li>
                   <a href="register.html">Withdraw Request</a>
                 </li>
@@ -301,9 +292,6 @@ const Navbar = () => {
                 </li>
                 <li>
                   <a href="#">Starline Winning report</a>
-                </li>
-                <li>
-                  <a href="#">Starline Winning Prediction</a>
                 </li>
               </ul>
             </li>
