@@ -4,6 +4,7 @@ import './App.css';
 import Navbar from "./Common/Navbar";
 import Dashbaord from "./Pages/Dashbaord";
 import GameName from "./Pages/GameName";
+import Login from "./Pages/Login";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Dashbaord/>} />
           <Route path="/game-name" element={<GameName/>} />
+          <Route path="/login" element={<Login/> } />
           {/* <Route path="/upi-payment" element={<UpiPage/>} />
           <Route path="/payment-status" element={<Payment/>} /> */}
         </Routes>
