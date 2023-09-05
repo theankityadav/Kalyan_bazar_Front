@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { loginApi } from '../service/authentication';
 
 const Login = () => {
+    const [formInput,setForminput]=useState("")
+    const handleInput =(e)=>{
+        const {name,value} = e.target;
+        setForminput({...formInput,[name]:value})
+    }
+
+    const handleLogin =()=>{
+        let data = formInput
+        loginApi(data).then((res)=>{
+            console.log(res)
+        }).catch((err)=>{
+            console.log("err")
+            alert(err?.response?.data?.message||"Internal server error")
+        })
+    }
   return (
     <>
         <div className='login'>
@@ -20,18 +36,18 @@ const Login = () => {
                                 <form>
                                     <div class="form-group">
                                         <label class="form-control-label">USERNAME</label>
-                                        <input type="text" class="form-control"/>
+                                        <input name="name" type="text" class="form-control" onChange={handleInput}/>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-control-label">PASSWORD</label>
-                                        <input type="password" class="form-control" i/>
+                                        <input name="password" type="password" class="form-control"  onChange={handleInput} />
                                     </div>
 
                                     <div class="col-lg-12 loginbttm">
                                         <div class="col-lg-6 login-btm login-text">
                                         </div>
                                         <div class="col-lg-6 login-btm login-button">
-                                            <button type="submit" class="btn btn-outline-primary">LOGIN</button>
+                                            <button type="submit" class="btn btn-outline-primary" onClick={handleLogin}>LOGIN</button>
                                         </div>
                                     </div>
                                 </form>
