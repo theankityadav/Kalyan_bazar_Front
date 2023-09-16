@@ -12,9 +12,10 @@ function App() {
      <BrowserRouter>
         <Navbar/>
         <Routes>
-          <Route path="/" element={<Dashbaord/>} />
+         <Route path="/" element={<Login/> } />
+          <Route path="/dashboard" element={<Dashbaord/>} />
           <Route path="/game-name" element={<GameName/>} />
-          <Route path="/login" element={<Login/> } />
+         
           {/* <Route path="/upi-payment" element={<UpiPage/>} />
           <Route path="/payment-status" element={<Payment/>} /> */}
         </Routes>
