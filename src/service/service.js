@@ -10,9 +10,9 @@ const headersApplicationJson = {
   let basicAuth = btoa("admin:Admin@123");
 
   if (token) {
-      
+
     axios.defaults.headers.common["AccessToken"] = token;
-    axios.defaults.headers.common["Authorization"] = `Bearer ${basicAuth}`;
+    axios.defaults.headers.common["Authorization"] = `Basic ${basicAuth}`;
     
   }
     
