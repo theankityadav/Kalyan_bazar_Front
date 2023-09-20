@@ -144,7 +144,7 @@ const Navbar = () => {
                   <a href="/game-name">Game Name</a>
                 </li>
                 <li>
-                  <a href="#">Game Rates</a>
+                  <a href="/game-rates">Game Rates</a>
                 </li>
               </ul>
             </li>
