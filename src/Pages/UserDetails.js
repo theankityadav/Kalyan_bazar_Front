@@ -97,7 +97,7 @@ const UserDetails = () => {
                           <div class="col-6">
                             <button
                               class="btn btn-primary btn-sm"
-                              id="changePinModal"
+                              id="changePin"
                             >
                               Change
                             </button>
@@ -121,6 +121,7 @@ const UserDetails = () => {
                         <button
                           class="btn btn-success btn-sm w-md btn-block"
                           id="adFund"
+                          data-toggle="modal" data-target="#adFund"
                         >
                           Add Fund
                         </button>
@@ -1576,138 +1577,6 @@ const UserDetails = () => {
             </div>
           </div>
         </div>
-
-        <div class="modal fade" id="bettingAllowedModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-frame modal-top modal-md">
-                <div class="modal-content">
-                <div class="modal-body">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p>Are you sure you want to allowed betting for this user.</p>
-                            </div>
-                            <div class="col-md-12">
-                            <form class="theme-form" id="bettingAllowedFrm" method="post" enctype="multipart/formdata">
-                                <input type="hidden" name="user_id" id="user_id" value="10603"/>
-                            <div class="form-group">	
-                                <button class="btn btn-danger waves-effect waves-light" data-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-info waves-effect waves-light" id="submitBtn">Yes</button>
-                            </div>
-                            </form>
-                            <div class="form-group m-b-0">
-                                <div id="alert"></div>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="addFundModel" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Add Fund</h5><button type="button" class="close" data-dismiss="modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <form class="theme-form" id="addFundFrm" method="post" enctype="multipart/formdata">
-                                                        
-                        <div class="form-group">
-                            <label class="col-form-label">Amount</label>
-                            <input class="form-control" type="Number" min="0" name="user_amount" id="user_amount" placeholder="Enter Amount" data-original-title="" title=""/>
-                        </div>
-                    <input type="hidden" name="user_id" id="user_id" value="10603"/>
-                    <div class="form-group">							
-                    <button type="submit" class="btn btn-info btn-sm m-t-10" id="submitAddBtn" name="submitBtn">Submit</button>
-                    </div>
-                    <div class="form-group m-b-0">
-                        <div id="alert_msg"></div>
-                    </div>
-                </form>
-                </div>
-                <div class="modal-footer">
-                    
-                </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="changePinModal" class="modal fade" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Change Pin</h5><button type="button" class="close" data-dismiss="modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <form class="theme-form" id="changePinFrm" method="post" enctype="multipart/formdata">
-                                                        
-                        <div class="form-group">
-                            <label class="col-form-label">Enter New Pin</label>
-                            <input class="form-control digit_number" type="number" name="security_pin" id="security_pin" placeholder="Enter Security Pin" min="0" max="9999" maxlength="4"/>
-                        </div>
-                    <input type="hidden" name="user_id" id="user_id" value="10603"/>
-                    <div class="form-group">							
-                    <button type="submit" class="btn btn-info btn-sm m-t-10" id="submitchangepinBtn" name="submitchangepinBtn">Submit</button>
-                    </div>
-                    <div class="form-group m-b-0">
-                        <div id="alert_msg"></div>
-                    </div>
-                </form>
-                </div>
-                <div class="modal-footer">
-                    
-                </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="withdrawFundModel" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Withdraw Fund</h5><button type="button" class="close" data-dismiss="modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <form class="theme-form" id="withdrawFundFrm" method="post" enctype="multipart/formdata">
-                                                        
-                        <div class="form-group">
-                            <label class="col-form-label">Amount</label>
-                            <input class="form-control" type="Number" min="0" name="amount" id="amount" placeholder="Enter Amount" data-original-title="" title=""/>
-                        </div>
-                    <input type="hidden" name="user_id" id="user_id" value="10603"/>
-                    <div class="form-group">							
-                    <button type="submit" class="btn btn-info btn-sm m-t-10" id="submitWithdrawBtn" name="submitBtn">Submit</button>
-                    </div>
-                    <div class="form-group m-b-0">
-                        <div id="error_msg"></div>
-                    </div>
-                </form>
-                </div>
-                <div class="modal-footer">
-                    
-                </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="viewWithdrawRequest" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title mt-0" id="myLargeModalLabel">Withdraw Request Detail</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body viewWithdrawRequestBody">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-
       </div>
     </>
   );
