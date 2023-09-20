@@ -5,6 +5,7 @@ import Navbar from "./Common/Navbar";
 import Dashbaord from "./Pages/Dashbaord";
 import GameName from "./Pages/GameName";
 import Login from "./Pages/Login";
+import UserDetails from "./Pages/UserDetails";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
          <Route path="/" element={<Login/> } />
           <Route path="/dashboard" element={<Dashbaord/>} />
           <Route path="/game-name" element={<GameName/>} />
+          <Route path="/user-details" element={<UserDetails/>} />
          
           {/* <Route path="/upi-payment" element={<UpiPage/>} />
           <Route path="/payment-status" element={<Payment/>} /> */}
