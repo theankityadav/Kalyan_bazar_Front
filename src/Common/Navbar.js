@@ -41,7 +41,7 @@ const Navbar = () => {
               data-placement="right"
               title="User Management"
             >
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/user-details">
                 <i className="fa fa-fw fa-area-chart"></i>
                 <span className="nav-link-text">User Management</span>
               </a>

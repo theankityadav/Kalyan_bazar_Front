@@ -14,7 +14,7 @@ const Login = () => {
         e.preventDefault()
         let data = formInput
         loginApi(data).then((res)=>{
-            localStorage.setItem("access_token",res?.data?.access_token)
+            // localStorage.setItem("access_token",res?.data?.access_token)
             window.location.href="/dashboard"
         }).catch((err)=>{
             console.log("err",err)
