@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { gameNameApi } from '../service/service'
 
 const GameName = () => {
-    let arr = [1,2,3,4,5,6,2,3,4,5,6]
-
-
+   const[data,setData]=useState([])
 
     useEffect(()=>{
         handleGameNameList()
@@ -12,7 +10,7 @@ const GameName = () => {
 
     const handleGameNameList =()=>{
         gameNameApi().then((res)=>{
-            console.log("res",res)
+            setData(res.data.data)
         }).catch((err)=>{
             alert(err||"something went wrong ")
         })
@@ -49,10 +47,10 @@ const GameName = () => {
                 </tr>
               </thead>
               <tbody>
-                  {arr.map((item,index)=>{
+                  {data.map((item,index)=>{
                       return( <tr>
-                        <td>Jonas Alexander {item}</td>
-                        <td>Developer {item}</td>
+                        <td>{item?.market_name||"NA"} </td>
+                        <td>Developer </td>
                         <td>San Francisco</td>
                         <td>30</td>
                         <td>2010/07/14</td>
