@@ -1,10 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../Common/Table";
 import UpperCard from "../Components/UpperCard";
 import MidCards from "../Components/MidCards";
 import SecondRightCard from "../Components/SecondRightCard";
 import SmallCards from "../Components/SmallCards";
+import { getuserList } from "../service/service";
 const Dashbaord = () => {
+
+  const[list,setList]=useState([])
+  useEffect(()=>{
+    getInformation()
+},[])
+
+
+const getInformation =()=>{
+    getuserList().then((res)=>{
+      setList(res.data.data)
+    }).catch((err)=>{
+        alert(err||"something went wrong ")
+    })
+}
 
   return (
     <>
@@ -26,7 +41,7 @@ const Dashbaord = () => {
                 <SmallCards />
             </div>
           </div>
-          <Table/>
+          <Table list={list}/>
         </div>
         <footer className="sticky-footer">
           <div className="container">

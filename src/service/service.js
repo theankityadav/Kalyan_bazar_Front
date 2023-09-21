@@ -24,7 +24,14 @@ export const gameNameApi =()=>{
 }
 
 export const getBid =()=>{
-    let url = `${BASE_URL}/v1/dashboard/list/`;
+    let url = `${BASE_URL}/v1/user-list/`;
+    return axios.get(url, {
+        headers: headersApplicationJson,
+    });
+}
+
+export const getuserList =()=>{
+    let url = `${BASE_URL}/v1/user-list/`;
     return axios.get(url, {
         headers: headersApplicationJson,
     });
