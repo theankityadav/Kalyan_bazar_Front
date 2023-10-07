@@ -2,7 +2,7 @@ import React from "react";
 import dashboard from "../Assets/dashboard.jpg"
 
 
-const UpperCard = () => {
+const UpperCard = ({data}) => {
   return (
     <>
         <div className="row mb-3 card-height">
@@ -13,10 +13,10 @@ const UpperCard = () => {
 						<h5 className="card-title">Kalyan Bazar Admin Pannel</h5>
 						<div className="row">
                             <div className="col-md-6 mb-2">
-                                <h5 className="card-title">123 Unapproved Users</h5>
+                                <h5 className="card-title">{data?.un_approved_users} Unapproved Users</h5>
                             </div>
                             <div className="col-md-6 mb-2">
-                                <h5 className="card-title">1234 Approved Users</h5>
+                                <h5 className="card-title">{data?.approved_users} Approved Users</h5>
                             </div>
                         </div>
 					</div>

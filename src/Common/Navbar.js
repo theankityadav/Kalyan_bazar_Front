@@ -30,7 +30,7 @@ const Navbar = () => {
               data-placement="right"
               title="Dashboard"
             >
-              <a className="nav-link" href="/">
+              <a className="nav-link" href="/dashboard">
                 <i className="fa fa-fw fa-dashboard"></i>
                 <span className="nav-link-text">Dashboard</span>
               </a>
@@ -41,7 +41,7 @@ const Navbar = () => {
               data-placement="right"
               title="User Management"
             >
-              <a className="nav-link" href="/user-details">
+              <a className="nav-link" href="/user-list">
                 <i className="fa fa-fw fa-area-chart"></i>
                 <span className="nav-link-text">User Management</span>
               </a>
@@ -168,25 +168,25 @@ const Navbar = () => {
                 id="GameNumbers"
               >
                 <li>
-                  <a href="#">Single Digit</a>
+                  <a href="/games/single_digit">Single Digit</a>
                 </li>
                 <li>
-                  <a href="#">Jodi Digit</a>
+                  <a href="/games/jodi_digit">Jodi Digit</a>
                 </li>
                 <li>
-                  <a href="#">Single Pana</a>
+                  <a href="/games/single_pana">Single Pana</a>
                 </li>
                 <li>
-                  <a href="#">Double Pana</a>
+                  <a href="/games/double_pana">Double Pana</a>
                 </li>
                 <li>
-                  <a href="#">Tripple Pana</a>
+                  <a href="/games/triple_pana">Tripple Pana</a>
                 </li>
                 <li>
-                  <a href="#">Half Sangam</a>
+                  <a href="/games/half_sangam">Half Sangam</a>
                 </li>
                 <li>
-                  <a href="#">Full Sangam</a>
+                  <a href="/games/full_sangam">Full Sangam</a>
                 </li>
               </ul>
             </li>
@@ -295,28 +295,7 @@ const Navbar = () => {
                 </li>
               </ul>
             </li>
-            <li
-              className="nav-item"
-              data-toggle="tooltip"
-              data-placement="right"
-              title="Users Query"
-            >
-              <a className="nav-link" href="#">
-                <i className="fa fa-question-circle"></i>
-                <span className="nav-link-text">Users Query</span>
-              </a>
-            </li>
-            <li
-              className="nav-item"
-              data-toggle="tooltip"
-              data-placement="right"
-              title="Sub Admin Management"
-            >
-              <a className="nav-link" href="#">
-                <i className="fa fa-lock"></i>
-                <span className="nav-link-text">Sub Admin Management</span>
-              </a>
-            </li>
+         
           </ul>
           <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown">

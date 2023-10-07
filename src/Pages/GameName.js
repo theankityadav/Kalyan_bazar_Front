@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { gameNameApi } from '../service/service'
 
 const GameName = () => {
-    let arr = [1,2,3,4,5,6,2,3,4,5,6]
+   const[data,setData]=useState([])
+
     useEffect(()=>{
         handleGameNameList()
     },[])
 
     const handleGameNameList =()=>{
         gameNameApi().then((res)=>{
-            console.log("res",res)
+            setData(res.data.data)
         }).catch((err)=>{
             alert(err||"something went wrong ")
         })
@@ -32,36 +33,43 @@ const GameName = () => {
               cellspacing="0"
               cellpadding="0"
             >
-              <thead>
+              <thead className='text-center'>
                 <tr>
                   <th>#</th>
                   <th>Game Name</th>
-                  <th>Game Name Hindi</th>
+                 
                   <th>Today Open</th>
                   <th>Today Close</th>
                   <th>Active</th>
                   <th> Market Status</th>
-                  <th>Status</th>
+                 
                   <th>Action</th>
                 </tr>
               </thead>
-              <tbody>
-                  {arr.map((item,index)=>{
+              <tbody className='text-center'>
+                  {data.map((item,index)=>{
                       return( <tr>
-                        <td>Jonas Alexander {item}</td>
-                        <td>Developer {item}</td>
-                        <td>San Francisco</td>
-                        <td>30</td>
-                        <td>2010/07/14</td>
-                        <td><span className={index%2===0? "btnspan success" :"btnspan danger"}>
-                            { index%2===0? "Yes" :"No"}
+                         <td>{item?.id} </td>
+                        <td>{item?.market_name||"NA"} </td>
+                       
+                        <td>{item?.market_opening_time}</td>
+                        <td>{item?.market_closing_time}</td>
+                        <td><span className={item?.market_status? "btnspan success" :"btnspan danger"}>
+                            {item?.market_status? "Yes" :"No"}
                             </span></td>
                         <td>
-                            <span className={index? "btnspan success" :"btnspan danger"}>
-                            { index? "Open Today" :"Close Today"}
+                            <span className={item?.market_status? "btnspan success" :"btnspan danger"}>
+                            { item?.market_status? "Open Today" :"Close Today"}
                             </span></td>
-                        <td>2010/07/14</td>
-                        <td>$86,500</td>
+                      
+                        <td className='text-center'>
+                          <button className='btn btn-primary m-1 btn-sm'>
+                            Edit
+                          </button>
+                          <button className='btn btn-primary m-1 btn-sm'>
+                            Market Off Today
+                            </button>
+                        </td>
                       </tr>)
                   })}
                

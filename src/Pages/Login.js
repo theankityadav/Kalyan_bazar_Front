@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import {  useNavigate } from 'react-router-dom';
 import { loginApi } from '../service/authentication';
 
 const Login = () => {
+    const navigate = useNavigate()
     const [formInput,setForminput]=useState({
         login_type:"email"
     })
@@ -9,12 +11,17 @@ const Login = () => {
         const {name,value} = e.target;
         setForminput({...formInput,[name]:value})
     }
+    useEffect(()=>{
+   if(localStorage.getItem("access_token")){
+    navigate("/dashboard")
+   }
+    },[])
 
     const handleLogin =(e)=>{
         e.preventDefault()
         let data = formInput
         loginApi(data).then((res)=>{
-            // localStorage.setItem("access_token",res?.data?.access_token)
+            localStorage.setItem("access_token",res?.data?.access_token)
             window.location.href="/dashboard"
         }).catch((err)=>{
             console.log("err",err)

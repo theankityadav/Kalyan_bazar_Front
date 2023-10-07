@@ -1,6 +1,10 @@
+import moment from "moment";
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 const UserDetails = () => {
+  const {state} = useLocation()
+  console.log("state",state)
   return (
     <>
       <div class="content-wrapper">
@@ -20,13 +24,13 @@ const UserDetails = () => {
                   <div class="row">
                     <div class="col-7">
                       <div class="text-primary p-3">
-                        <h5 class="text-primary">Bhhvhh</h5>
+                        <h5 class="text-primary">{state?.first_name+" "+state?.last_name}</h5>
                         <p>
-                          7847967695{" "}
-                          <a href="tel:917847967695">
+                          {state?.phone_number}{" "}
+                          <a href={`tel:${state?.phone_number}`}>
                             <i class="mdi mdi-cellphone-iphone"></i>
                           </a>
-                          <a href="https://wa.me/917847967695" target="blank">
+                          <a href={`https://wa.me/91${state?.phone_number}`} target="blank">
                             <i class="mdi mdi-whatsapp"></i>
                           </a>
                         </p>
@@ -92,7 +96,7 @@ const UserDetails = () => {
                         <div class="row">
                           <div class="col-6">
                             <p class="text-muted mb-0">Security Pin</p>
-                            <h5 class="font-size-15 mb-0">7847</h5>
+                            <h5 class="font-size-15 mb-0">{state?.user_pin||"NA"}</h5>
                           </div>
                           <div class="col-6">
                             <button
@@ -151,14 +155,14 @@ const UserDetails = () => {
                       <tbody>
                         <tr>
                           <th scope="row">Full Name :</th>
-                          <td>Bhhvhh</td>
+                          <td>{state?.first_name+" "+state?.last_name}</td>
                           <th scope="row">Email :</th>
-                          <td>mm0291523@gmail.com</td>
+                          <td>{state?.email}</td>
                         </tr>
                         <tr>
                           <th scope="row">Mobile :</th>
                           <td>
-                            7847967695{" "}
+                            {state?.phone_number}{" "}
                             <a href="tel:917847967695">
                               <i class="mdi mdi-cellphone-iphone"></i>
                             </a>
@@ -167,7 +171,7 @@ const UserDetails = () => {
                             </a>
                           </td>
                           <th scope="row">Password :</th>
-                          <td>7847</td>
+                          <td>{state?.password}</td>
                         </tr>
                         <tr>
                           <th scope="row">District Name :</th>
@@ -195,9 +199,9 @@ const UserDetails = () => {
                         </tr>
                         <tr>
                           <th scope="row">Creation Date :</th>
-                          <td>20 Sep 2023 09:18:50 PM</td>
+                          <td>{moment(state?.created_at).format('MMMM Do YYYY, h:mm a')}</td>
                           <th scope="row">Last Seen :</th>
-                          <td>20 Sep 2023 09:21:31 PM</td>
+                          <td>{moment(state?.updated_at).format('MMMM Do YYYY, h:mm a')}</td>
                         </tr>
                       </tbody>
                     </table>

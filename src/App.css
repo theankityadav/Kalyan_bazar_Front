@@ -644,3 +644,20 @@ footer.sticky-footer {
 .login .loginbttm {
   padding: 0px;
 }
+.primary{
+  color: #556ee5;
+  cursor: pointer;
+}
+.digit_num{
+  border: 1px solid #34c38f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  /* background-color: #E6E6FA; */
+  background-color: rgba(52,195,143,.18);
+  width: 40px;
+  height: 40px;
+  margin: 10px 20px;
+  font-weight: 600;
+}
