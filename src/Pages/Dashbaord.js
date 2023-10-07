@@ -4,13 +4,23 @@ import UpperCard from "../Components/UpperCard";
 import MidCards from "../Components/MidCards";
 import SecondRightCard from "../Components/SecondRightCard";
 import SmallCards from "../Components/SmallCards";
-import { getuserList } from "../service/service";
+import { getDashboarddata, getuserList } from "../service/service";
 const Dashbaord = () => {
 
   const[list,setList]=useState([])
+  const[data,setData]=useState()
   useEffect(()=>{
     getInformation()
+    handleGetDashboardData()
 },[])
+
+const handleGetDashboardData =()=>{
+  getDashboarddata().then((res)=>{
+    setData(res?.data?.data)
+  }).catch((err)=>{
+        alert(err||"something went wrong ")
+    })
+}
 
 
 const getInformation =()=>{
@@ -33,15 +43,15 @@ const getInformation =()=>{
           </ol>
           <div className="row">
             <div className="col-xl-4">
-                <UpperCard />
+                <UpperCard data={data} />
             </div>
             <div className="col-xl-8">
-                <MidCards />
-                <SecondRightCard />
+                <MidCards data={data} />
+                <SecondRightCard  />
                 <SmallCards />
             </div>
           </div>
-          <Table list={list}/>
+          <Table list={list} head="Fund Request Auto Deposit History"/>
         </div>
         <footer className="sticky-footer">
           <div className="container">
@@ -85,7 +95,7 @@ const getInformation =()=>{
                 >
                   Cancel
                 </button>
-                <a className="btn btn-primary" href="login.html">
+                <a className="btn btn-primary" href="/">
                   Logout
                 </a>
               </div>

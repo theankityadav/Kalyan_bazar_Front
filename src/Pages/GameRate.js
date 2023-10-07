@@ -1,6 +1,7 @@
 import React from 'react'
 
 const GameRate = () => {
+    
   return (
     <>
     <div class="content-wrapper">

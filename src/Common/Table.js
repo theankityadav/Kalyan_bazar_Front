@@ -1,11 +1,13 @@
 import React from "react";
-
-const Table = ({list}) => {
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
+const Table = ({ list, head }) => {
+  const navigate = useNavigate()
   return (
     <>
       <div className="card mb-3">
         <div className="card-header">
-          <i className="fa fa-table"></i> <b>Fund Request Auto Deposit History</b>
+          <i className="fa fa-table"></i> <b>{head}</b>
         </div>
         <div className="card-body">
           <div className="table-responsive">
@@ -20,41 +22,44 @@ const Table = ({list}) => {
                 <tr>
                   <th>#</th>
                   <th>User Name</th>
-                  <th>Amount</th>
-                  <th>Request No.</th>
-                  <th>Txn Id</th>
-                  <th>Reject Remark</th>
+                  <th>Mobile</th>
+                  <th>Email</th>
                   <th>Date</th>
-                  <th>Status</th>
-                  <th>Action</th>
+                  <th>Active</th>
+
+                  <th>View</th>
                 </tr>
               </thead>
               <tbody>
                 {
-                  list?.map((item,index)=>{
-                    return(
+                  list?.map((item, index) => {
+                    return (
                       <tr key={index}>
-                      <td>Jonas Alexander</td>
-                      <td>{item?.first_name+" "+item?.last_name}</td>
-                      <td>San Francisco</td>
-                      <td>30</td>
-                      <td>2010/07/14</td>
-                      <td>$86,500</td>
-                      <td>30</td>
-                      <td>2010/07/14</td>
-                      <td>$86,500</td>
-                    </tr>
+                        <td>{index}</td>
+                        <td>{item?.first_name + " " + item?.last_name}</td>
+                        <td>{item?.phone_number}</td>
+                        <td>{item?.email}</td>
+                        <td>{moment(item?.created_at).format("DD-MM-YYYY")}</td>
+                        <td><span className={item?.user_status? "btnspan success" :"btnspan danger"}>
+                            {item?.user_status? "Yes" :"No"}
+                            </span></td>
+                   
+
+                        <td><i className="fa fa-eye primary" onClick={() => navigate("/user-details",
+                          { state: item }
+                        )}></i></td>
+                      </tr>
                     )
                   })
                 }
-          
-              
+
+
               </tbody>
             </table>
           </div>
         </div>
         <div className="card-footer small text-muted">
-            Showing 0 to 0 of 0 entries
+          Showing 0 to 0 of 0 entries
         </div>
       </div>
     </>
