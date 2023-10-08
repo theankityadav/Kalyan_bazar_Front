@@ -661,3 +661,7 @@ footer.sticky-footer {
   margin: 10px 20px;
   font-weight: 600;
 }
+.add-name{
+  display: flex;
+  justify-content: right;
+}
