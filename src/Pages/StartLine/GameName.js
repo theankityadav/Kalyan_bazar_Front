@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { Loader } from '../Common/Loader'
-import { gameNameApi } from '../service/service';
+import { Loader } from '../../Common/Loader'
+import { gameNameApi } from '../../service/service';
 import DataTable, { createTheme } from 'react-data-table-component';
 
 const GameName = () => {
@@ -13,7 +13,7 @@ const GameName = () => {
 
   const handleGameNameList = () => {
     setLoader(true)
-    gameNameApi("NORMAL").then((res) => {
+    gameNameApi("STARLINE").then((res) => {
       setLoader(false)
       setData(res.data.data)
     }).catch((err) => {

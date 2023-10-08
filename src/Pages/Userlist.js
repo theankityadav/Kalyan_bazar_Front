@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import Table from '../Common/Table'
 import { getuserList } from '../service/service'
 import DataTable, { createTheme } from 'react-data-table-component';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
+import { Loader } from '../Common/Loader';
 
 const Userlist = () => {
-  
+
   const navigate = useNavigate()
   const [list, setList] = useState([])
   useEffect(() => {
@@ -32,7 +32,7 @@ const Userlist = () => {
           </p>
         )
       },
-    
+
       sortable: true,
 
     },
@@ -81,12 +81,12 @@ const Userlist = () => {
 
         return (
           <i className="fa fa-eye primary" onClick={() => navigate("/user-details",
-          { state: row }
-        )}></i>
+            { state: row }
+          )}></i>
         )
       }
     },
-   
+
   ];
   createTheme('dark', {
     background: {
@@ -97,26 +97,21 @@ const Userlist = () => {
 
   return (
     <div>
+
       <div className="content-wrapper">
         {/* <Table list={list} head="User List" /> */}
-        { list.length >0? 
-         <DataTable
-              columns={columns}
-              data={list}
-              pagination
-              sortable
-            />
+        {list.length > 0 ?
+          <DataTable
+            columns={columns}
+            data={list}
+            pagination
+            sortable
+          />
 
-            : <div className='nosimilar_torrent text-gray-700 '>
-
-              <h1>
-
-                Sorry Data Not Available  !!!
-
-              </h1>
-
+          : <div className='nosimilar_torrent text-gray-700 '>
+            <Loader />  
             </div>
-}
+        }
       </div>
     </div>
   )

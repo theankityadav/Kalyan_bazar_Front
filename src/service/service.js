@@ -16,8 +16,8 @@ const headersApplicationJson = {
     
   }
     
-export const gameNameApi =()=>{
-    let url = `${BASE_URL}/v1/dashboard/list/`;
+export const gameNameApi =(type)=>{
+    let url = `${BASE_URL}/v1/dashboard/list/?market_type=${type}`;
     return axios.get(url, {
         headers: headersApplicationJson,
     });
@@ -30,7 +30,7 @@ export const getBid =()=>{
     });
 }
 
-export const getuserList =()=>{
+export const getuserList = () => {
     let url = `${BASE_URL}/v1/user-list/`;
     return axios.get(url, {
         headers: headersApplicationJson,

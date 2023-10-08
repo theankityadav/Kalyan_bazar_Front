@@ -273,10 +273,10 @@ const Navbar = () => {
                 id="Starline"
               >
                 <li>
-                  <a href="#">Game Name</a>
+                  <a href="/startline/game_name">Game Name</a>
                 </li>
                 <li>
-                  <a href="#">Game Rates</a>
+                  <a href="/startline/game_rate">Game Rates</a>
                 </li>
                 <li>
                   <a href="#">Bid History</a>
