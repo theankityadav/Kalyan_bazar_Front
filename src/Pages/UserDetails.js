@@ -21,6 +21,7 @@ const UserDetails = () => {
     }
     addFund(data).then((res)=>{
        alert("fund added successfully")
+       setShow(false)
     }).catch((err)=>{
       alert("something went wrong")
       console.log('error',err)
