@@ -511,6 +511,7 @@ footer.sticky-footer {
   padding: 2px 12px;
   border-radius: 12px;
   font-weight:600;
+  cursor: pointer;
 
 }
 .success{

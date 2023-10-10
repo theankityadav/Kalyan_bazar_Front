@@ -74,6 +74,19 @@ const Userlist = () => {
       }
     },
     {
+      name: 'Batting',
+
+      cell: (row, index) => {
+
+
+        return (
+          <span className={row?.betting ? "btnspan success" : "btnspan danger"}>
+            {row?.betting ? "Yes" : "No"}
+          </span>
+        )
+      }
+    },
+    {
       name: 'Action',
 
       cell: (row, index) => {

@@ -49,3 +49,17 @@ export const getDashboarddata =()=>{
         headers: headersApplicationJson,
     });
 }
+
+
+export const addFund = (data) => {
+
+    
+
+    let url = `${BASE_URL}/v1/add-fund/`;
+
+    return axios.post(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}

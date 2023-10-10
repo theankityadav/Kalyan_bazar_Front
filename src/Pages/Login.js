@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import {  useNavigate } from 'react-router-dom';
+import { Loader } from '../Common/Loader';
 import { loginApi } from '../service/authentication';
 
 const Login = () => {
     const navigate = useNavigate()
+    const[loader,setLoader]=useState(false)
     const [formInput,setForminput]=useState({
         login_type:"email"
     })
@@ -20,16 +22,21 @@ const Login = () => {
     const handleLogin =(e)=>{
         e.preventDefault()
         let data = formInput
+        setLoader(true)
         loginApi(data).then((res)=>{
+
             localStorage.setItem("access_token",res?.data?.access_token)
             window.location.href="/dashboard"
+            setLoader(false)
         }).catch((err)=>{
+            setLoader(false)
             console.log("err",err)
             alert(err?.response?.data?.message||"Internal server error")
         })
     }
   return (
     <>
+    {loader?<Loader/>:null}
         <div className='login'>
             <div className="container">
                 <div className="row">

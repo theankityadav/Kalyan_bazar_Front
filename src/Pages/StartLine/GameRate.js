@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import { Button } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 const GameRate = () => {
-
+    
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 

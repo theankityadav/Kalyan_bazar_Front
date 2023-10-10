@@ -1,5 +1,5 @@
 //eslint-disable-next-line
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,10 +16,12 @@ import Userlist from "./Pages/Userlist";
 import GameNumbers from "./Pages/GameNumbers";
 
 function App() {
+  const [token,setToken]=useState(localStorage.getItem("access_token"))
+
   return (
     <>
      <BrowserRouter>
-        <Navbar/>
+       {token? <Navbar/>:null}
         <Routes>
          <Route path="/" element={<Login/> } />
           <Route path="/dashboard" element={<Dashbaord/>} />
