@@ -6,7 +6,6 @@ import SecondRightCard from "../Components/SecondRightCard";
 import SmallCards from "../Components/SmallCards";
 import { getDashboarddata, getuserList } from "../service/service";
 const Dashbaord = () => {
-
   const[list,setList]=useState([])
   const[data,setData]=useState()
   useEffect(()=>{
@@ -95,9 +94,12 @@ const getInformation =()=>{
                 >
                   Cancel
                 </button>
-                <a className="btn btn-primary" href="/">
+                <button className="btn btn-primary"  onClick={()=>{
+                  localStorage.clear()
+                 window.location.href="/"
+                }}>
                   Logout
-                </a>
+                </button>
               </div>
             </div>
           </div>

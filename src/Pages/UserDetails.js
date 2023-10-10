@@ -1,10 +1,31 @@
 import moment from "moment";
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import { addFund } from "../service/service";
 
 const UserDetails = () => {
   const {state} = useLocation()
+  const[show,setShow]=useState(false)
+  const[amount,setAmount]=useState(0)
+  const handleClose =()=>{
+    setShow(false)
+  }
   console.log("state",state)
+
+  const handleSubmit =()=>{
+    let data={
+      amount:amount,
+      id:state?.id
+    }
+    addFund(data).then((res)=>{
+       alert("fund added successfully")
+    }).catch((err)=>{
+      alert("something went wrong")
+      console.log('error',err)
+    })
+  }
   return (
     <>
       <div class="content-wrapper">
@@ -26,7 +47,7 @@ const UserDetails = () => {
                       <div class="text-primary p-3">
                         <h5 class="text-primary">{state?.first_name+" "+state?.last_name}</h5>
                         <p>
-                          {state?.phone_number}{" "}
+                           {state?.phone_number}
                           <a href={`tel:${state?.phone_number}`}>
                             <i class="mdi mdi-cellphone-iphone"></i>
                           </a>
@@ -125,7 +146,7 @@ const UserDetails = () => {
                         <button
                           class="btn btn-success btn-sm w-md btn-block"
                           id="adFund"
-                          data-toggle="modal" data-target="#adFund"
+                          onClick={()=>setShow(true)}
                         >
                           Add Fund
                         </button>
@@ -1582,6 +1603,22 @@ const UserDetails = () => {
           </div>
         </div>
       </div>
+         <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Amount " className="form-control" value={amount} onChange={(e)=>setAmount(e.target.value)}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmit}>
+                        Save Changes
+                    </Button>
+                </Modal.Footer>
+            </Modal>
     </>
   );
 };
