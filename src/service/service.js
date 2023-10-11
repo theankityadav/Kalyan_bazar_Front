@@ -63,3 +63,16 @@ export const addFund = (data) => {
    
 }});
 }
+
+export const changePin = (data) => {
+
+    
+
+    let url = `${BASE_URL}/v1/change-pin/`;
+
+    return axios.post(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}
