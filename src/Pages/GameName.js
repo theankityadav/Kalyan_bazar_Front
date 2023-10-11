@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react'
 import { Loader } from '../Common/Loader'
 import { gameNameApi } from '../service/service';
 import DataTable, { createTheme } from 'react-data-table-component';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const GameName = () => {
   const [data, setData] = useState([])
   const[loader,setLoader]=useState(false)
-
+  const[show,setShow]=useState(false)
+  const handleClose =()=>{
+    setShow(false)
+  }
   useEffect(() => {
     handleGameNameList()
   }, [])
@@ -125,7 +130,7 @@ const GameName = () => {
           <div className="card-header">
             <i className="fa fa-table"></i> <b>Fund Request Auto Deposit History</b>
             <div className='add-name'>
-              <button className='btn btn-primary m-1 btn-sm'>Add Game</button>
+              <button className='btn btn-primary m-1 btn-sm' onClick={()=>setShow(true)}>Add Game</button>
             </div>
 
           </div>
@@ -141,6 +146,24 @@ const GameName = () => {
           sortable
         />
       </div>
+      <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Add Game</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <input name="game-name" type="text" onWheel={(e) => e.target.blur()} placeholder="Enter Game Name " className="form-control"/><br/>
+                  <input name="time" type="time" onWheel={(e) => e.target.blur()} placeholder="open time " className="form-control"/><br/>
+                  <input name="time" type="time" onWheel={(e) => e.target.blur()} placeholder="close time " className="form-control"/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary">
+                        Submit
+                    </Button>
+                </Modal.Footer>
+            </Modal>
 
     </div>
   )
