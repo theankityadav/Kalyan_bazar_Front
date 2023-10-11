@@ -12,7 +12,6 @@ const UserDetails = () => {
   const handleClose =()=>{
     setShow(false)
   }
-  console.log("state",state)
 
   const handleSubmit =()=>{
     let data={

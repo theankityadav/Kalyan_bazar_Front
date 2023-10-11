@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button, Modal } from "react-bootstrap";
 import logo from "../Assets/logo.png"
+import { changePin } from "../service/service";
+import { Loader } from "./Loader";
 
 const Navbar = () => {
+  const [show,setShow]=useState(false)
+  const[loader,setLoader]=useState(false)
+  const[password,setPassword]=useState("")
+  const id = localStorage.getItem("id")
+  const handleClose =()=>{
+    setShow(false)
+  }
+  const hanldSubmit=()=>{
+    let data ={
+      user_pin:password,
+      user_id:id,
+    }
+    setLoader(true)
+    changePin(data).then((res)=>{
+      console.log("res",res)
+      setLoader(false)
+    }).catch((err)=>{
+      console.log("err",err)
+      setLoader(false)
+      alert("Internal Server Error")
+    })
+
+  }
   return (
     <>
+      {loader?<Loader/>:null}
       <nav
         className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
         id="mainNav"
@@ -310,7 +337,7 @@ const Navbar = () => {
                 <i class="fa fa-user"></i> Admin
               </a>
               <div className="dropdown-menu" aria-labelledby="messagesDropdown">
-                <a className="dropdown-item">
+                <a className="dropdown-item" onClick={()=>setShow(true)}>
                   <i className="fa fa-key"></i>&nbsp;&nbsp;Change Password
                 </a>
                 <div className="dropdown-divider"></div>
@@ -322,7 +349,7 @@ const Navbar = () => {
                   className="dropdown-item"
                   data-toggle="modal"
                   data-target="#exampleModal"
-                >
+                  >
                   <i className="fa fa-fw fa-sign-out"></i>&nbsp;&nbsp;Logout
                 </a>
               </div>
@@ -330,6 +357,70 @@ const Navbar = () => {
           </ul>
         </div>
       </nav>
+      <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Change Password</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                 
+                  <input name="password" type="text" onWheel={(e) => e.target.blur()} placeholder="New Password" className="form-control" onChange={(e)=>{
+                    setPassword(e.target.value.slice(0,50))
+                  }}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={hanldSubmit}>
+                        Submit
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <div
+          className="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Ready to Leave?
+                </h5>
+                <button
+                  className="close"
+                  type="button"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Select "Logout" below if you are ready to end your current
+                session.
+              </div>
+              <div className="modal-footer">
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  data-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button className="btn btn-primary"  onClick={()=>{
+                  localStorage.clear()
+                 window.location.href="/"
+                }}>
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
     </>
   );
 };

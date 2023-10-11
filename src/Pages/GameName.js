@@ -9,6 +9,15 @@ const GameName = () => {
   const [data, setData] = useState([])
   const[loader,setLoader]=useState(false)
   const[show,setShow]=useState(false)
+  const[edit,setEdit]=useState()
+  const[newGameName,setnewGameName]=useState("")
+
+  const handleSubmitEdit =()=>{
+    let data={
+      game_name:newGameName,
+    }
+
+  }
   const handleClose =()=>{
     setShow(false)
   }
@@ -98,7 +107,7 @@ const GameName = () => {
 
         return (
           <span className='d-flex ' >
-            <button className='btn btn-primary m-1 btn-sm'>
+            <button className='btn btn-primary m-1 btn-sm' onClick={()=>setEdit(true)}>
               Edit
             </button>
             <button className='btn btn-primary m-1 btn-sm'>
@@ -160,6 +169,27 @@ const GameName = () => {
                         Close
                     </Button>
                     <Button variant="primary">
+                        Submit
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+
+            <Modal show={edit} onHide={()=>setEdit(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Edit Game Name</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <input name="game" type="text" onWheel={(e) => e.target.blur()} placeholder="Enter Game Name " className="form-control" onChange={(e)=>{
+                    setnewGameName(e.target.value)
+                  }}/><br/>
+                  
+                 
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={()=>setEdit(false)}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={handleSubmitEdit}>
                         Submit
                     </Button>
                 </Modal.Footer>
