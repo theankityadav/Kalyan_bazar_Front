@@ -79,7 +79,7 @@ const Navbar = () => {
               data-placement="right"
               title="Declare Results"
             >
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/declair-result">
                 <i className="fa fa-fw fa-table"></i>
                 <span className="nav-link-text">Declare Results</span>
               </a>

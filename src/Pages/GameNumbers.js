@@ -27,7 +27,27 @@ const GameNumbers = () => {
   return (
     <div className="content-wrapper">
     <div  className="container-fluid d-flex flex-wrap">
-   { data.map((item,index)=> <Digit key={index} item={item}/>)}
+   { data[0]?.number? data.map((item,index)=> <Digit key={index} item={item?.number}/>):null}
+    {data[0]?.ank_list?.length>0? data.map((item,index)=> {
+
+       return(
+           <>
+           <div style={{width:"100%"}}>
+           <Digit key={index} classname='red_bg' item={item?.ank}/>
+           </div>
+           
+           
+           {
+               item?.ank_list?.map((item,index)=>{
+                   return(
+                 <Digit key={index} item={item}/>
+                   )
+               })
+           }
+           <br/>
+           </>
+       )
+   }):null}
     </div>
     </div>
   )

@@ -11,6 +11,14 @@ const GameName = () => {
   const[show,setShow]=useState(false)
   const[edit,setEdit]=useState()
   const[newGameName,setnewGameName]=useState("")
+  const[formInput,setFormInput]=useState("")
+
+
+
+  const handleInput=(e)=>{
+    const{name,value}=e.target;
+    setFormInput({...formInput,[name]:value})
+  }
 
   const handleSubmitEdit =()=>{
     let data={
@@ -128,7 +136,7 @@ const GameName = () => {
       default: 'transparent',
     },
   });
-
+console.log("data",formInput)
 
   return (
     <div className="content-wrapper">
@@ -160,9 +168,9 @@ const GameName = () => {
                     <Modal.Title>Add Game</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <input name="game-name" type="text" onWheel={(e) => e.target.blur()} placeholder="Enter Game Name " className="form-control"/><br/>
-                  <input name="time" type="time" onWheel={(e) => e.target.blur()} placeholder="open time " className="form-control"/><br/>
-                  <input name="time" type="time" onWheel={(e) => e.target.blur()} placeholder="close time " className="form-control"/>
+                  <input name="gamename" type="text" value={formInput?.gamename} onWheel={(e) => e.target.blur()} onChange={handleInput} placeholder="Enter Game Name " className="form-control"/><br/>
+                  <input name="open_time" type="time" value={formInput?.open_time} onWheel={(e) => e.target.blur()} onChange={handleInput} placeholder="open time " className="form-control"/><br/>
+                  <input name="close_time" type="time" value={formInput?.close_time} onWheel={(e) => e.target.blur()} onChange={handleInput} placeholder="close time " className="form-control"/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
@@ -173,6 +181,10 @@ const GameName = () => {
                     </Button>
                 </Modal.Footer>
             </Modal>
+
+
+
+
 
             <Modal show={edit} onHide={()=>setEdit(false)}>
                 <Modal.Header closeButton>

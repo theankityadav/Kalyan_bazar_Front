@@ -666,3 +666,17 @@ footer.sticky-footer {
   display: flex;
   justify-content: right;
 }
+
+.red_bg{
+  border: 1px solid #f46a6a;
+  border-radius: 4px;
+  background-color: rgba(244,106,106,.18);
+  width: 40px;
+  height: 40px;
+  margin: 10px 20px;
+  font-weight: 600;
+}
+.link{
+  color: blue;
+  cursor: pointer;
+}

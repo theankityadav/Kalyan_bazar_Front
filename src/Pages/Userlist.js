@@ -36,11 +36,21 @@ const Userlist = () => {
       sortable: true,
 
     },
+   
     {
       name: 'Name',
-      selector: row => (row?.first_name + " " + row?.last_name),
-      sortable: true,
 
+      cell: (row, index) => {
+
+
+        return (
+          <span className='link' onClick={() => navigate("/user-details",
+            { state: row }
+          )}>
+           {row?.first_name + " " + row?.last_name}
+          </span>
+        )
+      }
     },
     {
       name: 'Phone Number',

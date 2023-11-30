@@ -76,3 +76,27 @@ export const changePin = (data) => {
    
 }});
 }
+
+export const gameRate = () => {
+
+
+    let url = `${BASE_URL}/v1/get-normal-game-rate`;
+
+    return axios.get(url, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}
+
+export const updateGameName = (data) => {
+
+
+    let url = `${BASE_URL}/v1/get-normal-game-rate`;
+
+    return axios.put(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}

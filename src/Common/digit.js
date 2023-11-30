@@ -1,10 +1,10 @@
 import React from 'react'
 
-const Digit = ({item}) => {
-
+const Digit = ({item,classname}) => {
+    
   return (
-    <div className='digit_num'>
-      {item?.number} 
+    <div className={`digit_num ${classname?"red_bg":""}`} >
+      {item} 
     </div>
   )
 }

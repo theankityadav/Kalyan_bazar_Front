@@ -14,6 +14,7 @@ import UserDetails from "./Pages/UserDetails";
 import GameRate from "./Pages/GameRate";
 import Userlist from "./Pages/Userlist";
 import GameNumbers from "./Pages/GameNumbers";
+import DeclaireResult from "./Pages/DeclaireResult";
 
 function App() {
   const [token,setToken]=useState(localStorage.getItem("access_token"))
@@ -25,6 +26,7 @@ function App() {
         <Routes>
          <Route path="/" element={<Login/> } />
           <Route path="/dashboard" element={<Dashbaord/>} />
+          <Route path="/declair-result" element={<DeclaireResult/>} />
           <Route path="/game-name" element={<GameName/>} />
           <Route path="/user-list" element={<Userlist/>} />
           <Route path="/user-details" element={<UserDetails/>} />
