@@ -32,7 +32,7 @@ const Resultdeclare = () => {
                     </div>
                 </div>
             </div>
-            <div className='card p-3 flex align-center space-between'>
+            <div className='card p-3 flex align-center space-between mb-3'>
                 <h4 class="card-title text-left w-100">Declare Result</h4>
                 <div className='row w-100'>
                     <div className='form-group col-md-4'>
@@ -52,6 +52,16 @@ const Resultdeclare = () => {
                     <div className='form-group col-md-2'>
                         <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn">Declare</button>
                     </div>
+                </div>
+            </div>
+            <div className='card p-3 flex align-center space-between'>
+                <h4 class="card-title text-left w-100">Game Result History</h4>
+                <div className='row w-100'>
+                    <div className='form-group col-md-3'>
+                        <label>Select Result Date</label>
+                        <input type="date" id="start" className='form-control' />
+                    </div>
+                    <div className='form-group col-md-9'></div>
                 </div>
             </div>
         </div>
