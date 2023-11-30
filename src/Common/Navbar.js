@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import { Button, Modal } from "react-bootstrap";
 import logo from "../Assets/logo.png"
+import { changePin } from "../service/service";
+import { Loader } from "./Loader";
 
 const Navbar = () => {
+  const [show,setShow]=useState(false)
+  const[loader,setLoader]=useState(false)
+  const[password,setPassword]=useState("")
+  const id = localStorage.getItem("id")
+  const handleClose =()=>{
+    setShow(false)
+  }
+  const hanldSubmit=()=>{
+    let data ={
+      user_pin:password,
+      user_id:id,
+    }
+    setLoader(true)
+    changePin(data).then((res)=>{
+      console.log("res",res)
+      setLoader(false)
+    }).catch((err)=>{
+      console.log("err",err)
+      setLoader(false)
+      alert("Internal Server Error")
+    })
+
+  }
   return (
     <>
+      {loader?<Loader/>:null}
       <nav
         className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
         id="mainNav"
@@ -30,7 +57,7 @@ const Navbar = () => {
               data-placement="right"
               title="Dashboard"
             >
-              <a className="nav-link" href="/">
+              <a className="nav-link" href="/dashboard">
                 <i className="fa fa-fw fa-dashboard"></i>
                 <span className="nav-link-text">Dashboard</span>
               </a>
@@ -41,7 +68,7 @@ const Navbar = () => {
               data-placement="right"
               title="User Management"
             >
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/user-list">
                 <i className="fa fa-fw fa-area-chart"></i>
                 <span className="nav-link-text">User Management</span>
               </a>
@@ -52,7 +79,7 @@ const Navbar = () => {
               data-placement="right"
               title="Declare Results"
             >
-              <a className="nav-link" href="#">
+              <a className="nav-link" href="/declair-result">
                 <i className="fa fa-fw fa-table"></i>
                 <span className="nav-link-text">Declare Results</span>
               </a>
@@ -81,16 +108,10 @@ const Navbar = () => {
                   <a href="#">Users Bid History</a>
                 </li>
                 <li>
-                  <a href="#">Customer Sell Report</a>
-                </li>
-                <li>
                   <a href="#">Winning Report</a>
                 </li>
                 <li>
                   <a href="#">Transfer Point Report</a>
-                </li>
-                <li>
-                  <a href="#">CarBid Win Reportds</a>
                 </li>
                 <li>
                   <a href="#">Withdraw Report</a>
@@ -119,9 +140,6 @@ const Navbar = () => {
                 className="sidenav-second-level collapse"
                 id="WalletManagement"
               >
-                <li>
-                  <a href="login.html">Fund Request</a>
-                </li>
                 <li>
                   <a href="register.html">Withdraw Request</a>
                 </li>
@@ -153,7 +171,7 @@ const Navbar = () => {
                   <a href="/game-name">Game Name</a>
                 </li>
                 <li>
-                  <a href="#">Game Rates</a>
+                  <a href="/game-rates">Game Rates</a>
                 </li>
               </ul>
             </li>
@@ -177,25 +195,25 @@ const Navbar = () => {
                 id="GameNumbers"
               >
                 <li>
-                  <a href="#">Single Digit</a>
+                  <a href="/games/single_digit">Single Digit</a>
                 </li>
                 <li>
-                  <a href="#">Jodi Digit</a>
+                  <a href="/games/jodi_digit">Jodi Digit</a>
                 </li>
                 <li>
-                  <a href="#">Single Pana</a>
+                  <a href="/games/single_pana">Single Pana</a>
                 </li>
                 <li>
-                  <a href="#">Double Pana</a>
+                  <a href="/games/double_pana">Double Pana</a>
                 </li>
                 <li>
-                  <a href="#">Tripple Pana</a>
+                  <a href="/games/triple_pana">Tripple Pana</a>
                 </li>
                 <li>
-                  <a href="#">Half Sangam</a>
+                  <a href="/games/half_sangam">Half Sangam</a>
                 </li>
                 <li>
-                  <a href="#">Full Sangam</a>
+                  <a href="/games/full_sangam">Full Sangam</a>
                 </li>
               </ul>
             </li>
@@ -282,10 +300,10 @@ const Navbar = () => {
                 id="Starline"
               >
                 <li>
-                  <a href="#">Game Name</a>
+                  <a href="/startline/game_name">Game Name</a>
                 </li>
                 <li>
-                  <a href="#">Game Rates</a>
+                  <a href="/startline/game_rate">Game Rates</a>
                 </li>
                 <li>
                   <a href="#">Bid History</a>
@@ -302,33 +320,9 @@ const Navbar = () => {
                 <li>
                   <a href="#">Starline Winning report</a>
                 </li>
-                <li>
-                  <a href="#">Starline Winning Prediction</a>
-                </li>
               </ul>
             </li>
-            <li
-              className="nav-item"
-              data-toggle="tooltip"
-              data-placement="right"
-              title="Users Query"
-            >
-              <a className="nav-link" href="#">
-                <i className="fa fa-question-circle"></i>
-                <span className="nav-link-text">Users Query</span>
-              </a>
-            </li>
-            <li
-              className="nav-item"
-              data-toggle="tooltip"
-              data-placement="right"
-              title="Sub Admin Management"
-            >
-              <a className="nav-link" href="#">
-                <i className="fa fa-lock"></i>
-                <span className="nav-link-text">Sub Admin Management</span>
-              </a>
-            </li>
+         
           </ul>
           <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown">
@@ -343,7 +337,7 @@ const Navbar = () => {
                 <i class="fa fa-user"></i> Admin
               </a>
               <div className="dropdown-menu" aria-labelledby="messagesDropdown">
-                <a className="dropdown-item">
+                <a className="dropdown-item" onClick={()=>setShow(true)}>
                   <i className="fa fa-key"></i>&nbsp;&nbsp;Change Password
                 </a>
                 <div className="dropdown-divider"></div>
@@ -355,7 +349,7 @@ const Navbar = () => {
                   className="dropdown-item"
                   data-toggle="modal"
                   data-target="#exampleModal"
-                >
+                  >
                   <i className="fa fa-fw fa-sign-out"></i>&nbsp;&nbsp;Logout
                 </a>
               </div>
@@ -363,6 +357,70 @@ const Navbar = () => {
           </ul>
         </div>
       </nav>
+      <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Change Password</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                 
+                  <input name="password" type="text" onWheel={(e) => e.target.blur()} placeholder="New Password" className="form-control" onChange={(e)=>{
+                    setPassword(e.target.value.slice(0,50))
+                  }}/>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={hanldSubmit}>
+                        Submit
+                    </Button>
+                </Modal.Footer>
+            </Modal>
+            <div
+          className="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          role="dialog"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">
+                  Ready to Leave?
+                </h5>
+                <button
+                  className="close"
+                  type="button"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                Select "Logout" below if you are ready to end your current
+                session.
+              </div>
+              <div className="modal-footer">
+                <button
+                  className="btn btn-secondary"
+                  type="button"
+                  data-dismiss="modal"
+                >
+                  Cancel
+                </button>
+                <button className="btn btn-primary"  onClick={()=>{
+                  localStorage.clear()
+                 window.location.href="/"
+                }}>
+                  Logout
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
     </>
   );
 };

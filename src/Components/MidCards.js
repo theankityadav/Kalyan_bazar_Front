@@ -1,6 +1,6 @@
 import React from "react";
 
-const MidCards = () => {
+const MidCards = ({data}) => {
   return (
     <>
       <div className="row">
@@ -15,7 +15,7 @@ const MidCards = () => {
               </div>
             </div>
             <a className="card-footer text-white clearfix small z-1" href="#">
-              <span className="float-left">X X X X X X</span>
+              <span className="float-left">{data?.users_count}</span>
               <span className="float-right">
                 <i className="fa fa-angle-right"></i>
               </span>
@@ -33,7 +33,7 @@ const MidCards = () => {
               </div>
             </div>
             <a className="card-footer text-white clearfix small z-1" href="#">
-              <span className="float-left">X X</span>
+              <span className="float-left">{data?.games}</span>
               <span className="float-right">
                 <i className="fa fa-angle-right"></i>
               </span>
@@ -51,7 +51,7 @@ const MidCards = () => {
               </div>
             </div>
             <a className="card-footer text-white clearfix small z-1" href="#">
-              <span className="float-left">X X X X</span>
+              <span className="float-left">{data?.bid_amount}</span>
               <span className="float-right">
                 <i className="fa fa-angle-right"></i>
               </span>

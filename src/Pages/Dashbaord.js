@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../Common/Table";
 import UpperCard from "../Components/UpperCard";
 import MidCards from "../Components/MidCards";
 import SecondRightCard from "../Components/SecondRightCard";
 import SmallCards from "../Components/SmallCards";
+import { getDashboarddata, getuserList } from "../service/service";
 const Dashbaord = () => {
+  const[list,setList]=useState([])
+  const[data,setData]=useState()
+  useEffect(()=>{
+    getInformation()
+    handleGetDashboardData()
+},[])
+
+const handleGetDashboardData =()=>{
+  getDashboarddata().then((res)=>{
+    setData(res?.data?.data)
+  }).catch((err)=>{
+        alert(err||"something went wrong ")
+    })
+}
+
+
+const getInformation =()=>{
+    getuserList().then((res)=>{
+      setList(res.data.data)
+    }).catch((err)=>{
+        alert(err||"something went wrong ")
+    })
+}
 
   return (
     <>
@@ -18,15 +42,15 @@ const Dashbaord = () => {
           </ol>
           <div className="row">
             <div className="col-xl-4">
-                <UpperCard />
+                <UpperCard data={data} />
             </div>
             <div className="col-xl-8">
-                <MidCards />
-                <SecondRightCard />
+                <MidCards data={data} />
+                <SecondRightCard  />
                 <SmallCards />
             </div>
           </div>
-          <Table/>
+          <Table list={list} head="Fund Request Auto Deposit History"/>
         </div>
         <footer className="sticky-footer">
           <div className="container">
@@ -35,48 +59,7 @@ const Dashbaord = () => {
             </div>
           </div>
         </footer>
-        <div
-          className="modal fade"
-          id="exampleModal"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title" id="exampleModalLabel">
-                  Ready to Leave?
-                </h5>
-                <button
-                  className="close"
-                  type="button"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                Select "Logout" below if you are ready to end your current
-                session.
-              </div>
-              <div className="modal-footer">
-                <button
-                  className="btn btn-secondary"
-                  type="button"
-                  data-dismiss="modal"
-                >
-                  Cancel
-                </button>
-                <a className="btn btn-primary" href="login.html">
-                  Logout
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
+       
       </div>
     </>
   );
