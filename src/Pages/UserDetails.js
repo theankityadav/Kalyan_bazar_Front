@@ -1,33 +1,122 @@
 import moment from "moment";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { addFund } from "../service/service";
+import { addFund, getuserDetails, getuserTransation, getuserTransationByid, updateUserAcitvity, updateUserPin, withdrawAmountAPi } from "../service/service";
+import { Loader } from '../Common/Loader'
+import Table from "../Common/Table";
 
 const UserDetails = () => {
-  const {state} = useLocation()
-  const[show,setShow]=useState(false)
-  const[amount,setAmount]=useState(0)
-  const handleClose =()=>{
+  const { state } = useLocation()
+  const [show, setShow] = useState(false)
+  const [showPin, setShowPin] = useState(false)
+  const[showWithDraw,setShowWithDrawa]=useState(false)
+  const [amount, setAmount] = useState("")
+  const [withdrawAmount, setWithdrawAmount] = useState("")
+  const [pin, setPin] = useState("")
+  const [loader, setLoader] = useState(false)
+  const [data, setData] = useState({})
+  const handleClose = () => {
     setShow(false)
+    setShowPin(false)
   }
 
-  const handleSubmit =()=>{
-    let data={
-      amount:amount,
-      id:state?.id
+  const handleSubmit = () => {
+    let data = {
+      amount: amount,
+      user_id: state?.id
     }
-    addFund(data).then((res)=>{
-       alert("fund added successfully")
-       setShow(false)
-    }).catch((err)=>{
+    addFund(data).then((res) => {
+      handleGetUserDetails()
+      alert("fund added successfully")
+      setShow(false)
+      
+    }).catch((err) => {
       alert("something went wrong")
-      console.log('error',err)
+      console.log('error', err)
     })
   }
+  useEffect(() => {
+    
+    handleGetUserDetails()
+  }, [])
+
+  const handleGetUserDetails = () => {
+    getInformation()
+    getuserDetails(state?.id).then((res) => {
+      setLoader(false)
+      setData(res?.data?.data)
+    }).catch((err) => {
+      setLoader(false)
+      alert("something went wrong")
+      console.log('error', err)
+    })
+  }
+
+  const handleUpdateUserActivity = (data) => {
+    setLoader(true)
+    updateUserAcitvity(data).then((res) => {
+      setLoader(false)
+      handleGetUserDetails()
+    }).catch((err) => {
+      setLoader(false)
+      alert("something went wrong")
+      console.log('error', err)
+    })
+  }
+
+  const handleUpdatePin = (e) => {
+    e.preventDefault()
+    let reqBody = {
+      user_id: state?.id,
+      user_pin: pin
+    }
+    setLoader(true)
+    updateUserPin(reqBody).then((res) => {
+      handleGetUserDetails()
+      setLoader(false)
+      setShowPin(false)
+    }).catch((err) => {
+      setLoader(false)
+      alert("something went wrong")
+      console.log('error', err)
+    })
+  }
+
+
+  const handleWithdraw = (e) => {
+    e.preventDefault()
+    let reqBody = {
+      user_id: state?.id,
+      amount: withdrawAmount
+    }
+    setLoader(true)
+    withdrawAmountAPi(reqBody).then((res) => {
+      handleGetUserDetails()
+      setLoader(false)
+      setShowWithDrawa(false)
+    }).catch((err) => {
+      setLoader(false)
+      alert("something went wrong")
+      console.log('error', err)
+    })
+  }
+  const[list,setList]=useState([])
+
+  const getInformation =()=>{
+    getuserTransationByid(state?.id).then((res)=>{
+        setList(res.data.data)
+        console.log("res.data",res.data)
+      }).catch((err)=>{
+          alert(err||"something went wrong ")
+      })
+  }
+  
+
   return (
     <>
+      {loader ? <Loader /> : null}
       <div class="content-wrapper">
         <div class="container-fluid">
           <div class="row">
@@ -45,13 +134,13 @@ const UserDetails = () => {
                   <div class="row">
                     <div class="col-7">
                       <div class="text-primary p-3">
-                        <h5 class="text-primary">{state?.first_name+" "+state?.last_name}</h5>
+                        <h5 class="text-primary">{data?.first_name + " " + data?.last_name}</h5>
                         <p>
-                           {state?.phone_number}
-                          <a href={`tel:${state?.phone_number}`}>
+                          {data?.phone_number}
+                          <a href={`tel:${data?.phone_number}`}>
                             <i class="mdi mdi-cellphone-iphone"></i>
                           </a>
-                          <a href={`https://wa.me/91${state?.phone_number}`} target="blank">
+                          <a href={`https://wa.me/91${data?.phone_number}`} target="blank">
                             <i class="mdi mdi-whatsapp"></i>
                           </a>
                         </p>
@@ -60,39 +149,47 @@ const UserDetails = () => {
                     <div class="col-5 align-center">
                       <div class="p-3 text-right">
                         <div class="mb-2">
-                          Active : 
+                          Active :
                           <a
                             role="button"
                             class="activeDeactiveStatus"
                             id="success-10603-tb_user-user_id-status"
+                            onClick={() => {
+                              handleUpdateUserActivity({ user_status: !data?.user_status, user_id: state?.id })
+                            }}
                           >
-                            <span class="badge badge-pill badge-success font-size-12">
-                              Yes
+                            <span class={`badge badge-pill ${data?.user_status ? "badge-success" : "badge-danger"} font-size-12`}>
+                              {data?.user_status ? "Yes" : "No"}
                             </span>
                           </a>
                         </div>
                         <div class="mb-2">
-                          Betting : 
+                          Betting :
                           <a
                             role="button"
                             class="activeDeactiveStatus"
                             id="success-10603-tb_user-user_id-betting_status"
+                            onClick={() => {
+                              handleUpdateUserActivity({ betting: !data?.betting, user_id: state?.id })
+                            }}
                           >
-                            <span class="badge badge-pill badge-success font-size-12">
-                            Yes
+                            <span class={`badge badge-pill ${data?.betting ? "badge-success" : "badge-danger"} font-size-12`}>
+                              {data?.betting ? "Yes" : "No"}
                             </span>
                           </a>
                         </div>
-
                         <div class="mb-2">
                           TP :
                           <a
                             role="button"
                             class="activeDeactiveStatus"
                             id="danger-10603-tb_user-user_id-transfer_point_status"
+                            onClick={() => {
+                              handleUpdateUserActivity({ transfer: !data?.transfer, user_id: state?.id })
+                            }}
                           >
-                            <span class="badge badge-pill badge-danger font-size-12">
-                              No
+                            <span class={`badge badge-pill ${data?.transfer ? "badge-success" : "badge-danger"} font-size-12`}>
+                              {data?.transfer ? "Yes" : "No"}
                             </span>
                           </a>
                         </div>
@@ -117,12 +214,15 @@ const UserDetails = () => {
                         <div class="row">
                           <div class="col-6">
                             <p class="text-muted mb-0">Security Pin</p>
-                            <h5 class="font-size-15 mb-0">{state?.user_pin||"NA"}</h5>
+                            <h5 class="font-size-15 mb-0">{data?.user_pin || "NA"}</h5>
                           </div>
                           <div class="col-6">
                             <button
                               class="btn btn-primary btn-sm"
                               id="changePin"
+                              onClick={() => {
+                                setShowPin(true)
+                              }}
                             >
                               Change
                             </button>
@@ -137,7 +237,7 @@ const UserDetails = () => {
                     <div class="col-sm-12">
                       <div>
                         <p class="text-muted mb-2">Available Balance</p>
-                        <h5>5</h5>
+                        <h5>{data?.total_amount}</h5>
                       </div>
                     </div>
 
@@ -146,7 +246,7 @@ const UserDetails = () => {
                         <button
                           class="btn btn-success btn-sm w-md btn-block"
                           id="adFund"
-                          onClick={()=>setShow(true)}
+                          onClick={() => setShow(true)}
                         >
                           Add Fund
                         </button>
@@ -157,6 +257,9 @@ const UserDetails = () => {
                         <button
                           class="btn btn-danger btn-sm w-md btn-block"
                           id="withdrawFund"
+                          onClick={()=>{
+                            setShowWithDrawa(true)
+                          }}
                         >
                           Withdraw Fund
                         </button>
@@ -176,7 +279,7 @@ const UserDetails = () => {
                       <tbody>
                         <tr>
                           <th scope="row">Full Name :</th>
-                          <td>{state?.first_name+" "+state?.last_name}</td>
+                          <td>{state?.first_name + " " + state?.last_name}</td>
                           <th scope="row">Email :</th>
                           <td>{state?.email}</td>
                         </tr>
@@ -522,89 +625,7 @@ const UserDetails = () => {
                       </div>
                       <div class="row">
                         <div class="col-sm-12">
-                          <table
-                            id="withdrawTable"
-                            class="table table-striped table-bordered list-unstyled dataTable no-footer"
-                            role="grid"
-                            aria-describedby="withdrawTable_info"
-                          >
-                            <thead>
-                              <tr role="row">
-                                <th
-                                  class="sorting_asc"
-                                  tabindex="0"
-                                  aria-controls="withdrawTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-sort="ascending"
-                                  aria-label="#: activate to sort column descending"
-                                >
-                                  #
-                                </th>
-                                <th
-                                  class="sorting"
-                                  tabindex="0"
-                                  aria-controls="withdrawTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Request Amount: activate to sort column ascending"
-                                >
-                                  Request Amount
-                                </th>
-                                <th
-                                  class="sorting"
-                                  tabindex="0"
-                                  aria-controls="withdrawTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Request	No.: activate to sort column ascending"
-                                >
-                                  Request No.
-                                </th>
-                                <th
-                                  class="sorting"
-                                  tabindex="0"
-                                  aria-controls="withdrawTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Request Date: activate to sort column ascending"
-                                >
-                                  Request Date
-                                </th>
-                                <th
-                                  class="sorting"
-                                  tabindex="0"
-                                  aria-controls="withdrawTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Status: activate to sort column ascending"
-                                >
-                                  Status
-                                </th>
-                                <th
-                                  class="sorting"
-                                  tabindex="0"
-                                  aria-controls="withdrawTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Action: activate to sort column ascending"
-                                >
-                                  Action
-                                </th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr class="odd">
-                                <td
-                                  valign="top"
-                                  colspan="6"
-                                  class="dataTables_empty"
-                                >
-                                  No data available in table
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                        <Table list={list} getInformation={getInformation} head="Fund Request Auto Deposit History"/>
                         </div>
                       </div>
                       <div class="row">
@@ -1603,22 +1624,57 @@ const UserDetails = () => {
           </div>
         </div>
       </div>
-         <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Amount " className="form-control" value={amount} onChange={(e)=>setAmount(e.target.value)}/>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleSubmit}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Fund</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Amount " className="form-control" value={amount} onChange={(e) => setAmount(e.target.value.slice(0,5))} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmit}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+      <Modal show={showWithDraw} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Withdraw Fund</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Amount " className="form-control" value={withdrawAmount} onChange={(e) => setWithdrawAmount(e.target.value.slice(0,5))} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleWithdraw}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+
+      <Modal show={showPin} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Change Pin</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Pin " className="form-control" value={pin} onChange={(e) => setPin(e.target.value.slice(0, 4))} />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleUpdatePin}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
