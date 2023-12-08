@@ -28,7 +28,7 @@ const Userlist = () => {
       cell: (row, index) => {
         return (
           <p >
-            {index}
+            {row?.id}
           </p>
         )
       },

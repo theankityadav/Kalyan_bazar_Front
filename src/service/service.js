@@ -23,12 +23,6 @@ export const gameNameApi =(type)=>{
     });
 }
 
-export const getBid =()=>{
-    let url = `${BASE_URL}/v1/user-list/`;
-    return axios.get(url, {
-        headers: headersApplicationJson,
-    });
-}
 
 export const getuserList = () => {
     let url = `${BASE_URL}/v1/user-list/`;
@@ -36,9 +30,36 @@ export const getuserList = () => {
         headers: headersApplicationJson,
     });
 }
+export const getuserTransation = () => {
+    let url = `${BASE_URL}/v1/get-withdrawl-list`;
+    return axios.get(url, {
+        headers: headersApplicationJson,
+    });
+}
+
+export const getuserTransationByid = (id) => {
+    let url = `${BASE_URL}/v1/get-withdrawl-list?user_id=${id}`;
+    return axios.get(url, {
+        headers: headersApplicationJson,
+    });
+}
+
+export const getuserDetails = (id) => {
+    let url = `${BASE_URL}/v1/user-list/?user_id=${id}`;
+    return axios.get(url, {
+        headers: headersApplicationJson,
+    });
+}
 
 export const getNumbers =(type)=>{
     let url = `${BASE_URL}/v1/get-numbers-list?number_type=${type}`;
+    return axios.get(url, {
+        headers: headersApplicationJson,
+    });
+}
+
+export const getAddNumbers =(number)=>{
+    let url = `${BASE_URL}/v1/get-add-numbers?number=${number}`;
     return axios.get(url, {
         headers: headersApplicationJson,
     });
@@ -52,17 +73,32 @@ export const getDashboarddata =()=>{
 
 
 export const addFund = (data) => {
-
-    
-
     let url = `${BASE_URL}/v1/add-fund/`;
 
     return axios.post(url,data, {headers: { "accept": 'application/json' ,
    
     "Content-Type": 'application/json' ,
-   
 }});
 }
+
+export const approvedFund = (data) => {
+    let url = `${BASE_URL}/v1/accept-withdrawl`;
+
+    return axios.post(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+}});
+}
+
+export const rejectFund = (data) => {
+    let url = `${BASE_URL}/v1/reject-withdrawl`;
+
+    return axios.post(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+}});
+}
+
 
 export const changePin = (data) => {
 
@@ -95,6 +131,40 @@ export const updateGameName = (data) => {
     let url = `${BASE_URL}/v1/get-normal-game-rate`;
 
     return axios.put(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}
+
+
+export const updateUserAcitvity = (data) => {
+
+    let url = `${BASE_URL}/v1/update-user-activity`;
+
+    return axios.put(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+}});
+}
+
+
+export const updateUserPin = (data) => {
+
+    let url = `${BASE_URL}/v1/change-pin`;
+
+    return axios.put(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}
+
+export const withdrawAmountAPi = (data) => {
+
+    let url = `${BASE_URL}/v1/add-withdrawl`;
+
+    return axios.post(url,data, {headers: { "accept": 'application/json' ,
    
     "Content-Type": 'application/json' ,
    

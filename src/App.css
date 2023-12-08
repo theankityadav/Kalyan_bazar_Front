@@ -47,6 +47,20 @@ body.fixed-nav {
   z-index: 1;
 }
 
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+}
+.align-center{
+  align-items: center;
+}
+.space-between{
+  justify-content: space-between;
+}
+
+input, select {
+  padding: 6px 12px!important;
+}
 #mainNav .navbar-collapse {
   overflow: auto;
   max-height: 75vh;
@@ -522,7 +536,10 @@ footer.sticky-footer {
   color: #f46a6a;
   background-color: rgba(244,106,106,.18);
 }
-
+.pending{
+  color: blue;
+  background-color: rgb(204, 201, 44);
+}
 .login-box {
   margin-top: 75px;
   height: auto;

@@ -4,7 +4,7 @@ import UpperCard from "../Components/UpperCard";
 import MidCards from "../Components/MidCards";
 import SecondRightCard from "../Components/SecondRightCard";
 import SmallCards from "../Components/SmallCards";
-import { getDashboarddata, getuserList } from "../service/service";
+import { getDashboarddata, getuserList, getuserTransation } from "../service/service";
 const Dashbaord = () => {
   const[list,setList]=useState([])
   const[data,setData]=useState()
@@ -23,8 +23,9 @@ const handleGetDashboardData =()=>{
 
 
 const getInformation =()=>{
-    getuserList().then((res)=>{
+  getuserTransation().then((res)=>{
       setList(res.data.data)
+      console.log("res.data",res.data)
     }).catch((err)=>{
         alert(err||"something went wrong ")
     })
@@ -50,7 +51,7 @@ const getInformation =()=>{
                 <SmallCards />
             </div>
           </div>
-          <Table list={list} head="Fund Request Auto Deposit History"/>
+          <Table list={list} getInformation={getInformation} head="Fund Request Auto Deposit History"/>
         </div>
         <footer className="sticky-footer">
           <div className="container">
