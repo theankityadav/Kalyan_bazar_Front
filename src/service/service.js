@@ -170,3 +170,24 @@ export const withdrawAmountAPi = (data) => {
    
 }});
 }
+
+export const resultDeclareAPi = (data) => {
+    let url = `${BASE_URL}/v1/declare-result`;
+
+    return axios.post(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}
+
+export const getresultList = (data) => {
+    let url = `${BASE_URL}/v1/get-result`;
+
+    return axios.get(url, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}
+
