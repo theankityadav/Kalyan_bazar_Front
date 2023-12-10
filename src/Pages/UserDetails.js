@@ -94,6 +94,7 @@ const UserDetails = () => {
     setLoader(true)
     withdrawAmountAPi(reqBody).then((res) => {
       handleGetUserDetails()
+
       setLoader(false)
       setShowWithDrawa(false)
     }).catch((err) => {
@@ -105,8 +106,10 @@ const UserDetails = () => {
   const[list,setList]=useState([])
 
   const getInformation =()=>{
+
     getuserTransationByid(state?.id).then((res)=>{
         setList(res.data.data)
+      
         console.log("res.data",res.data)
       }).catch((err)=>{
           alert(err||"something went wrong ")
@@ -625,7 +628,7 @@ const UserDetails = () => {
                       </div>
                       <div class="row">
                         <div class="col-sm-12">
-                        <Table list={list} getInformation={getInformation} head="Fund Request Auto Deposit History"/>
+                        <Table list={list}   handleGetUserDetails={handleGetUserDetails} getInformation={getInformation} head="Fund Request Auto Deposit History"/>
                         </div>
                       </div>
                       <div class="row">

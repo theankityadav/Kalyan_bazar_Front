@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { approvedFund, rejectFund } from "../service/service";
 import { Loader } from "./Loader";
-const Table = ({ list, head,getInformation }) => {
+const Table = ({ list, head,getInformation,handleGetUserDetails }) => {
   const navigate = useNavigate()
   const[loader,setLoader]=useState(false)
 
@@ -12,6 +12,7 @@ const Table = ({ list, head,getInformation }) => {
     setLoader(true)
     approvedFund(data).then((res)=>{
       getInformation()
+      handleGetUserDetails()
       setLoader(false)
     }).catch((err)=>{
       alert(err?.response?.data?.message||"something went wrong ")
