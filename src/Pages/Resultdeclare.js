@@ -1,7 +1,8 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
+import { Button } from 'react-bootstrap'
 import { Loader } from '../Common/Loader'
-import { gameNameApi, getAddNumbers, getNumbers, resultDeclareAPi, getresultList } from '../service/service'
+import { gameNameApi, getAddNumbers, getNumbers, resultDeclareAPi, getresultList, deleteGameResult } from '../service/service'
 
 const Resultdeclare = () => {
     const [data, setData] = useState([])
@@ -15,14 +16,20 @@ const Resultdeclare = () => {
     const [marketId, setMarketId] = useState("")
     const [resultList, setResultList] = useState([])
 
+    const [selectedNumberOpen, setselectedNumberOpen] = useState("")
+    const [selectedNumberClose, setselectedNumberClose] = useState("")
+
     useEffect(() => {
         handleGetGameList()
         handleGetPanalist()
         handleGetResultList()
     }, [])
+   
     const handleGetGameList = () => {
-        gameNameApi("NORMAL").then((res) => {
+        setLoader(true)
+        gameNameApi("normal").then((res) => {
             setData(res?.data?.data)
+            setLoader(false)
         }).catch((err) => {
             setLoader(false)
             console.log("err", err)
@@ -39,10 +46,19 @@ const Resultdeclare = () => {
     }
 
     const handleGetAddNumbers = (id, type) => {
+       
+        if(type==="1"){
+            setselectedNumberOpen(id)
+        }
+        if(type!=="1"){
+            setselectedNumberClose(id)
+        }
+
         setLoader(true)
         let key = type === "1" ? "open" : "close";
         getAddNumbers(id).then((res) => {
-            setNumberSum({ ...numberList, [key]: res?.data?.digit })
+           
+            setNumberSum({ ...numberSum, [key]: res?.data?.digit })
             setLoader(false)
         }).catch((err) => {
             setLoader(false)
@@ -51,7 +67,7 @@ const Resultdeclare = () => {
         })
     }
 
-    console.log("sum", numberSum)
+
     const handleDeclaireResultOpen = () => {
         console.log("pp", numberSum)
         alert("open")
@@ -61,11 +77,10 @@ const Resultdeclare = () => {
             result_date: dateSelect,
             open_declare_date: moment().format("YYYY-MM-DD"),
 
-            open_pana_result: numberSum?.open,
+            open_pana_result:selectedNumberOpen+"-"+numberSum?.open,
 
         }
         resultDeclareAPi(data).then((res) => {
-            console.log("result", res)
             handleGetResultList()
         }).catch((err) => {
             setLoader(false)
@@ -85,7 +100,7 @@ const Resultdeclare = () => {
 
             close_declare_date: moment().format("YYYY-MM-DD"),
 
-            close_pana_result: numberSum?.close,
+            close_pana_result: numberSum?.close+"-"+selectedNumberClose
         }
         resultDeclareAPi(data).then((res) => {
             console.log("result", res)
@@ -105,7 +120,17 @@ const Resultdeclare = () => {
             console.log("error", err)
         })
     }
-
+ const handleDelete =(id)=>{
+    setLoader(true)
+    deleteGameResult(id).then((res)=>{
+   
+        handleGetResultList()
+       setLoader(false)
+    }).catch((err) => {
+        setLoader(false)
+        console.log("error", err)
+    })
+}
     return (
         <>
             {
@@ -122,14 +147,14 @@ const Resultdeclare = () => {
                                 }} />
                             </div>
                             <div className='form-group col-md-4'>
-                                <select class="form-select" aria-label="Default select example" value={selectedGameName} onChange={(e) => {
+                                <select class="form-select" aria-label="Default select example" value={selectedGameName+"|"+marketId} onChange={(e) => {
                                     setSelectedGameName(e.target.value.split("|")[0])
                                     setMarketId(e.target.value.split("|")[1])
                                 }}>
                                     <option selected>Select Game Name</option>
                                     {data?.map((item, index) => {
                                         return (
-                                            <option key={index} value={item?.name + "|" + item?.id}>{`${item?.name || ""} (${item?.market_opening_time}-${item?.market_closing_time})`}</option>
+                                            <option key={index} value={item?.market_name + "|" + item?.id}>{`${item?.market_name || ""} (${item?.market_opening_time}-${item?.market_closing_time})`}</option>
                                         )
                                     })}
                                 </select>
@@ -290,8 +315,19 @@ const Resultdeclare = () => {
                                                         <td>{moment(item?.result_date).format("DD-MM-YYYY")}</td>
                                                         <td>{item?.open_declare_date || "NA"}</td>
                                                         <td>{item?.close_declare_date || "NA"}</td>
-                                                        <td>{item?.open_pana_result || "NA"}</td>
-                                                        <td>{item?.close_pana_result || "NA"}</td>
+                                                        <td>{item?.open_pana_result || "NA"}
+                                                        &nbsp;&nbsp;
+                                                        <Button onClick={()=>{
+                                                            handleDelete(item?.id)
+                                                        }} style={{fontSize:"12px"}} className='btn btn-sm btn-danger'>Delete</Button>
+                                                       
+                                                        </td>
+                                                        <td>{item?.close_pana_result || "NA"}
+                                                        &nbsp;&nbsp;
+                                                        <Button onClick={()=>{
+                                                            handleDelete(item?.id)
+                                                        }} style={{fontSize:"12px"}} className='btn btn-sm btn-danger'>Delete</Button>
+                                                        </td>
 
                                                     </tr>
                                                 )

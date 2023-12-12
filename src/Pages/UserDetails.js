@@ -158,7 +158,7 @@ const UserDetails = () => {
                             class="activeDeactiveStatus"
                             id="success-10603-tb_user-user_id-status"
                             onClick={() => {
-                              handleUpdateUserActivity({ user_status: !data?.user_status, user_id: state?.id })
+                              handleUpdateUserActivity({ user_status: !data?.user_status?"True":"False", user_id: state?.id })
                             }}
                           >
                             <span class={`badge badge-pill ${data?.user_status ? "badge-success" : "badge-danger"} font-size-12`}>
@@ -173,7 +173,7 @@ const UserDetails = () => {
                             class="activeDeactiveStatus"
                             id="success-10603-tb_user-user_id-betting_status"
                             onClick={() => {
-                              handleUpdateUserActivity({ betting: !data?.betting, user_id: state?.id })
+                              handleUpdateUserActivity({ betting: !data?.betting?"True":"False", user_id: state?.id })
                             }}
                           >
                             <span class={`badge badge-pill ${data?.betting ? "badge-success" : "badge-danger"} font-size-12`}>
@@ -188,7 +188,7 @@ const UserDetails = () => {
                             class="activeDeactiveStatus"
                             id="danger-10603-tb_user-user_id-transfer_point_status"
                             onClick={() => {
-                              handleUpdateUserActivity({ transfer: !data?.transfer, user_id: state?.id })
+                              handleUpdateUserActivity({ transfer: !data?.transfer?"True":"False", user_id: state?.id })
                             }}
                           >
                             <span class={`badge badge-pill ${data?.transfer ? "badge-success" : "badge-danger"} font-size-12`}>

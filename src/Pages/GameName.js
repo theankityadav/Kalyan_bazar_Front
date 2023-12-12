@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Loader } from '../Common/Loader'
-import { gameNameApi } from '../service/service';
+import { addGameApi, gameNameApi, updateGameName } from '../service/service';
 import DataTable, { createTheme } from 'react-data-table-component';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -11,19 +11,30 @@ const GameName = () => {
   const[show,setShow]=useState(false)
   const[edit,setEdit]=useState()
   const[newGameName,setnewGameName]=useState("")
+  const[gameId,setGameId]=useState("")
   const[formInput,setFormInput]=useState("")
 
 
 
   const handleInput=(e)=>{
     const{name,value}=e.target;
+    console.log("pppp",e.target.value)
     setFormInput({...formInput,[name]:value})
   }
 
-  const handleSubmitEdit =()=>{
-    let data={
-      game_name:newGameName,
-    }
+  const handleSubmitEdit =(value)=>{
+      
+    setLoader(true)
+    updateGameName(value).then((res)=>{
+      setLoader(false)
+      handleClose()
+      handleGameNameList()
+      
+    }).catch((err) => {
+      setLoader(false)
+      alert(err || "something went wrong ")
+    })
+
 
   }
   const handleClose =()=>{
@@ -35,7 +46,7 @@ const GameName = () => {
 
   const handleGameNameList = () => {
     setLoader(true)
-    gameNameApi("NORMAL").then((res) => {
+    gameNameApi("normal").then((res) => {
       setLoader(false)
       setData(res.data.data)
     }).catch((err) => {
@@ -49,7 +60,7 @@ const GameName = () => {
       cell: (row,index) => {
         return (
           <p >
-            {index+1}
+            {row?.id}
           </p>
         )
       },
@@ -85,8 +96,13 @@ const GameName = () => {
 
 
         return (
-          <span className={row?.market_status ? "btnspan success" : "btnspan danger"}>
-            {row?.market_status ? "Yes" : "No"}
+          <span className={row?.active ? "btnspan success" : "btnspan danger"} onClick={()=>{
+            handleSubmitEdit({
+              active:!row?.active?"True":"False" ,
+              id:row?.id
+            })
+          }}>
+            {row?.active ? "Yes" : "No"}
           </span>
         )
       },
@@ -111,11 +127,13 @@ const GameName = () => {
       name: 'Action',
 
       cell: (row, index) => {
-
-
         return (
           <span className='d-flex ' >
-            <button className='btn btn-primary m-1 btn-sm' onClick={()=>setEdit(true)}>
+            <button className='btn btn-primary m-1 btn-sm' onClick={()=>{
+              setGameId(row.id)
+              setEdit(true)
+            }
+              }>
               Edit
             </button>
             <button className='btn btn-primary m-1 btn-sm'>
@@ -137,6 +155,29 @@ const GameName = () => {
     },
   });
 console.log("data",formInput)
+
+
+const handleAddGame =()=>{
+  setLoader(true)
+  let data ={
+    market_name: formInput?.gamename,
+    market_code: "",
+    active: true,
+    market_status: true,
+    market_opening_time: formInput?.open_time,
+    market_type: "NORMAL",
+    market_closing_time: formInput?.close_time
+  }
+  addGameApi(data).then((res)=>{
+  console.log("res",res)
+  setLoader(false)
+  handleGameNameList()
+  handleClose()
+  }).catch((err) => {
+    setLoader(false)
+    alert(err || "something went wrong ")
+  })
+}
 
   return (
     <div className="content-wrapper">
@@ -169,14 +210,17 @@ console.log("data",formInput)
                 </Modal.Header>
                 <Modal.Body>
                   <input name="gamename" type="text" value={formInput?.gamename} onWheel={(e) => e.target.blur()} onChange={handleInput} placeholder="Enter Game Name " className="form-control"/><br/>
-                  <input name="open_time" type="time" value={formInput?.open_time} onWheel={(e) => e.target.blur()} onChange={handleInput} placeholder="open time " className="form-control"/><br/>
-                  <input name="close_time" type="time" value={formInput?.close_time} onWheel={(e) => e.target.blur()} onChange={handleInput} placeholder="close time " className="form-control"/>
+                  <input name="open_time" type="time" step={900} value={formInput?.open_time} onWheel={(e) => e.target.blur()} onChange={handleInput} placeholder="open time " className="form-control"/><br/>
+                  <input name="close_time" type="time" step={900} value={formInput?.close_time} onWheel={(e) => e.target.blur()} onChange={handleInput} placeholder="close time " className="form-control"/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary">
+                    <Button variant="primary" onClick={(e)=>{
+                      e.preventDefault()
+                      handleAddGame()
+                    }}>
                         Submit
                     </Button>
                 </Modal.Footer>
@@ -195,13 +239,17 @@ console.log("data",formInput)
                     setnewGameName(e.target.value)
                   }}/><br/>
                   
-                 
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={()=>setEdit(false)}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={handleSubmitEdit}>
+                    <Button variant="primary" onClick={()=>{
+                      handleSubmitEdit({
+                        market_name:newGameName,
+                        id:gameId
+                      })
+                    }}>
                         Submit
                     </Button>
                 </Modal.Footer>
