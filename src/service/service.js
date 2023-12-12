@@ -127,10 +127,20 @@ export const gameRate = () => {
 
 export const updateGameName = (data) => {
 
+    let url = `${BASE_URL}/v1/update-game-name`;
 
-    let url = `${BASE_URL}/v1/get-normal-game-rate`;
+    return axios.patch(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}
 
-    return axios.put(url,data, {headers: { "accept": 'application/json' ,
+export const deleteGameResult = (id) => {
+
+    let url = `${BASE_URL}/v1/delete-result?id=${id}`;
+
+    return axios.delete(url, {headers: { "accept": 'application/json' ,
    
     "Content-Type": 'application/json' ,
    
@@ -191,3 +201,12 @@ export const getresultList = (data) => {
 }});
 }
 
+export const addGameApi = (data) => {
+    let url = `${BASE_URL}/v1/dashboard/create/`;
+
+    return axios.post(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}

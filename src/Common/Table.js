@@ -12,10 +12,14 @@ const Table = ({ list, head,getInformation,handleGetUserDetails }) => {
     setLoader(true)
     approvedFund(data).then((res)=>{
       getInformation()
+      
+      if(handleGetUserDetails){
       handleGetUserDetails()
+      }
       setLoader(false)
     }).catch((err)=>{
       alert(err?.response?.data?.message||"something went wrong ")
+      setLoader(false)
     })
   }
   const handleRejectWithdraw =(data)=>{
@@ -25,6 +29,7 @@ const Table = ({ list, head,getInformation,handleGetUserDetails }) => {
       setLoader(false)
     }).catch((err)=>{
       alert(err?.response?.data?.message||"something went wrong ")
+      setLoader(false)
     })
   }
 
