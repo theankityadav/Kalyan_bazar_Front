@@ -120,9 +120,9 @@ const Resultdeclare = () => {
             console.log("error", err)
         })
     }
- const handleDelete =(id)=>{
+ const handleDelete =(id,isOpen)=>{
     setLoader(true)
-    deleteGameResult(id).then((res)=>{
+    deleteGameResult(id,isOpen).then((res)=>{
    
         handleGetResultList()
        setLoader(false)
@@ -313,19 +313,19 @@ const Resultdeclare = () => {
                                                         <td>{index}</td>
                                                         <td>{item?.game_name || "NA"}</td>
                                                         <td>{moment(item?.result_date).format("DD-MM-YYYY")}</td>
-                                                        <td>{item?.open_declare_date || "NA"}</td>
-                                                        <td>{item?.close_declare_date || "NA"}</td>
+                                                        <td>{moment(item?.open_declare_date).format("ddd DD-MMM-YYYY, hh:mm A") || "NA"}</td>
+                                                        <td>{moment(item?.close_declare_date ).format("ddd DD-MMM-YYYY, hh:mm A")|| "NA"}</td>
                                                         <td>{item?.open_pana_result || "NA"}
                                                         &nbsp;&nbsp;
                                                         <Button onClick={()=>{
-                                                            handleDelete(item?.id)
+                                                            handleDelete(item?.id,false)
                                                         }} style={{fontSize:"12px"}} className='btn btn-sm btn-danger'>Delete</Button>
                                                        
                                                         </td>
                                                         <td>{item?.close_pana_result || "NA"}
                                                         &nbsp;&nbsp;
                                                         <Button onClick={()=>{
-                                                            handleDelete(item?.id)
+                                                            handleDelete(item?.id,true)
                                                         }} style={{fontSize:"12px"}} className='btn btn-sm btn-danger'>Delete</Button>
                                                         </td>
 

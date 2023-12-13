@@ -36,7 +36,13 @@ export const getuserTransation = () => {
         headers: headersApplicationJson,
     });
 }
-
+export const getFundHistory = (id) => {
+    let user = id?`?user_id=${id}`:"";
+    let url = `${BASE_URL}/v1/get-user-fund${user}`;
+    return axios.get(url, {
+        headers: headersApplicationJson,
+    });
+}
 export const getuserTransationByid = (id) => {
     let url = `${BASE_URL}/v1/get-withdrawl-list?user_id=${id}`;
     return axios.get(url, {
@@ -136,9 +142,10 @@ export const updateGameName = (data) => {
 }});
 }
 
-export const deleteGameResult = (id) => {
+export const deleteGameResult = (id,is_open) => {
+    let isOpen = is_open?`&is_open=${is_open}`:"";
 
-    let url = `${BASE_URL}/v1/delete-result?id=${id}`;
+    let url = `${BASE_URL}/v1/delete-result?id=${id}${isOpen}`;
 
     return axios.delete(url, {headers: { "accept": 'application/json' ,
    

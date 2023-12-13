@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { addFund, getuserDetails, getuserTransation, getuserTransationByid, updateUserAcitvity, updateUserPin, withdrawAmountAPi } from "../service/service";
+import { addFund, getFundHistory, getuserDetails, getuserTransation, getuserTransationByid, updateUserAcitvity, updateUserPin, withdrawAmountAPi } from "../service/service";
 import { Loader } from '../Common/Loader'
 import Table from "../Common/Table";
 
@@ -11,7 +11,7 @@ const UserDetails = () => {
   const { state } = useLocation()
   const [show, setShow] = useState(false)
   const [showPin, setShowPin] = useState(false)
-  const[showWithDraw,setShowWithDrawa]=useState(false)
+  const [showWithDraw, setShowWithDrawa] = useState(false)
   const [amount, setAmount] = useState("")
   const [withdrawAmount, setWithdrawAmount] = useState("")
   const [pin, setPin] = useState("")
@@ -31,14 +31,14 @@ const UserDetails = () => {
       handleGetUserDetails()
       alert("fund added successfully")
       setShow(false)
-      
+
     }).catch((err) => {
       alert("something went wrong")
       console.log('error', err)
     })
   }
   useEffect(() => {
-    
+    handleGetFundHistory()
     handleGetUserDetails()
   }, [])
 
@@ -103,19 +103,28 @@ const UserDetails = () => {
       console.log('error', err)
     })
   }
-  const[list,setList]=useState([])
+  const [list, setList] = useState([])
 
-  const getInformation =()=>{
+  const getInformation = () => {
 
-    getuserTransationByid(state?.id).then((res)=>{
-        setList(res.data.data)
-      
-        console.log("res.data",res.data)
-      }).catch((err)=>{
-          alert(err||"something went wrong ")
-      })
+    getuserTransationByid(state?.id).then((res) => {
+      setList(res.data.data)
+
+      console.log("res.data", res.data)
+    }).catch((err) => {
+      alert(err || "something went wrong ")
+    })
   }
-  
+  const [fundHistory, setFundHistory] = useState([])
+
+  const handleGetFundHistory = () => {
+    getFundHistory(state?.id).then((res) => {
+      setFundHistory(res.data.data)
+      console.log("res.data", res.data)
+    }).catch((err) => {
+      alert(err || "something went wrong ")
+    })
+  }
 
   return (
     <>
@@ -158,7 +167,7 @@ const UserDetails = () => {
                             class="activeDeactiveStatus"
                             id="success-10603-tb_user-user_id-status"
                             onClick={() => {
-                              handleUpdateUserActivity({ user_status: !data?.user_status?"True":"False", user_id: state?.id })
+                              handleUpdateUserActivity({ user_status: !data?.user_status ? "True" : "False", user_id: state?.id })
                             }}
                           >
                             <span class={`badge badge-pill ${data?.user_status ? "badge-success" : "badge-danger"} font-size-12`}>
@@ -173,7 +182,7 @@ const UserDetails = () => {
                             class="activeDeactiveStatus"
                             id="success-10603-tb_user-user_id-betting_status"
                             onClick={() => {
-                              handleUpdateUserActivity({ betting: !data?.betting?"True":"False", user_id: state?.id })
+                              handleUpdateUserActivity({ betting: !data?.betting ? "True" : "False", user_id: state?.id })
                             }}
                           >
                             <span class={`badge badge-pill ${data?.betting ? "badge-success" : "badge-danger"} font-size-12`}>
@@ -188,7 +197,7 @@ const UserDetails = () => {
                             class="activeDeactiveStatus"
                             id="danger-10603-tb_user-user_id-transfer_point_status"
                             onClick={() => {
-                              handleUpdateUserActivity({ transfer: !data?.transfer?"True":"False", user_id: state?.id })
+                              handleUpdateUserActivity({ transfer: !data?.transfer ? "True" : "False", user_id: state?.id })
                             }}
                           >
                             <span class={`badge badge-pill ${data?.transfer ? "badge-success" : "badge-danger"} font-size-12`}>
@@ -260,7 +269,7 @@ const UserDetails = () => {
                         <button
                           class="btn btn-danger btn-sm w-md btn-block"
                           id="withdrawFund"
-                          onClick={()=>{
+                          onClick={() => {
                             setShowWithDrawa(true)
                           }}
                         >
@@ -430,17 +439,9 @@ const UserDetails = () => {
                             aria-describedby="myTable_info"
                           >
                             <thead>
-                              <tr role="row">
-                                <th
-                                  class="sorting_asc"
-                                  tabindex="0"
-                                  aria-controls="myTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-sort="ascending"
-                                  aria-label="#: activate to sort column descending"
-                                >
-                                  #
+                              <tr>
+                                <th>
+                                  User Name
                                 </th>
                                 <th
                                   class="sorting"
@@ -450,28 +451,10 @@ const UserDetails = () => {
                                   colspan="1"
                                   aria-label="Request Amount: activate to sort column ascending"
                                 >
-                                  Request Amount
+                                  Amount
                                 </th>
-                                <th
-                                  class="sorting"
-                                  tabindex="0"
-                                  aria-controls="myTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Request	No.: activate to sort column ascending"
-                                >
-                                  Request No.
-                                </th>
-                                <th
-                                  class="sorting"
-                                  tabindex="0"
-                                  aria-controls="myTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Receipt Image: activate to sort column ascending"
-                                >
-                                  Receipt Image
-                                </th>
+
+
                                 <th
                                   class="sorting"
                                   tabindex="0"
@@ -482,38 +465,28 @@ const UserDetails = () => {
                                 >
                                   Date
                                 </th>
-                                <th
-                                  class="sorting"
-                                  tabindex="0"
-                                  aria-controls="myTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Status: activate to sort column ascending"
-                                >
-                                  Status
-                                </th>
-                                <th
-                                  class="sorting"
-                                  tabindex="0"
-                                  aria-controls="myTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Action: activate to sort column ascending"
-                                >
-                                  Action
-                                </th>
+
                               </tr>
                             </thead>
                             <tbody>
-                              <tr class="odd">
-                                <td
-                                  valign="top"
-                                  colspan="7"
-                                  class="dataTables_empty"
-                                >
-                                  No data available in table
-                                </td>
-                              </tr>
+                            
+                                {fundHistory?.map((item, index) => {
+                                  return (
+                                    <tr>
+                                      <td  >
+                                       {item?.user_id__first_name}
+                                      </td>
+                                      <td  >
+                                      {item?.amount}
+                                      </td>
+                                      <td  >
+                                      {moment(item?.created_at).format("YYYY-MM-DD")}
+                                      </td>
+                                    
+                                    </tr>
+                                  )
+                                })}
+                             
                             </tbody>
                           </table>
                         </div>
@@ -628,7 +601,7 @@ const UserDetails = () => {
                       </div>
                       <div class="row">
                         <div class="col-sm-12">
-                        <Table list={list}   handleGetUserDetails={handleGetUserDetails} getInformation={getInformation} head="Fund Request Auto Deposit History"/>
+                          <Table list={list} handleGetUserDetails={handleGetUserDetails} getInformation={getInformation} head="Fund Request Auto Deposit History" />
                         </div>
                       </div>
                       <div class="row">
@@ -1632,7 +1605,7 @@ const UserDetails = () => {
           <Modal.Title>Add Fund</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Amount " className="form-control" value={amount} onChange={(e) => setAmount(e.target.value.slice(0,5))} />
+          <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Amount " className="form-control" value={amount} onChange={(e) => setAmount(e.target.value.slice(0, 5))} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -1649,7 +1622,7 @@ const UserDetails = () => {
           <Modal.Title>Withdraw Fund</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Amount " className="form-control" value={withdrawAmount} onChange={(e) => setWithdrawAmount(e.target.value.slice(0,5))} />
+          <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Amount " className="form-control" value={withdrawAmount} onChange={(e) => setWithdrawAmount(e.target.value.slice(0, 5))} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
