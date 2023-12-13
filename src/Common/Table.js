@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import { approvedFund, rejectFund } from "../service/service";
 import { Loader } from "./Loader";
-const Table = ({ list, head,getInformation,handleGetUserDetails }) => {
+const Table = ({AddFund, list, head,getInformation,handleGetUserDetails }) => {
   const navigate = useNavigate()
   const[loader,setLoader]=useState(false)
 
@@ -54,13 +54,15 @@ const Table = ({ list, head,getInformation,handleGetUserDetails }) => {
                 <tr>
 
                   <th>User Name</th>
-                  <th>Mobile</th>
+                  {!AddFund ? <th>Mobile</th>:null}
                   <th>Amount</th>
-                  <th>Request ID</th>
+                  {!AddFund ? <th>Request ID</th>:null}
+              
                   <th>Date</th>
-                  <th>Status</th>
+             
+                  {!AddFund ? <th>Status</th>:null}
 
-                  <th>Action</th>
+                  {!AddFund ? <th>Action</th>:null}
                 </tr>
               </thead>
               <tbody>
@@ -70,17 +72,17 @@ const Table = ({ list, head,getInformation,handleGetUserDetails }) => {
                       <tr key={index}>
 
                         <td>{item?.user_id__first_name}</td>
-                        <td>{item?.user_id__phone_number}</td>
+                        {!AddFund ?  <td>{item?.user_id__phone_number}</td>:null}
                         <td>{item?.amount}</td>
-                        <td>{item?.id}</td>
+                        {!AddFund ?   <td>{item?.id}</td>:null}
 
                         <td>{moment(item?.created_at).format("DD-MM-YYYY , h:mm:ss a")}</td>
-                        <td><span className={item?.is_rejected ==="PENDING" ? "btnspan pending" :  item?.is_rejected==="APPROVE"?"btnspan success":"btnspan danger"}>
+                       {!AddFund ? <td><span className={item?.is_rejected ==="PENDING" ? "btnspan pending" :  item?.is_rejected==="APPROVE"?"btnspan success":"btnspan danger"}>
                           {item?.is_rejected }
-                        </span></td>
+                        </span></td>:null}
 
 
-                        <td> <Button variant="primary" className="m-1" onClick={()=>{
+                       {!AddFund ?<td> <Button variant="primary" className="m-1" onClick={()=>{
                           handleApporvedWithdraw({withdrawl_id:item?.id})
                         }} disabled={item?.is_rejected !=="PENDING"} >
                            Approve
@@ -92,7 +94,7 @@ const Table = ({ list, head,getInformation,handleGetUserDetails }) => {
                           >
                             Reject
                           </Button>
-                        </td>
+                        </td>:null}
 
                       </tr>
                     )

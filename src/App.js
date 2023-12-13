@@ -15,6 +15,7 @@ import GameRate from "./Pages/GameRate";
 import Userlist from "./Pages/Userlist";
 import GameNumbers from "./Pages/GameNumbers";
 import Resultdeclare from "./Pages/Resultdeclare";
+import WithdrawalReport from "./Pages/WithdrawalReport";
 
 function App() {
   const [token,setToken]=useState(localStorage.getItem("access_token"))
@@ -34,6 +35,7 @@ function App() {
           <Route path="/games/:id" element={<GameNumbers/>} />
           <Route path="/startline/game_name" element={<GameName2/>} />
           <Route path="/startline/game_rate" element={<GameRate2/>} />
+          <Route path="/withdrawal_report" element={<WithdrawalReport/>} />
          
          
           {/* <Route path="/upi-payment" element={<UpiPage/>} />
