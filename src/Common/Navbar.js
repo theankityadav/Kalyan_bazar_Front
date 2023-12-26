@@ -237,14 +237,14 @@ const Navbar = () => {
                 id="Settings"
               >
                 <li>
-                  <a href="#">Main Settings</a>
+                  <a href="/settings">Main Settings</a>
                 </li>
-                <li>
+                {/* <li>
                   <a href="#">Contact Settings</a>
                 </li>
                 <li>
                   <a href="#">Clear Data</a>
-                </li>
+                </li> */}
                 <li>
                   <a href="#">Slider Images</a>
                 </li>
