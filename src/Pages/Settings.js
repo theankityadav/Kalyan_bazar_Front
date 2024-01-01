@@ -1,94 +1,161 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { getAppSetting, updateAppSettings, updateUpiId } from '../service/service'
+import { Loader } from '../Common/Loader';
 
 const Settings = () => {
+    const [upiId,setUpiId]=useState("")
+    const[data,setData]=useState({})
+    const[loader,setLoader]=useState(false)
+
+
+    
+    useEffect(()=>{
+        handlegetInformation()
+    },[])
+
+    const handlegetInformation =()=>{
+        setLoader(true)
+        getAppSetting().then((res)=>{
+                  console.log("res",res?.data)
+                  setData(res?.data?.data[0])
+                  setLoader(false)
+        }).catch((err)=>{
+            console.log("err",err)
+            setLoader(false)
+        })
+    }
+
+    const handleSubmit =(e)=>{
+        setLoader(true)
+        let data={id:data?.id,upi_address:upiId}
+        e.preventDefault()
+        updateUpiId(data).then((res)=>{
+            setLoader(false)
+           alert("Success")
+        }).catch((err)=>{
+            setLoader(false)
+            console.log("err",err)
+        })
+        
+    }
+    const hanldeChange =(e)=>{
+        const {value,name}=e.target;
+        setData({...data,[name]:value})
+
+    }
+
+
+    const handleUpdateAppSetting =()=>{
+        setLoader(true)
+        let reqBody=data
+        updateAppSettings(reqBody).then((res)=>{
+            setLoader(false)
+           alert("Success")
+        }).catch((err)=>{
+            setLoader(false)
+            console.log("err",err)
+        })
+        
+    }
+    const [checkboxInput,setCheckboxInput]=useState({maintainence_msg_status:false})
+    const handleCheckbox=(e)=>{
+        alert("ll")
+        const{name} = e.target;
+        setCheckboxInput({...checkboxInput,[name]:!checkboxInput[name]})
+        console.log("name",name)
+
+    }
+
+console.log("form",checkboxInput)
   return (
     <>
+    {loader?<Loader/>:null}
     <div className="content-wrapper">
-        <div class="container-fluid">
-            <div class="row row_col" style={{marginTop:"30px"}}>
-                <div class="col-sm-12 col-xl-6">
-                    <div class="card h100p">
-                        <div class="card-body">
-                            <h4 class="card-title">Add UPI ID</h4>
-                            <form class="theme-form mega-form" id="adminUPIFrm" name="adminUPIFrm" method="post">
-                                <input type="hidden" name="account_id" value="1"/>
-                                <div class="row">
-                                    <div class="form-group col-12">
-                                        <label class="col-form-label">UPI Payment Id</label>
-                                        <input class="form-control" type="text" name="upi_payment_id" id="upi_payment_id" value="merchant482402.augp@aubank" placeholder="Enter upi payment id"/>
+        <div className="container-fluid">
+            <div className="row row_col" style={{marginTop:"30px"}}>
+                <div className="col-sm-12 col-xl-6">
+                    <div className="card h100p">
+                        <div className="card-body">
+                            <h4 className="card-title">Add UPI ID</h4>
+                            <form className="theme-form mega-form" id="adminUPIFrm" name="adminUPIFrm" method="post">
+                                <input type="hidden"  name="account_id" value="1"/>
+                                <div className="row">
+                                    <div className="form-group col-12">
+                                        <label className="col-form-label">UPI Payment Id</label>
+                                        <input className="form-control" type="text" onChange={(e)=>setUpiId(e.target.value)} name="upi_payment_id" id="upi_payment_id" value="merchant482402.augp@aubank" placeholder="Enter upi payment id"/>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
+                                <div className="form-group">
+                                    <button type="submit" onClick={handleSubmit} className="btn btn-primary waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <div id="error_upi"></div>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-xl-6">
-                    <div class="card h100p">
-                        <div class="card-body">
-                            <h4 class="card-title">App Maintainence</h4>
-                            <form class="theme-form mega-form" id="appMaintainenceFrm" name="appMaintainenceFrm" method="post">
+                <div className="col-sm-12 col-xl-6">
+                    <div className="card h100p">
+                        <div className="card-body">
+                            <h4 className="card-title">App Maintainence</h4>
+                            <form className="theme-form mega-form" id="appMaintainenceFrm" name="appMaintainenceFrm" method="post">
                                 <input type="hidden" name="value_id" value="1"/>
-                                <div class="form-group">
-                                    <label class="col-form-label">Withdrawl Message</label>
-                                    <textarea class="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">Our app is under maintenance. We will back to you very soon..</textarea>
+                                <div className="form-group">
+                                    <label className="col-form-label">Withdrawl Message</label>
+                                    <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">Our app is under maintenance. We will back to you very soon..</textarea>
                                 </div>
-                                <div class="form-group col-6" style={{marginTop:"30px"}}>
-                                    <div class="media">
-                                        <div class="custom-control custom-switch mb-3" dir="ltr">
-                                            <input type="checkbox" class="custom-control-input" id="maintainence_msg_status" name="maintainence_msg_status" value="1"/>
-                                            <label class="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
+                                <div className="form-group col-6" style={{marginTop:"30px"}}>
+                                    <div className="media">
+                                        <div className="custom-control custom-switch mb-3" dir="ltr">
+                                            <input type="checkbox" className="custom-control-input" onChange={(e)=>alert("pp")}  name="maintainence_msg_status" checked={checkboxInput?.maintainence_msg_status}/>
+                                             <label className="custom-control-label" name="maintainence_msg_status" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
                                         </div>
                                     </div>
                                 </div>
                                 <input type="hidden" name="value_id" value="1"/>
-                                <div class="form-group">
-                                    <label class="col-form-label">Add Fund Message</label>
-                                    <textarea class="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">Our app is under maintenance. We will back to you very soon..</textarea>
+                                <div className="form-group">
+                                    <label className="col-form-label">Add Fund Message</label>
+                                    <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">Our app is under maintenance. We will back to you very soon..</textarea>
                                 </div>
-                                <div class="form-group col-6" style={{marginTop:"30px"}}>
-                                    <div class="media">
-                                        <div class="custom-control custom-switch mb-3" dir="ltr">
-                                            <input type="checkbox" class="custom-control-input" id="maintainence_msg_status" name="maintainence_msg_status" value="1"/>
-                                            <label class="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
+                                <div className="form-group col-6" style={{marginTop:"30px"}}>
+                                    <div className="media">
+                                        <div className="custom-control custom-switch mb-3" dir="ltr">
+                                            <input type="checkbox" className="custom-control-input" onChange={handleCheckbox}  name="maintainence_msg_status" value="1"/>
+                                            <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
                                         </div>
                                     </div>
                                 </div>
                                 <input type="hidden" name="value_id" value="1"/>
-                                <div class="form-group">
-                                    <label class="col-form-label">Information Message</label>
-                                    <textarea class="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">Our app is under maintenance. We will back to you very soon..</textarea>
+                                <div className="form-group">
+                                    <label className="col-form-label">Information Message</label>
+                                    <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">Our app is under maintenance. We will back to you very soon..</textarea>
                                 </div>
-                                <div class="form-group col-6" style={{marginTop:"30px"}}>
-                                    <div class="media">
-                                        <div class="custom-control custom-switch mb-3" dir="ltr">
-                                            <input type="checkbox" class="custom-control-input" id="maintainence_msg_status" name="maintainence_msg_status" value="1"/>
-                                            <label class="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
+                                <div className="form-group col-6" style={{marginTop:"30px"}}>
+                                    <div className="media">
+                                        <div className="custom-control custom-switch mb-3" dir="ltr">
+                                            <input type="checkbox" className="custom-control-input" onChange={handleCheckbox}  name="maintainence_msg_status" value="1"/>
+                                            <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
                                         </div>
                                     </div>
                                 </div>
                                 <input type="hidden" name="value_id" value="1"/>
-                                <div class="form-group">
-                                    <label class="col-form-label">Note Message</label>
-                                    <textarea class="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">Our app is under maintenance. We will back to you very soon..</textarea>
+                                <div className="form-group">
+                                    <label className="col-form-label">Note Message</label>
+                                    <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">Our app is under maintenance. We will back to you very soon..</textarea>
                                 </div>
-                                <div class="form-group col-6" style={{marginTop:"30px"}}>
-                                    <div class="media">
-                                        <div class="custom-control custom-switch mb-3" dir="ltr">
-                                            <input type="checkbox" class="custom-control-input" id="maintainence_msg_status" name="maintainence_msg_status" value="1"/>
-                                            <label class="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
+                                <div className="form-group col-6" style={{marginTop:"30px"}}>
+                                    <div className="media">
+                                        <div className="custom-control custom-switch mb-3" dir="ltr">
+                                            <input type="checkbox" className="custom-control-input"  name="maintainence_msg_status" value="1"/>
+                                            <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary waves-light m-t-10" id="submitBtnAppMaintainece" name="submitBtnAppMaintainece">Submit</button>
+                                <div className="form-group">
+                                    <button type="submit" className="btn btn-primary waves-light m-t-10" id="submitBtnAppMaintainece" name="submitBtnAppMaintainece">Submit</button>
                                 </div>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <div id="error_maintainence"></div>
                                 </div>
                             </form>
@@ -97,73 +164,73 @@ const Settings = () => {
                 </div>
             </div>
         </div>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-12 col-xl-12" style={{margin:"30px 0px"}}>
-                    <div class="row">
-                        <div class="col-sm-12 col-md-12 col-xl-12">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h4 class="card-title">Add Value's</h4>
-                                    <form class="theme-form mega-form" id="adminvaluesettingFrm" name="adminvaluesettingFrm" method="post">
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-sm-12 col-xl-12" style={{margin:"30px 0px"}}>
+                    <div className="row">
+                        <div className="col-sm-12 col-md-12 col-xl-12">
+                            <div className="card">
+                                <div className="card-body">
+                                    <h4 className="card-title">Add Value's</h4>
+                                    <form className="theme-form mega-form" id="adminvaluesettingFrm" name="adminvaluesettingFrm" method="post">
                                         <input type="hidden" name="value_id" value="1"/>
-                                    <div class="row">
-                                        <div class="form-group col-md-4">
-                                            <label class="col-form-label">Minimum Deposite</label>
-                                            <input class="form-control" type="number" min="0" name="min_deposite" id="min_deposite" value="300" placeholder="Enter Min. Deposite Amount"/>
+                                    <div className="row">
+                                        <div className="form-group col-md-4">
+                                            <label className="col-form-label">Minimum Deposite</label>
+                                            <input className="form-control" value={data?.min_deposit} name="min_deposit" type="number" onChange={hanldeChange} min="0" id="min_deposite"  placeholder="Enter Min. Deposite Amount"/>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label class="col-form-label">Maximum Deposite</label>
-                                            <input class="form-control" type="number" min="0" name="max_deposite" id="max_deposite" value="100000" placeholder="Enter Max Deposite Amount"/>
+                                        <div className="form-group col-md-4">
+                                            <label className="col-form-label">Maximum Deposite</label>
+                                            <input className="form-control" type="number" min="0" name="max_deposit" id="max_deposite" onChange={hanldeChange} value={data?.max_deposit} placeholder="Enter Max Deposite Amount"/>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label class="col-form-label">Minimum Withdrawal</label>
-                                            <input class="form-control" type="number" min="0" name="min_withdrawal" id="min_withdrawal" value="1000" placeholder="Enter Min Withdrawal Amount"/>
+                                        <div className="form-group col-md-4">
+                                            <label className="col-form-label">Minimum Withdrawal</label>
+                                            <input className="form-control" type="number" min="0" name="min_withdrawl" onChange={hanldeChange} id="min_withdrawl" value={data?.min_withdrawl} placeholder="Enter Min Withdrawal Amount"/>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label class="col-form-label">Maximum Withdrawal</label>
-                                            <input class="form-control" type="number" min="0" name="max_withdrawal" id="max_withdrawal" value="1000" placeholder="Enter Max Withdrawal Amount"/>
+                                        <div className="form-group col-md-4">
+                                            <label className="col-form-label">Maximum Withdrawal</label>
+                                            <input className="form-control" type="number" min="0" name="max_withdrawl" id="max_withdrawl" onChange={hanldeChange}  value={data?.max_withdrawl} placeholder="Enter Max Withdrawal Amount"/>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label class="col-form-label">Minimum Transfer</label>
-                                            <input class="form-control" type="number" min="0" name="min_transfer" id="min_transfer" value="100" placeholder="Enter Min Transfer Amount"/>
+                                        <div className="form-group col-md-4">
+                                            <label className="col-form-label">Minimum Transfer</label>
+                                            <input className="form-control" type="number" min="0" name="min_transfer" id="min_transfer" onChange={hanldeChange} value={data?.min_transfer} placeholder="Enter Min Transfer Amount"/>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label class="col-form-label">Maximum Transfer</label>
-                                            <input class="form-control" type="number" min="0" name="max_transfer" id="max_transfer" value="100" placeholder="Enter Max Transfer Amount"/>
+                                        <div className="form-group col-md-4">
+                                            <label className="col-form-label">Maximum Transfer</label>
+                                            <input className="form-control" type="number" min="0" name="max_transfer" id="max_transfer" onChange={hanldeChange} value={data?.max_transfer} placeholder="Enter Max Transfer Amount"/>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label class="col-form-label">Minimum Bid Amount</label>
-                                            <input class="form-control" type="number" min="0" name="min_bid_amt" id="min_bid_amt" value="10" placeholder="Enter Min Bid Amount"/>
+                                        <div className="form-group col-md-4">
+                                            <label className="col-form-label">Minimum Bid Amount</label>
+                                            <input className="form-control" type="number" min="0" name="min_bid_amount" id="min_bid_amount" onChange={hanldeChange} value={data?.min_bid_amount} placeholder="Enter Min Bid Amount"/>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label class="col-form-label">Maximum Bid Amount</label>
-                                            <input class="form-control" type="number" min="0" name="max_bid_amt" id="max_bid_amt" value="100000" placeholder="Enter Max Bid Amount"/>
+                                        <div className="form-group col-md-4">
+                                            <label className="col-form-label">Maximum Bid Amount</label>
+                                            <input className="form-control" type="number" min="0" name="max_bid_amount" id="max_bid_amount" onChange={hanldeChange} value={data?.max_bid_amount} placeholder="Enter Max Bid Amount"/>
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label class="col-form-label">Welcome Bonus</label>
-                                            <input class="form-control" type="number" min="0" name="welcome_bonus" id="welcome_bonus" value="5" placeholder="Enter Welcome Bonus Amount"/>
+                                        <div className="form-group col-md-4">
+                                            <label className="col-form-label">Welcome Bonus</label>
+                                            <input className="form-control" type="number" min="0" name="welcome_bonus" id="welcome_bonus" onChange={hanldeChange} value={data?.welcome_bonus} placeholder="Enter Welcome Bonus Amount"/>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="form-group col-2">
+                                    <div className="row">
+                                        <div className="form-group col-2">
                                                     <label for="open_time">Withdraw Open Time</label>
 
-                                                    <input name="withdraw_open_time" id="withdraw_open_time" class="form-control digits" value="08:00" type="time"/>
+                                                    <input name="withdraw_open_time" id="withdraw_open_time" className="form-control digits" value={data?.withdrawl_open_time} onChange={hanldeChange} type="time"/>
                                                     
                                         </div>
-                                        <div class="form-group col-2">
+                                        <div className="form-group col-2">
                                                     <label for="close_time">Withdraw Close Time</label>
-                                                    <input name="withdraw_close_time" id="withdraw_close_time" class="form-control digits" type="time" value="22:00"/>
+                                                    <input name="withdraw_close_time" id="withdraw_close_time" className="form-control digits" type="time" value={data?.withdrawl_close_time}/>
                                                     
                                         </div>
-                                        <div class="form-group col-2" style={{marginTop:"30px"}}>
+                                        <div className="form-group col-2" style={{marginTop:"30px"}}>
                                                     
-                                                    <div class="media">
+                                                    <div className="media">
                                                     
-                                                    <div class="custom-control custom-switch mb-3" dir="ltr">
-                                                        <input type="checkbox" class="custom-control-input" id="global_batting_status" name="global_batting_status" checked="" value="1"/>
-                                                        <label class="custom-control-label" for="global_batting_status">Global Batting</label>
+                                                    <div className="custom-control custom-switch mb-3" dir="ltr">
+                                                        <input type="checkbox" className="custom-control-input" id="global_batting_status" name="global_batting_status" checked="" value="1"/>
+                                                        <label className="custom-control-label" for="global_batting_status">Global Batting</label>
                                                     </div>
                                                 
                                                 </div>
@@ -171,10 +238,12 @@ const Settings = () => {
                                                     
                                     </div>
                                     </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-primary waves-light m-t-10" id="submitValueBtn" name="submitValueBtn">Submit</button>
+                                        <div className="form-group">
+                                            <button  className="btn btn-primary waves-light m-t-10"  onClick={()=>{
+                                                handleUpdateAppSetting()
+                                            }} name="submitValueBtn">Submit</button>
                                         </div>
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <div id="alert"></div>
                                         </div>
                                     </form>
