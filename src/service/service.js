@@ -217,3 +217,36 @@ export const addGameApi = (data) => {
    
 }});
 }
+
+
+export const updateUpiId = (data) => {
+
+    let url = `${BASE_URL}/v1/update-upi`;
+
+    return axios.patch(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}
+
+export const updateAppSettings= (data) => {
+
+    let url = `${BASE_URL}/v1/update-app-settings`;
+    return axios.patch(url,data, {headers: { "accept": 'application/json' ,
+    "Content-Type": 'application/json' ,
+   
+}});
+}
+
+export const getAppSetting = () => {
+
+    let url = `${BASE_URL}/v1/get-app-settings`;
+
+    return axios.get(url, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}
+
