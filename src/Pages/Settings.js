@@ -30,8 +30,8 @@ const Settings = () => {
         setLoader(true)
         getSettingInformation().then((res) => {
             console.log("resInfo", res?.data?.data)
-            setInfoData(res?.data?.data)
-            setData(res?.data?.data[0])
+            setInfoData(res?.data?.data[0])
+
             setLoader(false)
         }).catch((err) => {
             console.log("err", err)
@@ -82,16 +82,16 @@ const Settings = () => {
 
     }
 
-    const handleUpdateInformation =()=>{
+    const handleUpdateInformation = () => {
         setLoader(true)
-        let reqBody ={
-            
-                "information": {},
-                "is_shown": true
+        let reqBody = {
+
+            "information": {},
+            "is_shown": true
         }
-        updateInformation(reqBody).then((res)=>{
+        updateInformation(reqBody).then((res) => {
             setLoader(false)
-            console.log("res",res)
+            console.log("res", res)
         }).catch((err) => {
             setLoader(false)
             console.log("err", err)
@@ -130,33 +130,82 @@ const Settings = () => {
                         <div className="col-sm-12 col-xl-6">
                             <div className="card h100p">
                                 <div className="card-body">
-                                    <h4 className="card-title">App Maintainence</h4>
+                                    <h4 className="card-title">Add message</h4>
                                     <form className="theme-form mega-form" id="appMaintainenceFrm" name="appMaintainenceFrm" method="post">
-                                        {
-                                            infoData?.map((item, index) => {
-                                                return (
-                                                    <>
-                                                        <div key={index}>
 
 
-                                                            <input type="hidden" name="value_id" value="1" />
-                                                            <div className="form-group">
-                                                                <label className="col-form-label">{item?.information?.app_maintanence?.message}</label>
-                                                                <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">{item?.information?.app_maintanence?.message}</textarea>
-                                                            </div>
-                                                            <div className="form-group col-6" style={{ marginTop: "30px" }}>
-                                                                <div className="media">
-                                                                    <div className="custom-control custom-switch mb-3" dir="ltr">
-                                                                        <input type="checkbox" className="custom-control-input" name="maintainence_msg_status" value="1" />
-                                                                        <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </>
-                                                )
-                                            })
-                                        }
+                                        <div>
+
+
+                                            <input type="hidden" name="value_id" value="1" />
+                                            <div className="form-group">
+                                                <label className="col-form-label">Add fund message</label>
+                                                <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">{infoData?.information?.add_fund_message?.message}</textarea>
+                                            </div>
+                                            <div className="form-group col-6" style={{ marginTop: "30px" }}>
+                                                <div className="media">
+                                                    <div className="custom-control custom-switch mb-3" dir="ltr">
+                                                        <input type="checkbox" className="custom-control-input" name="maintainence_msg_status" value="1" />
+                                                        <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+
+
+                                            <input type="hidden" name="value_id" value="1" />
+                                            <div className="form-group">
+                                                <label className="col-form-label">App maintanence</label>
+                                                <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">{infoData?.information?.app_maintanence?.message}</textarea>
+                                            </div>
+                                            <div className="form-group col-6" style={{ marginTop: "30px" }}>
+                                                <div className="media">
+                                                    <div className="custom-control custom-switch mb-3" dir="ltr">
+                                                        <input type="checkbox" className="custom-control-input" name="maintainence_msg_status" value="1" />
+                                                        <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+
+
+                                            <input type="hidden" name="value_id" value="1" />
+                                            <div className="form-group">
+                                                <label className="col-form-label">withdrawl message</label>
+                                                <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">{infoData?.information?.withdrawl_message?.message}</textarea>
+                                            </div>
+                                            <div className="form-group col-6" style={{ marginTop: "30px" }}>
+                                                <div className="media">
+                                                    <div className="custom-control custom-switch mb-3" dir="ltr">
+                                                        <input type="checkbox" className="custom-control-input" name="maintainence_msg_status" value="1" />
+                                                        <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+
+
+                                            <input type="hidden" name="value_id" value="1" />
+                                            <div className="form-group">
+                                                <label className="col-form-label">pop up message</label>
+                                                <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">{infoData?.information?.pop_up_message?.message}</textarea>
+                                            </div>
+                                            <div className="form-group col-6" style={{ marginTop: "30px" }}>
+                                                <div className="media">
+                                                    <div className="custom-control custom-switch mb-3" dir="ltr">
+                                                        <input type="checkbox" className="custom-control-input" name="maintainence_msg_status" value="1" />
+                                                        <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
 
 
 
