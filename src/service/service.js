@@ -23,6 +23,32 @@ export const gameNameApi =(type)=>{
     });
 }
 
+export const getImageSliderData =(type)=>{
+    let url = `${BASE_URL}/v1/dashboard/get-image-slider/?market_type=${type}`;
+    return axios.get(url, {
+        headers: headersApplicationJson,
+    });
+}
+
+export const uploadImageSLider =(data)=>{
+    let url = `${BASE_URL}/v1/dashboard/create-image-slider/`;
+    return axios.post(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+}});
+}
+
+export const deleteImageSlider =(id)=>{
+    let url = `${BASE_URL}/v1/dashboard/delete-image-slider?id=${id}`;
+    return axios.delete(url, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+}});
+}
+
+
+
+
 
 export const getuserList = () => {
     let url = `${BASE_URL}/v1/user-list/`;

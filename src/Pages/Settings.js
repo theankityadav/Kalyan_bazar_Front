@@ -139,7 +139,7 @@ const Settings = () => {
                                                         <div key={index}>
 
 
-                                                          <input type="hidden" name="value_id" value="1" />
+                                                            <input type="hidden" name="value_id" value="1" />
                                                             <div className="form-group">
                                                                 <label className="col-form-label">{item?.information?.app_maintanence?.message}</label>
                                                                 <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">{item?.information?.app_maintanence?.message}</textarea>
