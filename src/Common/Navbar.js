@@ -246,7 +246,7 @@ const Navbar = () => {
                   <a href="#">Clear Data</a>
                 </li> */}
                 <li>
-                  <a href="#">Slider Images</a>
+                  <a href="/image-slider">Slider Images</a>
                 </li>
                 <li>
                   <a href="#">How To Play</a>

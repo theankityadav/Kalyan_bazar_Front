@@ -17,6 +17,7 @@ import GameNumbers from "./Pages/GameNumbers";
 import Resultdeclare from "./Pages/Resultdeclare";
 import WithdrawalReport from "./Pages/WithdrawalReport";
 import Settings from "./Pages/Settings";
+import ImageSlider from "./Pages/ImageSlider";
 
 function App() {
   const [token,setToken]=useState(localStorage.getItem("access_token"))
@@ -38,6 +39,7 @@ function App() {
           <Route path="/startline/game_rate" element={<GameRate2/>} />
           <Route path="/withdrawal_report" element={<WithdrawalReport/>} />
           <Route path="/settings" element={<Settings/>} />
+          <Route path="/image-slider" element={<ImageSlider/>} />
          
          
           {/* <Route path="/upi-payment" element={<UpiPage/>} />
