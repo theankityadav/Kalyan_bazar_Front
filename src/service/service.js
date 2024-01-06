@@ -250,3 +250,24 @@ export const getAppSetting = () => {
 }});
 }
 
+export const getSettingInformation = () => {
+
+    let url = `${BASE_URL}/v1/get-information`;
+
+    return axios.get(url, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+
+}
+export const updateInformation = (data) => {
+
+    let url = `${BASE_URL}/v1/update-information`;
+
+    return axios.patch(url,data, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+}

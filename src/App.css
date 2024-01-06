@@ -697,3 +697,8 @@ footer.sticky-footer {
   color: blue;
   cursor: pointer;
 }
+.custom-control-input{
+  position: absolute;
+  z-index: 1 !important;
+  opacity: 1;
+}
