@@ -158,7 +158,7 @@ input, select {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    margin-top: 56px;
+    margin-top: 65px;
   }
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item {
     width: 250px;
@@ -699,6 +699,19 @@ footer.sticky-footer {
 }
 .custom-control-input{
   position: absolute;
-  z-index: 1 !important;
-  opacity: 1;
+    z-index: 1 !important;
+    opacity: 0;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@media (max-width:768px){
+  .navbar-nav .nav-link {
+    padding-right: 20px!important;
+    padding-left: 20px!important;
+  }
+  span.nav-link-text {
+    margin-left: 20px;
+  }
 }
