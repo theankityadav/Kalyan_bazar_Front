@@ -275,7 +275,7 @@ const Settings = () => {
                                                     <div className="form-group col-2">
                                                         <label for="open_time">Withdraw Open Time</label>
 
-                                                        <input name="withdrawl_open_time" id="withdraw_open_time" className="form-control digits" onChange={hanldeChange} type="time" />
+                                                        <input name="withdrawl_open_time" id="withdraw_open_time" className="form-control digits" type="time" value={data?.withdrawl_open_time} onChange={hanldeChange} type="time" />
                                                     </div>
                                                     <div className="form-group col-2">
                                                         <label for="close_time">Withdraw Close Time</label>

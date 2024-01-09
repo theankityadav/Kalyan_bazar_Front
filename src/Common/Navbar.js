@@ -239,44 +239,8 @@ const Navbar = () => {
                 <li>
                   <a href="/settings">Main Settings</a>
                 </li>
-                {/* <li>
-                  <a href="#">Contact Settings</a>
-                </li>
-                <li>
-                  <a href="#">Clear Data</a>
-                </li> */}
                 <li>
                   <a href="/image-slider">Slider Images</a>
-                </li>
-                <li>
-                  <a href="#">How To Play</a>
-                </li>
-              </ul>
-            </li>
-            <li
-              className="nav-item"
-              data-toggle="tooltip"
-              data-placement="right"
-              title="Notice Management"
-            >
-              <a
-                className="nav-link nav-link-collapse collapsed"
-                data-toggle="collapse"
-                href="#NoticeManagement"
-                data-parent="#exampleAccordion"
-              >
-                <i className="fa fa-sticky-note-o"></i>
-                <span className="nav-link-text">Notice Management</span>
-              </a>
-              <ul
-                className="sidenav-second-level collapse"
-                id="NoticeManagement"
-              >
-                <li>
-                  <a href="#">Notice Management</a>
-                </li>
-                <li>
-                  <a href="#">Send Notification</a>
                 </li>
               </ul>
             </li>
