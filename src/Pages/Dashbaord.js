@@ -35,20 +35,14 @@ const getInformation =()=>{
     <>
       <div className="content-wrapper">
         <div className="container-fluid">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <a href="/">Dashboard</a>
-            </li>
-            <li className="breadcrumb-item active">Admin</li>
-          </ol>
           <div className="row">
-            <div className="col-xl-4">
+            {/* <div className="col-xl-4">
                 <UpperCard data={data} />
-            </div>
-            <div className="col-xl-8">
+            </div> */}
+            <div className="col-xl-12">
                 <MidCards data={data} />
-                <SecondRightCard  />
-                <SmallCards />
+                {/* <SecondRightCard  /> */}
+                {/* <SmallCards /> */}
             </div>
           </div>
           <Table list={list} getInformation={getInformation} head="Fund Request Auto Deposit History"/>

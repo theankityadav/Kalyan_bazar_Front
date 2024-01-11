@@ -6,7 +6,7 @@
     left: 0;
     right: 0;
     text-align: center;
-    color: blue;
+    color: #C13331;
   }
   .loader_wrapper {
     position: fixed;
@@ -39,7 +39,7 @@
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background: blue;
+    background: #C13331;
     margin: -3px 0 0 -3px;
   }
   .lds-roller div:nth-child(1) {
@@ -110,10 +110,10 @@
     display: none !important;
   }
   ._2JvrO {
-    background: blue !important;
+    background: #C13331 !important;
   }
   ._2kL0S {
-    background: blue !important;
+    background: #C13331 !important;
   } /* ._2Jtxm { background-color: #e7eaf3; } */
   ._53Ji7 {
     padding: 0rem !important;
