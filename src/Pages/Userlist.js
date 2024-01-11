@@ -84,7 +84,7 @@ const Userlist = () => {
       }
     },
     {
-      name: 'Batting',
+      name: 'Betting',
 
       cell: (row, index) => {
 

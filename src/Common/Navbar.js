@@ -32,11 +32,11 @@ const Navbar = () => {
     <>
       {loader?<Loader/>:null}
       <nav
-        className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+        className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-2"
         id="mainNav"
       >
-        <a className="navbar-brand" href="index.html">
-          <img src={logo} alt="logo" width={40} height={40} style={{borderRadius:"50%"}}/>&nbsp;&nbsp;Kalyan Bazar
+        <a className="navbar-brand" href="/dashboard">
+          <img src={logo} alt="logo" width={40} height={40} style={{borderRadius:"50%"}}/>&nbsp;&nbsp;Welcome To Kalyan Bazar
         </a>
         <button
           className="navbar-toggler navbar-toggler-right"
@@ -119,35 +119,8 @@ const Navbar = () => {
                 <li>
                   <a href="#">Auto Deposit History</a>
                 </li>
-              </ul>
-            </li>
-            <li
-              className="nav-item"
-              data-toggle="tooltip"
-              data-placement="right"
-              title="Wallet Management"
-            >
-              <a
-                className="nav-link nav-link-collapse collapsed"
-                data-toggle="collapse"
-                href="#WalletManagement"
-                data-parent="#exampleAccordion"
-              >
-                <i className="fa fa-google-wallet"></i>
-                <span className="nav-link-text">Wallet Management</span>
-              </a>
-              <ul
-                className="sidenav-second-level collapse"
-                id="WalletManagement"
-              >
                 <li>
-                  <a href="register.html">Withdraw Request</a>
-                </li>
-                <li>
-                  <a href="forgot-password.html">Add Fund (User Wallet)</a>
-                </li>
-                <li>
-                  <a href="blank.html">Bid Revert</a>
+                  <a href="#">Bid Revert</a>
                 </li>
               </ul>
             </li>
@@ -301,11 +274,11 @@ const Navbar = () => {
                 <i class="fa fa-user"></i> Admin
               </a>
               <div className="dropdown-menu" aria-labelledby="messagesDropdown">
-                <a className="dropdown-item" onClick={()=>setShow(true)}>
+                {/* <a className="dropdown-item" onClick={()=>setShow(true)}>
                   <i className="fa fa-key"></i>&nbsp;&nbsp;Change Password
                 </a>
-                <div className="dropdown-divider"></div>
-                <a className="dropdown-item">
+                <div className="dropdown-divider"></div> */}
+                <a className="dropdown-item" href="/settings">
                   <i className="fa fa-cogs"></i>&nbsp;&nbsp;Settings
                 </a>
                 <div className="dropdown-divider"></div>
