@@ -187,7 +187,7 @@ console.log("data",formInput)
           <div className="card-header flex align-center space-between">
             <div><i className="fa fa-table"></i> <b>Slider Image Management</b></div>
             <div className='add-name'>
-              <button className='btn btn-primary m-1 btn-sm' onClick={()=>setShow(true)}>Add Image Slider</button>
+              <button className='btn btn-danger m-1 btn-sm' onClick={()=>setShow(true)}>Add Image Slider</button>
             </div>
 
           </div>

@@ -118,7 +118,7 @@ const Settings = () => {
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <button type="submit" onClick={handleSubmit} className="btn btn-primary waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
+                                            <button type="submit" onClick={handleSubmit} className="btn btn-danger waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
                                         </div>
                                         <div className="form-group">
                                             <div id="error_upi"></div>
@@ -212,7 +212,7 @@ const Settings = () => {
 
 
                                         <div className="form-group">
-                                            <button type="submit" className="btn btn-primary waves-light m-t-10" id="submitBtnAppMaintainece" name="submitBtnAppMaintainece">Submit</button>
+                                            <button type="submit" className="btn btn-danger waves-light m-t-10" id="submitBtnAppMaintainece" name="submitBtnAppMaintainece">Submit</button>
                                         </div>
                                         <div className="form-group">
                                             <div id="error_maintainence"></div>
@@ -297,7 +297,7 @@ const Settings = () => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
-                                                    <button className="btn btn-primary waves-light m-t-10" onClick={(e) => {
+                                                    <button className="btn btn-danger waves-light m-t-10" onClick={(e) => {
                                                         handleUpdateAppSetting(e)
                                                     }} name="submitValueBtn">Submit</button>
                                                 </div>

@@ -6,7 +6,7 @@ const MidCards = ({ data }) => {
       <div className="dashbaord-users">
         <div className="row">
           <div className="col-4 col mb-3">
-            <div className="card text-white bg-success o-hidden h-100">
+            <div className="card text-white bg-custom o-hidden h-100">
               <div className="card-body">
                 <div className="card-body-icon">
                   <i className="fa fa-user"></i>
@@ -24,7 +24,7 @@ const MidCards = ({ data }) => {
             </div>
           </div>
           <div className="col-4 col mb-3">
-            <div className="card text-white bg-info o-hidden h-100">
+            <div className="card text-white bg-custom o-hidden h-100">
               <div className="card-body">
                 <div className="card-body-icon">
                   <i className="fa fa-gamepad"></i>
@@ -42,7 +42,7 @@ const MidCards = ({ data }) => {
             </div>
           </div>
           <div className="col-4 col mb-3">
-            <div className="card text-white bg-warning o-hidden h-100">
+            <div className="card text-white bg-custom o-hidden h-100">
               <div className="card-body">
                 <div className="card-body-icon">
                   <i className="fa fa-btc"></i>

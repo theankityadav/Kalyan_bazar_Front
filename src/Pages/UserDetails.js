@@ -1563,7 +1563,7 @@ const UserDetails = () => {
                             <label>&nbsp;</label>
                             <button
                               type="submit"
-                              class="btn btn-primary waves-light btn-block"
+                              class="btn btn-danger waves-light btn-block"
                               id="submitBtn_2"
                               name="submitBtn_2"
                             >

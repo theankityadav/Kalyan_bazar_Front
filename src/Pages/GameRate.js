@@ -88,7 +88,7 @@ const[data,setData]=useState()
                                         </div>
                                                                         </div>	
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-primary waves-light m-t-10" id="submitBtn" name="buysubmitBtn">Submit</button>
+                                            <button type="submit" class="btn btn-danger waves-light m-t-10" id="submitBtn" name="buysubmitBtn">Submit</button>
                                         </div>
                                         <div class="form-group">
                                             <div id="error"></div>
