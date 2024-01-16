@@ -167,7 +167,7 @@ const Resultdeclare = () => {
                                 </select>
                             </div>
                             <div className='form-group col-md-2'>
-                                <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn" onClick={() => {
+                                <button type="submit" class="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={() => {
                                     setShowResultDeclare(true)
                                     setNumberSum("")
 
@@ -205,11 +205,11 @@ const Resultdeclare = () => {
                                         <div className='form-group col-md-3'>
                                             <input type="text" id="start" className='form-control' value={numberSum?.close || numberSum?.open} placeholder='Digit' />
                                         </div>
-                                        <div className='form-group col-md-2'>
+                                        {/* <div className='form-group col-md-2'>
                                             <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn">Save</button>
-                                        </div>
+                                        </div> */}
                                         <div className='form-group col-md-2'>
-                                            <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn" onClick={(e) => {
+                                            <button type="submit" class="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={(e) => {
                                                 e.preventDefault()
                                                 selectsession === "1" ? handleDeclaireResultOpen() : handleDeclaireResultClose();
                                             }}>Declare</button>
@@ -234,11 +234,11 @@ const Resultdeclare = () => {
                                         <div className='form-group col-md-3'>
                                             <input type="text" id="start" className='form-control' value={numberSum?.open} placeholder='Digit' />
                                         </div>
-                                        <div className='form-group col-md-2'>
+                                        {/* <div className='form-group col-md-2'>
                                             <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn">Save</button>
-                                        </div>
+                                        </div> */}
                                         <div className='form-group col-md-2'>
-                                            <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn" onClick={handleDeclaireResultOpen}>Declare</button>
+                                            <button type="submit" class="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={handleDeclaireResultOpen}>Declare</button>
                                         </div>
                                     </div>
                                         <br></br>
@@ -261,11 +261,11 @@ const Resultdeclare = () => {
                                             <div className='form-group col-md-3'>
                                                 <input type="text" id="start" className='form-control' value={numberSum?.close} placeholder='Digit' />
                                             </div>
-                                            <div className='form-group col-md-2'>
+                                            {/* <div className='form-group col-md-2'>
                                                 <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn">Save</button>
-                                            </div>
+                                            </div> */}
                                             <div className='form-group col-md-2'>
-                                                <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn" onClick={handleDeclaireResultClose}>Declare</button>
+                                                <button type="submit" class="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={handleDeclaireResultClose}>Declare</button>
                                             </div>
                                         </div></>}
                             </div>
