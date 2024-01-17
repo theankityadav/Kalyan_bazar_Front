@@ -11,7 +11,7 @@ const Resultdeclare = () => {
     const [numberSum, setNumberSum] = useState("")
     const [numberList, setNumberList] = useState([])
     const [showResultDeclare, setShowResultDeclare] = useState(false)
-    const [dateSelect, setDateSelect] = useState("")
+    const [dateSelect, setDateSelect] = useState(moment().format("YYYY-MM-DD"))
     const [selectedGameName, setSelectedGameName] = useState("")
     const [marketId, setMarketId] = useState("")
     const [resultList, setResultList] = useState([])

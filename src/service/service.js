@@ -297,6 +297,48 @@ export const getSettingInformation = () => {
 }});
 
 }
+
+
+
+export const revertBid = (id) => {
+
+    let url = `${BASE_URL}/v1/revert-bid?market_id=${id}`;
+
+    return axios.get(url, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+
+}
+
+
+export const userBankdetails = (id) => {
+
+    let url = `${BASE_URL}/v1/user-bank-account-details-list/?user_id=${id}`;
+
+    return axios.get(url, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+
+}
+export const userUpiDetails = (id) => {
+
+    let url = `${BASE_URL}/v1/get-user-upi/?user_id=${id}`;
+
+    return axios.get(url, {headers: { "accept": 'application/json' ,
+   
+    "Content-Type": 'application/json' ,
+   
+}});
+
+}
+
+
+
+
 export const updateInformation = (data) => {
 
     let url = `${BASE_URL}/v1/update-information`;
