@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Loader } from '../Common/Loader'
-import { addGameApi, gameNameApi, updateGameName } from '../service/service';
+import { addGameApi, deleteGame, gameNameApi, updateGameName } from '../service/service';
 import DataTable, { createTheme } from 'react-data-table-component';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -54,13 +54,23 @@ const GameName = () => {
       alert(err || "something went wrong ")
     })
   }
+  const handleDeleteGame=(id)=>{
+    setLoader(true)
+    deleteGame(id).then((res)=>{
+      console.log(res)
+      handleGameNameList()
+    }).catch((err) => {
+      setLoader(false)
+      alert(err || "something went wrong ")
+    })
+  }
   const columns = [
     {
       name: 'Sr No',
       cell: (row,index) => {
         return (
           <p >
-            {row?.id}
+            {index+1}
           </p>
         )
       },
@@ -138,6 +148,11 @@ const GameName = () => {
             </button>
             <button className='btn btn-danger m-1 btn-sm'>
               Market Off Today
+            </button>
+            <button onClick={()=>{
+              handleDeleteGame(row.id)
+            }} className='btn btn-danger m-1 btn-sm'>
+              Delete
             </button>
           </span>
         )

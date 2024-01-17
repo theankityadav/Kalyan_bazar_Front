@@ -18,6 +18,7 @@ import Resultdeclare from "./Pages/Resultdeclare";
 import WithdrawalReport from "./Pages/WithdrawalReport";
 import Settings from "./Pages/Settings";
 import ImageSlider from "./Pages/ImageSlider";
+import BidRevert from "./Pages/BidRevert";
 
 function App() {
   const [token,setToken]=useState(localStorage.getItem("access_token"))
@@ -40,6 +41,7 @@ function App() {
           <Route path="/withdrawal_report" element={<WithdrawalReport/>} />
           <Route path="/settings" element={<Settings/>} />
           <Route path="/image-slider" element={<ImageSlider/>} />
+          <Route path="/bid-revert" element={<BidRevert/>} />
          
          
           {/* <Route path="/upi-payment" element={<UpiPage/>} />

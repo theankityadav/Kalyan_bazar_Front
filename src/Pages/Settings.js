@@ -8,7 +8,7 @@ const Settings = () => {
     const [loader, setLoader] = useState(false)
     const [infoData, setInfoData] = useState([])
 
-
+ const[infoId,setInfoId]=useState("")
 
     useEffect(() => {
         handlegetInformation()
@@ -20,6 +20,7 @@ const Settings = () => {
         getAppSetting().then((res) => {
             console.log("res", res?.data)
             setData(res?.data?.data[0])
+           
             setLoader(false)
         }).catch((err) => {
             console.log("err", err)
@@ -30,7 +31,8 @@ const Settings = () => {
         setLoader(true)
         getSettingInformation().then((res) => {
             console.log("resInfo", res?.data?.data)
-            setInfoData(res?.data?.data[0])
+            setInfoId(res?.data?.data[0]?.id)
+            setInfoData(res?.data?.data[0]?.information)
 
             setLoader(false)
         }).catch((err) => {
@@ -53,13 +55,11 @@ const Settings = () => {
 
     }
     const hanldeChange = (e) => {
-        console.log("pramod", e.target)
+        
         const { value, name } = e.target;
         setData({ ...data, [name]: value })
 
     }
-
-
     const handleUpdateAppSetting = (e) => {
         e.preventDefault()
         setLoader(true)
@@ -85,20 +85,42 @@ const Settings = () => {
     const handleUpdateInformation = () => {
         setLoader(true)
         let reqBody = {
-
-            "information": {},
-            "is_shown": true
+            information:infoData,
+            is_shown: true,
+            id:infoId
         }
         updateInformation(reqBody).then((res) => {
             setLoader(false)
             console.log("res", res)
+            handlegetInformationSetting()
+
         }).catch((err) => {
             setLoader(false)
             console.log("err", err)
         })
     }
+    const handleEditMessage = (e) => {
+        const {name,value} = e.target
+        setInfoData((prevInfoData) => ({
+            ...prevInfoData,
+            [name]: {
+                ...prevInfoData[name],
+                message: value,
+            },
+        }));
+    };
+    const handleEditStatus = (e) => {
+        const {name,checked} = e.target
+        setInfoData((prevInfoData) => ({
+            ...prevInfoData,
+            [name]: {
+                ...prevInfoData[name],
+                status: checked,
+            },
+        }));
+    };
 
-    console.log("form", checkboxInput)
+    console.log("form", infoData)
     return (
         <>
             {loader ? <Loader /> : null}
@@ -131,21 +153,18 @@ const Settings = () => {
                             <div className="card h100p">
                                 <div className="card-body">
                                     <h4 className="card-title">Add message</h4>
-                                    <form className="theme-form mega-form" id="appMaintainenceFrm" name="appMaintainenceFrm" method="post">
-
+                                    <form className="theme-form mega-form" id="appMaintainenceFrm" name="appMaintainenceFrm" >
 
                                         <div>
-
-
                                             <input type="hidden" name="value_id" value="1" />
                                             <div className="form-group">
                                                 <label className="col-form-label">Add fund message</label>
-                                                <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">{infoData?.information?.add_fund_message?.message}</textarea>
+                                                <textarea className="form-control" name="add_fund_message" rows="4" id="app_maintainence_msg" value={infoData?.add_fund_message?.message} onChange={handleEditMessage} />
                                             </div>
                                             <div className="form-group col-6" style={{ marginTop: "30px" }}>
                                                 <div className="media">
                                                     <div className="custom-control custom-switch mb-3" dir="ltr">
-                                                        <input type="checkbox" className="custom-control-input" name="maintainence_msg_status" value="1" />
+                                                        <input type="checkbox" className="custom-control-input" name="add_fund_message" checked={infoData?.add_fund_message?.status} onChange={handleEditStatus} />
                                                         <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
                                                     </div>
                                                 </div>
@@ -157,12 +176,12 @@ const Settings = () => {
                                             <input type="hidden" name="value_id" value="1" />
                                             <div className="form-group">
                                                 <label className="col-form-label">App maintanence</label>
-                                                <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">{infoData?.information?.app_maintanence?.message}</textarea>
+                                                <textarea className="form-control" name="app_maintanence" rows="4" id="app_maintainence_msg" value={infoData?.app_maintanence?.message} onChange={handleEditMessage}  />
                                             </div>
                                             <div className="form-group col-6" style={{ marginTop: "30px" }}>
                                                 <div className="media">
                                                     <div className="custom-control custom-switch mb-3" dir="ltr">
-                                                        <input type="checkbox" className="custom-control-input" name="maintainence_msg_status" value="1" />
+                                                        <input type="checkbox" className="custom-control-input" name="app_maintanence" checked={infoData?.app_maintanence?.status} onChange={handleEditStatus} />
                                                         <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
                                                     </div>
                                                 </div>
@@ -175,12 +194,12 @@ const Settings = () => {
                                             <input type="hidden" name="value_id" value="1" />
                                             <div className="form-group">
                                                 <label className="col-form-label">withdrawl message</label>
-                                                <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">{infoData?.information?.withdrawl_message?.message}</textarea>
+                                                <textarea className="form-control" name="withdrawl_message" rows="4" id="app_maintainence_msg" value={infoData?.withdrawl_message?.message}  onChange={handleEditMessage} />
                                             </div>
                                             <div className="form-group col-6" style={{ marginTop: "30px" }}>
                                                 <div className="media">
                                                     <div className="custom-control custom-switch mb-3" dir="ltr">
-                                                        <input type="checkbox" className="custom-control-input" name="maintainence_msg_status" value="1" />
+                                                        <input type="checkbox" className="custom-control-input" name="withdrawl_message" checked={infoData?.withdrawl_message?.status} onChange={handleEditStatus} />
                                                         <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
                                                     </div>
                                                 </div>
@@ -193,12 +212,12 @@ const Settings = () => {
                                             <input type="hidden" name="value_id" value="1" />
                                             <div className="form-group">
                                                 <label className="col-form-label">pop up message</label>
-                                                <textarea className="form-control" name="app_maintainence_msg" rows="4" id="app_maintainence_msg">{infoData?.information?.pop_up_message?.message}</textarea>
+                                                <textarea className="form-control" name="pop_up_message" rows="4" id="app_maintainence_msg" value={infoData?.pop_up_message?.message}  onChange={handleEditMessage} />
                                             </div>
                                             <div className="form-group col-6" style={{ marginTop: "30px" }}>
                                                 <div className="media">
                                                     <div className="custom-control custom-switch mb-3" dir="ltr">
-                                                        <input type="checkbox" className="custom-control-input" name="maintainence_msg_status" value="1" />
+                                                        <input type="checkbox" className="custom-control-input" name="pop_up_message" checked={infoData?.pop_up_message?.status} onChange={handleEditStatus} />
                                                         <label className="custom-control-label" for="maintainence_msg_status">Show Msg (ON/OFF)</label>
                                                     </div>
                                                 </div>
@@ -212,7 +231,10 @@ const Settings = () => {
 
 
                                         <div className="form-group">
-                                            <button type="submit" className="btn btn-danger waves-light m-t-10" id="submitBtnAppMaintainece" name="submitBtnAppMaintainece">Submit</button>
+                                            <button type="submit" className="btn btn-danger waves-light m-t-10" id="submitBtnAppMaintainece" name="submitBtnAppMaintainece" onClick={(e)=>{
+                                                e.preventDefault()
+                                              handleUpdateInformation()  
+                                            }}>Submit</button>
                                         </div>
                                         <div className="form-group">
                                             <div id="error_maintainence"></div>
@@ -231,7 +253,7 @@ const Settings = () => {
                                     <div className="card">
                                         <div className="card-body">
                                             <h4 className="card-title">Add Value's</h4>
-                                            <form className="theme-form mega-form" id="adminvaluesettingFrm" name="adminvaluesettingFrm" method="post">
+                                            <form className="theme-form mega-form" id="adminvaluesettingFrm" name="adminvaluesettingFrm" >
                                                 <input type="hidden" name="value_id" value="1" />
                                                 <div className="row">
                                                     <div className="form-group col-md-4">

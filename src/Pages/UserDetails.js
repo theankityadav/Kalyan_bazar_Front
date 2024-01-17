@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { addFund, getFundHistory, getuserDetails, getuserTransation, getuserTransationByid, updateUserAcitvity, updateUserPin, withdrawAmountAPi } from "../service/service";
+import { addFund, getFundHistory, getuserDetails, getuserTransation, getuserTransationByid, updateUserAcitvity, updateUserPin, userBankdetails, userUpiDetails, withdrawAmountAPi } from "../service/service";
 import { Loader } from '../Common/Loader'
 import Table from "../Common/Table";
 
@@ -40,6 +40,7 @@ const UserDetails = () => {
   useEffect(() => {
     handleGetFundHistory()
     handleGetUserDetails()
+    handleGetUserBankDetails()
   }, [])
 
   const handleGetUserDetails = () => {
@@ -120,11 +121,42 @@ const UserDetails = () => {
   const handleGetFundHistory = () => {
     getFundHistory(state?.id).then((res) => {
       setFundHistory(res.data.data)
-      console.log("res.data", res.data)
+     
     }).catch((err) => {
       alert(err || "something went wrong ")
     })
   }
+
+  const[userBank,setUserBank]=useState([])
+  const[userUpi,setUserUpi]=useState([])
+
+  const handleGetUserBankDetails =()=>{
+    userBankdetails(state?.id).then((res)=>{
+
+     console.log("res",res?.data?.data)
+     setUserBank(res?.data?.data)
+     handleGetUserUpiDetails()
+
+     
+    }).catch((err) => {
+      alert(err || "something went wrong ")
+    })
+  }
+
+  const handleGetUserUpiDetails =()=>{
+    userUpiDetails(state?.id).then((res)=>{
+
+    
+     setUserUpi(res?.data?.data)
+
+     
+    }).catch((err) => {
+      alert(err || "something went wrong ")
+    })
+  }
+  
+  
+  
 
   return (
     <>
@@ -345,44 +377,52 @@ const UserDetails = () => {
                 </div>
               </div>
             </div>
+            {
+userBank?.map((item,index)=>{
+  return(
+    <div key={index} class="col-xl-12">
+    <div class="card mb-4">
+      <div class="card-body">
+        <h4 class="card-title mb-4">Payment Information</h4>
+        <div class="table-responsive">
+          <table class="table table-nowrap mb-0">
+            <tbody>
+              <tr>
+                <th scope="row">Bank Name :</th>
+                <td>{item?.bank_name}</td>
+                <th scope="row">Branch Address :</th>
+                <td>{item?.bank_address}</td>
+                <th scope="row"></th>
+                <td></td>
+              </tr>
+              <tr>
+                <th scope="row">A/c Holder Name :</th>
+                <td>{item?.account_holder_name}</td>
+                <th scope="row">A/c Number :</th>
+                <td>{item?.account_number}</td>
+                <th scope="row">IFSC Code :</th>
+                <td>{item?.ifsc_code}</td>
+              </tr>
+              <tr>
+               
+                <th scope="row">Google Pay No. :</th>
+                <td>{userUpi[0]?.upi_id}</td>
+                <th scope="row">PhonePe No. :</th>
+                <td>{userUpi[1]?.upi_id}</td>
+                <th scope="row">Paytm No. :</th>
+                <td>{userUpi[2]?.upi_id}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  )
+})
+            }
 
-            <div class="col-xl-12">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <h4 class="card-title mb-4">Payment Information</h4>
-                  <div class="table-responsive">
-                    <table class="table table-nowrap mb-0">
-                      <tbody>
-                        <tr>
-                          <th scope="row">Bank Name :</th>
-                          <td>N/A</td>
-                          <th scope="row">Branch Address :</th>
-                          <td>N/A</td>
-                          <th scope="row"></th>
-                          <td></td>
-                        </tr>
-                        <tr>
-                          <th scope="row">A/c Holder Name :</th>
-                          <td>N/A</td>
-                          <th scope="row">A/c Number :</th>
-                          <td>N/A</td>
-                          <th scope="row">IFSC Code :</th>
-                          <td>N/A</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">PhonePe No. :</th>
-                          <td>N/A</td>
-                          <th scope="row">Google Pay No. :</th>
-                          <td>N/A</td>
-                          <th scope="row">Paytm No. :</th>
-                          <td>N/A</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
+           
           </div>
         </div>
 

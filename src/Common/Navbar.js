@@ -120,7 +120,7 @@ const Navbar = () => {
                   <a href="#">Auto Deposit History</a>
                 </li>
                 <li>
-                  <a href="#">Bid Revert</a>
+                  <a href="/bid-revert">Bid Revert</a>
                 </li>
               </ul>
             </li>
