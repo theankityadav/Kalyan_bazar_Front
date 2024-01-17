@@ -18,6 +18,14 @@ body.sticky-footer {
   margin-bottom: 56px;
 }
 
+.sticky-footer small{
+  color: #fff;
+}
+
+.bg-custom{
+  background-color: #C13331!important;
+}
+
 body.sticky-footer .content-wrapper {
   min-height: calc(100vh - 56px - 56px);
 }
@@ -93,7 +101,7 @@ input, select {
 }
 
 .navbar.bg-dark, .bg-dark{
-  background-color: #C13331!important;
+  background-color: #000!important;
 }
 
 #mainNav .navbar-collapse .navbar-sidenav .sidenav-second-level > li > a:focus, #mainNav .navbar-collapse .navbar-sidenav .sidenav-second-level > li > a:hover,
@@ -219,7 +227,7 @@ input, select {
     left: unset!important;
   }
   #mainNav.fixed-top .navbar-sidenav {
-    height: calc(100vh - 120px);
+    height: 100vh;
   }
   #mainNav.fixed-top .sidenav-toggler {
     position: absolute;
@@ -263,6 +271,10 @@ body.sidenav-toggled #mainNav.fixed-top .sidenav-toggler {
 .navbar-dark .navbar-nav .nav-link{
   color: #fff;
 }
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: #fff;
+}
+
 body.sidenav-toggled #mainNav.fixed-top .sidenav-toggler .nav-item,
 body.sidenav-toggled #mainNav.fixed-top .sidenav-toggler .nav-link {
   width: 55px !important;
@@ -356,7 +368,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 }
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item > .nav-link:hover {
-  color: #000;
+  color: #C13331;
   cursor: pointer;
 }
 
@@ -377,7 +389,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
 
 @media (min-width: 992px) {
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
-    background: #C13331;
+    background: #000;
   }
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav li.active a {
     color: white !important;
@@ -389,6 +401,7 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show {
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level,
   #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level {
     background: #fff;
+    border-right: 1px solid #000;
   }
 }
 
@@ -500,7 +513,7 @@ footer.sticky-footer {
   bottom: 0;
   width: 100%;
   height: 56px;
-  background-color: #e9ecef;
+  background-color: #000;
   line-height: 55px;
 }
 
@@ -675,13 +688,13 @@ footer.sticky-footer {
   cursor: pointer;
 }
 .digit_num{
-  border: 1px solid #34c38f;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  /* background-color: #E6E6FA; */
-  background-color: rgba(52,195,143,.18);
+  border: 1px solid #C13331;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+    /* background-color: #E6E6FA; */
+    background-color: rgb(193 51 49 / 50%);
   width: 40px;
   height: 40px;
   margin: 10px 20px;

@@ -36,7 +36,7 @@ const Navbar = () => {
         id="mainNav"
       >
         <a className="navbar-brand" href="/dashboard">
-          <img src={logo} alt="logo" width={40} height={40} style={{borderRadius:"50%"}}/>&nbsp;&nbsp;Welcome To Kalyan Bazar
+          <img src={logo} alt="logo" width={40} height={40} style={{borderRadius:"50%"}}/>&nbsp;&nbsp;Kalyan Bazar
         </a>
         <button
           className="navbar-toggler navbar-toggler-right"

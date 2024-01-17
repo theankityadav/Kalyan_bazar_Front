@@ -139,14 +139,14 @@ const GameName = () => {
       cell: (row, index) => {
         return (
           <span className='d-flex ' >
-            <button className='btn btn-primary m-1 btn-sm' onClick={()=>{
+            <button className='btn btn-danger m-1 btn-sm' onClick={()=>{
               setGameId(row.id)
               setEdit(true)
             }
               }>
               Edit
             </button>
-            <button className='btn btn-primary m-1 btn-sm'>
+            <button className='btn btn-danger m-1 btn-sm'>
               Market Off Today
             </button>
             <button onClick={()=>{
@@ -203,7 +203,7 @@ const handleAddGame =()=>{
           <div className="card-header flex align-center space-between">
             <div><i className="fa fa-table"></i> <b>Fund Request Auto Deposit History</b></div>
             <div className='add-name'>
-              <button className='btn btn-primary m-1 btn-sm' onClick={()=>setShow(true)}>Add Game</button>
+              <button className='btn btn-danger m-1 btn-sm' onClick={()=>setShow(true)}>Add Game</button>
             </div>
 
           </div>
@@ -232,7 +232,7 @@ const handleAddGame =()=>{
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={(e)=>{
+                    <Button variant="danger" onClick={(e)=>{
                       e.preventDefault()
                       handleAddGame()
                     }}>
@@ -259,7 +259,7 @@ const handleAddGame =()=>{
                     <Button variant="secondary" onClick={()=>setEdit(false)}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={()=>{
+                    <Button variant="danger" onClick={()=>{
                       handleSubmitEdit({
                         market_name:newGameName,
                         id:gameId

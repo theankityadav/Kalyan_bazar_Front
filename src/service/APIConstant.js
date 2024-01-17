@@ -1,1 +1,1 @@
-export const BASE_URL = "http://api.kalyanbazar.co.in"
+export const BASE_URL = "https://api.kalyanbazar.co.in"

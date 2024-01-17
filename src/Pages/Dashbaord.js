@@ -45,12 +45,12 @@ const getInformation =()=>{
                 {/* <SmallCards /> */}
             </div>
           </div>
-          <Table list={list} getInformation={getInformation} head="Fund Request Auto Deposit History"/>
+          <Table list={list} getInformation={getInformation} head="Withdrawl Requests"/>
         </div>
         <footer className="sticky-footer">
           <div className="container">
             <div className="text-center">
-              <small>Copyright © Kalyan Bazar <span id="autodate"></span></small>
+              <small>Copyright © Kalyan Bazar <span id="autodate">2024</span></small>
             </div>
           </div>
         </footer>
