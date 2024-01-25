@@ -44,7 +44,6 @@ const Settings = () => {
         e.preventDefault()
         setLoader(true)
         let reqBody = { id: data?.id, upi_address: upiId }
-
         updateUpiId(reqBody).then((res) => {
             setLoader(false)
             alert("Success")
