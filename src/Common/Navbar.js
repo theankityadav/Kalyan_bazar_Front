@@ -32,7 +32,7 @@ const Navbar = () => {
     <>
       {loader?<Loader/>:null}
       <nav
-        className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-2"
+        className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-4"
         id="mainNav"
       >
         <button

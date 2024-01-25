@@ -36,9 +36,9 @@ const getInformation =()=>{
       <div className="content-wrapper">
         <div className="container-fluid">
           <div className="row">
-            {/* <div className="col-xl-4">
+            <div className="col-xl-4">
                 <UpperCard data={data} />
-            </div> */}
+            </div>
             <div className="col-xl-12">
                 <MidCards data={data} />
                 {/* <SecondRightCard  /> */}
