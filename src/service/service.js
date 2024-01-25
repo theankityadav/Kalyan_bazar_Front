@@ -159,9 +159,9 @@ export const gameRate = () => {
 
 export const deleteGame= (id) => {
 
-    let url = `${BASE_URL}/v1/dashboard/delete?id=${id}`;
+    let url = `${BASE_URL}/v1/dashboard/delete/?id=${id}`;
 
-    return axios.get(url, {headers: { "accept": 'application/json' ,
+    return axios.delete(url, {headers: { "accept": 'application/json' ,
    
     "Content-Type": 'application/json' ,
    
