@@ -79,6 +79,7 @@ nav#mainNav {
 
 #mainNav .navbar-collapse .navbar-nav .nav-item .nav-link {
   cursor: pointer;
+  font-size: 18px;
 }
 
 #mainNav .navbar-collapse .navbar-sidenav .nav-link-collapse:after {
@@ -181,7 +182,7 @@ nav#mainNav {
     padding: 0;
   }
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item > .nav-link {
-    padding: 0.6em 1em;
+    padding: 0.6em;
   }
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level,
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level {
@@ -190,7 +191,7 @@ nav#mainNav {
   }
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav > .nav-item > .nav-link i {
-  margin-right: 15px;
+  margin-right: 10px;
 }
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-second-level > li,
   #mainNav .navbar-collapse .navbar-sidenav > .nav-item .sidenav-third-level > li {
@@ -343,6 +344,7 @@ body.sidenav-toggled .navbar-sidenav {
 body.sidenav-toggled .navbar-sidenav .nav-link-text {
   display: none;
 }
+
 
 body.sidenav-toggled .navbar-sidenav .nav-item,
 body.sidenav-toggled .navbar-sidenav .nav-link {
