@@ -12,10 +12,10 @@ const MidCards = ({ data }) => {
                   <i className="fa fa-user"></i>
                 </div>
                 <div className="mr-5">
-                  <h5>Total User's</h5>
+                    <h5>Total User's</h5>
                 </div>
               </div>
-              <a className="card-footer text-white clearfix small z-1" href="#">
+              <a className="card-footer text-white clearfix small z-1" href="/user-list">
                 <span className="float-left">{data?.users_count}</span>
                 <span className="float-right">
                   <i className="fa fa-angle-right"></i>
@@ -30,10 +30,10 @@ const MidCards = ({ data }) => {
                   <i className="fa fa-gamepad"></i>
                 </div>
                 <div className="mr-5">
-                  <h5>Total Games</h5>
+                    <h5>Total Games</h5>
                 </div>
               </div>
-              <a className="card-footer text-white clearfix small z-1" href="#">
+              <a className="card-footer text-white clearfix small z-1" href="/game-name">
                 <span className="float-left">{data?.games}</span>
                 <span className="float-right">
                   <i className="fa fa-angle-right"></i>
