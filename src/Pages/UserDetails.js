@@ -384,7 +384,7 @@ const UserDetails = () => {
                 </div>
               </div>
             </div>
-            {
+            {userBank.length>0?
             userBank?.map((item,index)=>{
               return(
                 <div key={index} class="col-xl-12">
@@ -426,7 +426,44 @@ const UserDetails = () => {
                 </div>
               </div>
               )
-            })
+            }):  <div  class="col-xl-12">
+            <div class="card mb-4">
+              <div class="card-body">
+                <h4 class="card-title mb-4">Payment Information</h4>
+                <div class="table-responsive">
+                  <table class="table table-nowrap mb-0">
+                    <tbody>
+                      <tr>
+                        <th scope="row">Bank Name :</th>
+                        <td>{"NA"}</td>
+                        <th scope="row">Branch Address :</th>
+                        <td>{"NA"}</td>
+                        <th scope="row"></th>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <th scope="row">A/c Holder Name :</th>
+                        <td>{"NA"}</td>
+                        <th scope="row">A/c Number :</th>
+                        <td>{"NA"}</td>
+                        <th scope="row">IFSC Code :</th>
+                        <td>{"NA"}</td>
+                      </tr>
+                      <tr>
+                      
+                        <th scope="row">Google Pay No. :</th>
+                        <td>{"NA"}</td>
+                        <th scope="row">PhonePe No. :</th>
+                        <td>{"NA"}</td>
+                        <th scope="row">Paytm No. :</th>
+                        <td>{"NA"}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
             }
 
            
