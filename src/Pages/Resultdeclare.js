@@ -69,7 +69,7 @@ const Resultdeclare = () => {
 
 
     const handleDeclaireResultOpen = () => {
-        console.log("pp", numberSum)
+      
         alert("open")
         let data = {
             market: marketId,
@@ -82,6 +82,7 @@ const Resultdeclare = () => {
         }
         resultDeclareAPi(data).then((res) => {
             handleGetResultList()
+
         }).catch((err) => {
             setLoader(false)
             console.log("error", err)
@@ -104,19 +105,27 @@ const Resultdeclare = () => {
         }
         resultDeclareAPi(data).then((res) => {
             console.log("result", res)
+            
             handleGetResultList()
         }).catch((err) => {
             setLoader(false)
             console.log("error", err)
+            alert(err?.response?.data?.message)
 
         })
     }
 
     const handleGetResultList = () => {
+        setLoader(true)
+        setselectedNumberClose("")
+        setselectedNumberOpen("")
+        setNumberSum({open:"",close:""})
         getresultList().then((res) => {
             setResultList(res?.data?.data)
+            setLoader(false)
         }).catch((err) => {
             setLoader(false)
+           
             console.log("error", err)
         })
     }
@@ -131,6 +140,7 @@ const Resultdeclare = () => {
         console.log("error", err)
     })
 }
+console.log("selectedNumberOpen",numberSum)
     return (
         <>
             {
@@ -183,8 +193,7 @@ const Resultdeclare = () => {
                                 {selectsession !== "0" ?
                                     <div className='row w-100'>
                                         <div className='form-group col-md-4'>
-                                            <select class="form-select" aria-label="Default select example" onChange={(e) => {
-
+                                            <select class="form-select" aria-label="Default select example" value={selectedNumberOpen||selectedNumberClose} onChange={(e) => {
                                                 handleGetAddNumbers(e.target.value, selectsession)
                                             }}>
                                                 <option selected>{"Select " + (selectsession === "1" ? "Open" : "Close") + " Panna"}</option>
@@ -217,7 +226,7 @@ const Resultdeclare = () => {
                                     </div> :
                                     <>  <div className='row w-100'>
                                         <div className='form-group col-md-4'>
-                                            <select class="form-select" aria-label="Default select example" onChange={(e) => {
+                                            <select class="form-select" aria-label="Default select example" value={selectedNumberOpen} onChange={(e) => {
                                                 handleGetAddNumbers(e.target.value, "1")
                                             }}>
                                                 <option selected>Select Open Panna</option>
@@ -244,7 +253,7 @@ const Resultdeclare = () => {
                                         <br></br>
                                         <div className='row w-100'>
                                             <div className='form-group col-md-4'>
-                                                <select class="form-select" aria-label="Default select example" onChange={(e) => {
+                                                <select class="form-select" aria-label="Default select example" value={selectedNumberClose} onChange={(e) => {
                                                     handleGetAddNumbers(e.target.value, "2")
                                                 }}>
                                                     <option selected>Select Close Panna </option>

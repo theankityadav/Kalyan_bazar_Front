@@ -3,7 +3,7 @@ import { getAppSetting, getSettingInformation, updateAppSettings, updateInformat
 import { Loader } from '../Common/Loader';
 
 const Settings = () => {
-    const [upiId, setUpiId] = useState("")
+    const [upiId, setUpiId] = useState("merchant482402.augp@aubank")
     const [data, setData] = useState({})
     const [loader, setLoader] = useState(false)
     const [infoData, setInfoData] = useState([])
@@ -19,6 +19,7 @@ const Settings = () => {
         setLoader(true)
         getAppSetting().then((res) => {
             console.log("res", res?.data)
+            setUpiId(res?.data?.data[0]?.upi_address)
             setData(res?.data?.data[0])
            
             setLoader(false)
@@ -32,6 +33,7 @@ const Settings = () => {
         getSettingInformation().then((res) => {
             console.log("resInfo", res?.data?.data)
             setInfoId(res?.data?.data[0]?.id)
+           
             setInfoData(res?.data?.data[0]?.information)
 
             setLoader(false)
@@ -92,6 +94,7 @@ const Settings = () => {
             setLoader(false)
             console.log("res", res)
             handlegetInformationSetting()
+            handlegetInformation()
 
         }).catch((err) => {
             setLoader(false)
@@ -135,7 +138,7 @@ const Settings = () => {
                                         <div className="row">
                                             <div className="form-group col-12">
                                                 <label className="col-form-label">Merchant Id</label>
-                                                <input className="form-control" type="text" onChange={(e) => setUpiId(e.target.value)} name="upi_payment_id" id="upi_payment_id" value="merchant482402.augp@aubank" placeholder="Enter upi payment id" />
+                                                <input className="form-control" type="text" onChange={(e) => setUpiId(e.target.value)} name="upi_payment_id" id="upi_payment_id" value={upiId} placeholder="Enter upi payment id" />
                                             </div>
                                         </div>
                                         <div className="form-group">
