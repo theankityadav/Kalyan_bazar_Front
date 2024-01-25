@@ -45,6 +45,7 @@ const UserDetails = () => {
   }, [])
 
   const handleGetUserDetails = () => {
+    setLoader(true)
     getInformation()
     getuserDetails(state?.id).then((res) => {
       setLoader(false)
@@ -108,22 +109,26 @@ const UserDetails = () => {
   const [list, setList] = useState([])
 
   const getInformation = () => {
-
+    setLoader(true)
     getuserTransationByid(state?.id).then((res) => {
       setList(res.data.data)
-
+      setLoader(false)
       console.log("res.data", res.data)
     }).catch((err) => {
+      setLoader(false)
       alert(err || "something went wrong ")
     })
   }
   const [fundHistory, setFundHistory] = useState([])
 
   const handleGetFundHistory = () => {
+    setLoader(true)
     getFundHistory(state?.id).then((res) => {
+      setLoader(false)
       setFundHistory(res.data.data)
      
     }).catch((err) => {
+      setLoader(false)
       alert(err || "something went wrong ")
     })
   }
@@ -132,22 +137,27 @@ const UserDetails = () => {
   const[userUpi,setUserUpi]=useState([])
 
   const handleGetUserBankDetails =()=>{
+    setLoader(true)
     userBankdetails(state?.id).then((res)=>{
-
+      setLoader(false)
      console.log("res",res?.data?.data)
      setUserBank(res?.data?.data)
      
 
      
     }).catch((err) => {
+      setLoader(false)
       alert(err || "something went wrong ")
     })
   }
 
   const handleGetUserUpiDetails =()=>{
+    setLoader(true)
     userUpiDetails(state?.id).then((res)=>{
+      setLoader(false)
      setUserUpi(res?.data?.data)     
     }).catch((err) => {
+      setLoader(false)
       alert(err || "something went wrong ")
     })
   }
@@ -175,7 +185,7 @@ const UserDetails = () => {
                   <div class="row">
                     <div class="col-7">
                       <div class="text-primary p-3">
-                        <h5 class="text-primary">{data?.first_name + " " + data?.last_name}</h5>
+                        <h5 class="text-primary" style={{textTransform:"capitalize"}}>{data?.first_name + " " + data?.last_name}</h5>
                         <p>
                           {data?.phone_number}
                           <a href={`tel:${data?.phone_number}`}>

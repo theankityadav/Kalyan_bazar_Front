@@ -17,7 +17,7 @@ export const Loader = (props) => {
         <div></div>
         <div></div>
       </div>
-      <div className="loader-text">{props.loadingText||"Loading..."}</div>
+      {/* <div className="loader-text">{props.loadingText||"Loading..."}</div> */}
     </div>
   );
 };
@@ -33,7 +33,7 @@ export const BtnSpinner = () => {
         role="status"
         aria-hidden="true"
       />
-      <span>Loading...</span>
+      {/* <span>Loading...</span> */}
     </>
   );
 };
