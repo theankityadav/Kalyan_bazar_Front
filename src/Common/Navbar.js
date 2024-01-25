@@ -35,9 +35,6 @@ const Navbar = () => {
         className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top px-2"
         id="mainNav"
       >
-        <a className="navbar-brand" href="/dashboard">
-          <img src={logo} alt="logo" width={40} height={40} style={{borderRadius:"50%"}}/>&nbsp;&nbsp;Kalyan Bazar
-        </a>
         <button
           className="navbar-toggler navbar-toggler-right"
           type="button"
@@ -49,6 +46,10 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+        <a className="navbar-brand" href="/dashboard">
+          <img src={logo} alt="logo" width={40} height={40} style={{borderRadius:"50%"}}/>&nbsp;&nbsp;Kalyan Bazar
+        </a>
+        
         <div className="collapse navbar-collapse" id="navbarResponsive">
           <ul className="navbar-nav navbar-sidenav left-nav" id="exampleAccordion">
             <li

@@ -73,9 +73,9 @@ input, select {
   overflow: auto;
   max-height: 75vh;
 }
-/* nav#mainNav {
+nav#mainNav {
   justify-content: flex-start;
-} */
+}
 
 #mainNav .navbar-collapse .navbar-nav .nav-item .nav-link {
   cursor: pointer;
