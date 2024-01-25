@@ -128,14 +128,34 @@ const Settings = () => {
                 <div className="container-fluid">
                     <div className="row row_col" style={{ marginTop: "30px" }}>
                         <div className="col-sm-12 col-xl-6">
-                            <div className="card h100p">
+                            <div className="card h100p mb-4">
                                 <div className="card-body">
-                                    <h4 className="card-title">Add UPI ID</h4>
+                                    <h4 className="card-title">Add Merchant Account Id</h4>
                                     <form className="theme-form mega-form" id="adminUPIFrm" name="adminUPIFrm" method="post">
                                         <input type="hidden" name="account_id" value="1" />
                                         <div className="row">
                                             <div className="form-group col-12">
-                                                <label className="col-form-label">UPI Payment Id</label>
+                                                <label className="col-form-label">Merchant Id</label>
+                                                <input className="form-control" type="text" onChange={(e) => setUpiId(e.target.value)} name="upi_payment_id" id="upi_payment_id" value="merchant482402.augp@aubank" placeholder="Enter upi payment id" />
+                                            </div>
+                                        </div>
+                                        <div className="form-group">
+                                            <button type="submit" onClick={handleSubmit} className="btn btn-danger waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
+                                        </div>
+                                        <div className="form-group">
+                                            <div id="error_upi"></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div className="card h100p mb-4">
+                                <div className="card-body">
+                                    <h4 className="card-title">Add Support Number</h4>
+                                    <form className="theme-form mega-form" id="adminUPIFrm" name="adminUPIFrm" method="post">
+                                        <input type="hidden" name="account_id" value="1" />
+                                        <div className="row">
+                                            <div className="form-group col-12">
+                                                <label className="col-form-label">Support No</label>
                                                 <input className="form-control" type="text" onChange={(e) => setUpiId(e.target.value)} name="upi_payment_id" id="upi_payment_id" value="merchant482402.augp@aubank" placeholder="Enter upi payment id" />
                                             </div>
                                         </div>

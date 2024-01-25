@@ -233,10 +233,10 @@ console.log("data",formInput)
 
             <Modal show={edit} onHide={()=>setEdit(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit Game Name</Modal.Title>
+                    <Modal.Title>Add Image Url</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  <input name="game" type="text" onWheel={(e) => e.target.blur()} placeholder="Enter Game Name " className="form-control" onChange={(e)=>{
+                  <input name="game" type="text" onWheel={(e) => e.target.blur()} placeholder="Paste Url Here " className="form-control" onChange={(e)=>{
                     setnewGameName(e.target.value)
                   }}/><br/>
                   
@@ -251,7 +251,7 @@ console.log("data",formInput)
                         id:gameId
                       })
                     }}>
-                        Submit
+                        Upload
                     </Button>
                 </Modal.Footer>
             </Modal>
