@@ -200,10 +200,10 @@ const UserDetails = () => {
                     <div class="col-5 align-center">
                       <div class="p-3 text-right">
                         <div class="mb-2">
-                          Active : 
+                          Active :  
                           <a
                             role="button"
-                            class="activeDeactiveStatus"
+                            class="activeDeactiveStatus ml-1"
                             id="success-10603-tb_user-user_id-status"
                             onClick={() => {
                               handleUpdateUserActivity({ user_status: !data?.user_status ? "True" : "False", user_id: state?.id })
@@ -215,10 +215,10 @@ const UserDetails = () => {
                           </a>
                         </div>
                         <div class="mb-2">
-                          Betting :
+                          Betting : 
                           <a
                             role="button"
-                            class="activeDeactiveStatus"
+                            class="activeDeactiveStatus ml-1"
                             id="success-10603-tb_user-user_id-betting_status"
                             onClick={() => {
                               handleUpdateUserActivity({ betting: !data?.betting ? "True" : "False", user_id: state?.id })
@@ -230,10 +230,10 @@ const UserDetails = () => {
                           </a>
                         </div>
                         <div class="mb-2">
-                          TP :
+                          TP : 
                           <a
                             role="button"
-                            class="activeDeactiveStatus"
+                            class="activeDeactiveStatus ml-1"
                             id="danger-10603-tb_user-user_id-transfer_point_status"
                             onClick={() => {
                               handleUpdateUserActivity({ transfer: !data?.transfer ? "True" : "False", user_id: state?.id })

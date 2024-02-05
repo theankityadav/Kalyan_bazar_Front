@@ -39,7 +39,7 @@ const getInformation =()=>{
             <div className="col-xl-4">
                 <UpperCard data={data} />
             </div>
-            <div className="col-xl-12">
+            <div className="col-xl-8">
                 <MidCards data={data} />
                 {/* <SecondRightCard  /> */}
                 {/* <SmallCards /> */}
