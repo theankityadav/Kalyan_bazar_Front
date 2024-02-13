@@ -19,35 +19,56 @@ import WithdrawalReport from "./Pages/WithdrawalReport";
 import Settings from "./Pages/Settings";
 import ImageSlider from "./Pages/ImageSlider";
 import BidRevert from "./Pages/BidRevert";
+import UserBidHistory from "./Pages/Reports/UserBidHistory";
+import WinningReport from "./Pages/Reports/WinningReport";
+import AutoDepositHistory from "./Pages/Reports/AutoDepositHistory";
 
 function App() {
-  const [token,setToken]=useState(localStorage.getItem("access_token"))
+  const [token, setToken] = useState(localStorage.getItem("access_token"))
+
+  useEffect(()=>{
+   if(!token&&window.location.pathname!=="/"){
+     window.location.href="/"
+   }
+   else{
+     return
+   }
+  },[])
 
   return (
     <>
-     <BrowserRouter>
-       {token? <Navbar/>:null}
-        <Routes>
-         <Route path="/" element={<Login/> } />
-          <Route path="/dashboard" element={<Dashbaord/>} />
-          <Route path="/declair-result" element={<Resultdeclare/>} />
-          <Route path="/game-name" element={<GameName/>} />
-          <Route path="/user-list" element={<Userlist/>} />
-          <Route path="/user-details" element={<UserDetails/>} />
-          <Route path="/game-rates" element={<GameRate/>} />
-          <Route path="/games/:id" element={<GameNumbers/>} />
-          <Route path="/startline/game_name" element={<GameName2/>} />
-          <Route path="/startline/game_rate" element={<GameRate2/>} />
-          <Route path="/withdrawal_report" element={<WithdrawalReport/>} />
-          <Route path="/settings" element={<Settings/>} />
-          <Route path="/image-slider" element={<ImageSlider/>} />
-          <Route path="/bid-revert" element={<BidRevert/>} />
-         
-         
-          {/* <Route path="/upi-payment" element={<UpiPage/>} />
+      <BrowserRouter>
+        {token ? <Navbar /> : null}
+
+        {!token ?
+          <Routes>
+            <Route path="/" element={<Login />} />
+          </Routes> :
+          <Routes>
+            <Route path="/dashboard" element={<Dashbaord />} />
+            <Route path="/declair-result" element={<Resultdeclare />} />
+            <Route path="/game-name" element={<GameName />} />
+            <Route path="/user-list" element={<Userlist />} />
+            <Route path="/user-details" element={<UserDetails />} />
+            <Route path="/game-rates" element={<GameRate />} />
+            <Route path="/games/:id" element={<GameNumbers />} />
+            <Route path="/startline/game_name" element={<GameName2 />} />
+            <Route path="/startline/game_rate" element={<GameRate2 />} />
+            <Route path="/withdrawal_report" element={<WithdrawalReport />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/image-slider" element={<ImageSlider />} />
+            <Route path="/bid-revert" element={<BidRevert />} />
+            <Route path="/bid-history" element={<UserBidHistory />} />
+            <Route path="/winning-history" element={<WinningReport />} />
+            <Route path="/auto-deposit-history" element={<AutoDepositHistory />} />
+          </Routes>
+        }
+
+
+        {/* <Route path="/upi-payment" element={<UpiPage/>} />
           <Route path="/payment-status" element={<Payment/>} /> */}
-        </Routes>
-        
+
+
       </BrowserRouter>
     </>
   );

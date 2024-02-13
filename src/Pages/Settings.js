@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { getAppSetting, getSettingInformation, updateAppSettings, updateInformation, updateUpiId } from '../service/service'
+import { getAppSetting, getUrl, getSettingInformation, updateAppSettings, updateInformation, updateUpiId } from '../service/service'
 import { Loader } from '../Common/Loader';
 
 const Settings = () => {
-    const [upiId, setUpiId] = useState("merchant482402.augp@aubank")
+    const [upiId, setUpiId] = useState()
+    const [apiLink, setAppLink] = useState("")
+    const [support_number, setSupportLInk] = useState()
     const [data, setData] = useState({})
     const [loader, setLoader] = useState(false)
     const [infoData, setInfoData] = useState([])
+   
 
- const[infoId,setInfoId]=useState("")
+    const [infoId, setInfoId] = useState("")
 
     useEffect(() => {
         handlegetInformation()
         handlegetInformationSetting()
+        handleGetUrl("get-url")
+        handleGetUrl("get-contact-us")
     }, [])
 
     const handlegetInformation = () => {
@@ -21,7 +26,7 @@ const Settings = () => {
             console.log("res", res?.data)
             setUpiId(res?.data?.data[0]?.upi_address)
             setData(res?.data?.data[0])
-           
+
             setLoader(false)
         }).catch((err) => {
             console.log("err", err)
@@ -33,7 +38,7 @@ const Settings = () => {
         getSettingInformation().then((res) => {
             console.log("resInfo", res?.data?.data)
             setInfoId(res?.data?.data[0]?.id)
-           
+
             setInfoData(res?.data?.data[0]?.information)
 
             setLoader(false)
@@ -42,12 +47,34 @@ const Settings = () => {
             setLoader(false)
         })
     }
-    const handleSubmit = (e) => {
+
+    const handleGetUrl = (type) => {
+
+        setLoader(true)
+        getUrl(type).then((res) => {
+            console.log("resData", res?.data)
+            if (type === "get-url") {
+                setAppLink(res?.data?.data[0]?.url)
+            }
+            else {
+                setSupportLInk(res?.data?.data?.phone_number)
+            }
+            setLoader(false)
+
+        }).catch((err) => {
+            setLoader(false)
+            console.log("err", err)
+        })
+
+    }
+    const handleSubmit = (e, data, type) => {
+
         e.preventDefault()
         setLoader(true)
-        let reqBody = { id: data?.id, upi_address: upiId }
-        updateUpiId(reqBody).then((res) => {
+        let reqBody = data;
+        updateUpiId(reqBody, type).then((res) => {
             setLoader(false)
+            handleGetUrl()
             alert("Success")
         }).catch((err) => {
             setLoader(false)
@@ -56,7 +83,10 @@ const Settings = () => {
 
     }
     const hanldeChange = (e) => {
-        
+      if(e.target.name==="global_betting"){
+        setData({ ...data, [e.target.name]: e.target.checked })
+        return;
+      }
         const { value, name } = e.target;
         setData({ ...data, [name]: value })
 
@@ -86,9 +116,9 @@ const Settings = () => {
     const handleUpdateInformation = () => {
         setLoader(true)
         let reqBody = {
-            information:infoData,
+            information: infoData,
             is_shown: true,
-            id:infoId
+            id: infoId
         }
         updateInformation(reqBody).then((res) => {
             setLoader(false)
@@ -102,7 +132,7 @@ const Settings = () => {
         })
     }
     const handleEditMessage = (e) => {
-        const {name,value} = e.target
+        const { name, value } = e.target
         setInfoData((prevInfoData) => ({
             ...prevInfoData,
             [name]: {
@@ -112,7 +142,7 @@ const Settings = () => {
         }));
     };
     const handleEditStatus = (e) => {
-        const {name,checked} = e.target
+        const { name, checked } = e.target
         setInfoData((prevInfoData) => ({
             ...prevInfoData,
             [name]: {
@@ -133,7 +163,7 @@ const Settings = () => {
                             <div className="card h100p mb-4">
                                 <div className="card-body">
                                     <h4 className="card-title">Add Merchant Account Id</h4>
-                                    <form className="theme-form mega-form" id="adminUPIFrm" name="adminUPIFrm" method="post">
+                                    <form className="theme-form mega-form" id="adminUPIFrm" name="adminUPIFrm" >
                                         <input type="hidden" name="account_id" value="1" />
                                         <div className="row">
                                             <div className="form-group col-12">
@@ -142,7 +172,9 @@ const Settings = () => {
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <button type="submit" onClick={handleSubmit} className="btn btn-danger waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
+                                            <button type="submit" onClick={(e) => {
+                                                handleSubmit(e, { id: data?.id, upi_address: upiId }, "update-upi")
+                                            }} className="btn btn-danger waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
                                         </div>
                                         <div className="form-group">
                                             <div id="error_upi"></div>
@@ -153,16 +185,18 @@ const Settings = () => {
                             <div className="card h100p mb-4">
                                 <div className="card-body">
                                     <h4 className="card-title">Add Support Number</h4>
-                                    <form className="theme-form mega-form" id="adminUPIFrm" name="adminUPIFrm" method="post">
+                                    <form className="theme-form mega-form" id="adminUPIFrm" name="adminUPIFrm" >
                                         <input type="hidden" name="account_id" value="1" />
                                         <div className="row">
                                             <div className="form-group col-12">
                                                 <label className="col-form-label">Support No</label>
-                                                <input className="form-control" type="text" onChange={(e) => setUpiId(e.target.value)} name="upi_payment_id" id="upi_payment_id" value="merchant482402.augp@aubank" placeholder="Enter upi payment id" />
+                                                <input className="form-control" type="text" onChange={(e) => setSupportLInk(e.target.value.slice(0, 10))} name="upi_payment_id" id="upi_payment_id" value={support_number} placeholder="Enter upi payment id" />
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <button type="submit" onClick={handleSubmit} className="btn btn-danger waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
+                                            <button type="submit" onClick={(e) => {
+                                                handleSubmit(e, { phone_number: support_number }, "add-contact-us")
+                                            }} className="btn btn-danger waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
                                         </div>
                                         <div className="form-group">
                                             <div id="error_upi"></div>
@@ -173,16 +207,18 @@ const Settings = () => {
                             <div className="card h100p mb-4">
                                 <div className="card-body">
                                     <h4 className="card-title">Apk Link</h4>
-                                    <form className="theme-form mega-form" id="adminUPIFrm" name="adminUPIFrm" method="post">
+                                    <form className="theme-form mega-form" id="adminUPIFrm" name="adminUPIFrm" >
                                         <input type="hidden" name="account_id" value="1" />
                                         <div className="row">
                                             <div className="form-group col-12">
                                                 <label className="col-form-label">Link</label>
-                                                <input className="form-control" type="text" onChange={(e) => setUpiId(e.target.value)} name="upi_payment_id" id="upi_payment_id" value="merchant482402.augp@aubank" placeholder="Enter upi payment id" />
+                                                <input className="form-control" type="text" onChange={(e) => setAppLink(e.target.value)} name="upi_payment_id" id="upi_payment_id" value={apiLink} placeholder="Enter upi payment id" />
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <button type="submit" onClick={handleSubmit} className="btn btn-danger waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
+                                            <button type="submit" onClick={(e) => {
+                                                handleSubmit(e, { url: apiLink }, "add-url")
+                                            }} className="btn btn-danger waves-light m-t-10" id="upiSubmitBtn" name="upiSubmitBtn">Submit</button>
                                         </div>
                                         <div className="form-group">
                                             <div id="error_upi"></div>
@@ -218,7 +254,7 @@ const Settings = () => {
                                             <input type="hidden" name="value_id" value="1" />
                                             <div className="form-group">
                                                 <label className="col-form-label">App maintanence</label>
-                                                <textarea className="form-control" name="app_maintanence" rows="4" id="app_maintainence_msg" value={infoData?.app_maintanence?.message} onChange={handleEditMessage}  />
+                                                <textarea className="form-control" name="app_maintanence" rows="4" id="app_maintainence_msg" value={infoData?.app_maintanence?.message} onChange={handleEditMessage} />
                                             </div>
                                             <div className="form-group col-6" style={{ marginTop: "30px" }}>
                                                 <div className="media">
@@ -236,7 +272,7 @@ const Settings = () => {
                                             <input type="hidden" name="value_id" value="1" />
                                             <div className="form-group">
                                                 <label className="col-form-label">withdrawl message</label>
-                                                <textarea className="form-control" name="withdrawl_message" rows="4" id="app_maintainence_msg" value={infoData?.withdrawl_message?.message}  onChange={handleEditMessage} />
+                                                <textarea className="form-control" name="withdrawl_message" rows="4" id="app_maintainence_msg" value={infoData?.withdrawl_message?.message} onChange={handleEditMessage} />
                                             </div>
                                             <div className="form-group col-6" style={{ marginTop: "30px" }}>
                                                 <div className="media">
@@ -254,7 +290,7 @@ const Settings = () => {
                                             <input type="hidden" name="value_id" value="1" />
                                             <div className="form-group">
                                                 <label className="col-form-label">pop up message</label>
-                                                <textarea className="form-control" name="pop_up_message" rows="4" id="app_maintainence_msg" value={infoData?.pop_up_message?.message}  onChange={handleEditMessage} />
+                                                <textarea className="form-control" name="pop_up_message" rows="4" id="app_maintainence_msg" value={infoData?.pop_up_message?.message} onChange={handleEditMessage} />
                                             </div>
                                             <div className="form-group col-6" style={{ marginTop: "30px" }}>
                                                 <div className="media">
@@ -273,9 +309,9 @@ const Settings = () => {
 
 
                                         <div className="form-group">
-                                            <button type="submit" className="btn btn-danger waves-light m-t-10" id="submitBtnAppMaintainece" name="submitBtnAppMaintainece" onClick={(e)=>{
+                                            <button type="submit" className="btn btn-danger waves-light m-t-10" id="submitBtnAppMaintainece" name="submitBtnAppMaintainece" onClick={(e) => {
                                                 e.preventDefault()
-                                              handleUpdateInformation()  
+                                                handleUpdateInformation()
                                             }}>Submit</button>
                                         </div>
                                         <div className="form-group">
@@ -347,11 +383,10 @@ const Settings = () => {
 
                                                     </div>
                                                     <div className="form-group col-2" style={{ marginTop: "30px" }}>
-
                                                         <div className="media">
 
                                                             <div className="custom-control custom-switch mb-3" dir="ltr">
-                                                                <input type="checkbox" className="custom-control-input" id="global_batting_status" name="global_batting_status" checked="" value="1" />
+                                                                <input type="checkbox" className="custom-control-input" id="global_batting_status" name="global_betting" checked={data.global_betting} value="1" onChange={hanldeChange}/>
                                                                 <label className="custom-control-label" for="global_batting_status">Global Batting</label>
                                                             </div>
 

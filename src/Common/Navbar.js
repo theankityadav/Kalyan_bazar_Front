@@ -106,10 +106,10 @@ const Navbar = () => {
                 id="ReportManagement"
               >
                 <li>
-                  <a href="#">Users Bid History</a>
+                  <a href="/bid-history">Users Bid History</a>
                 </li>
                 <li>
-                  <a href="#">Winning Report</a>
+                  <a href="/winning-history">Winning Report</a>
                 </li>
                 <li>
                   <a href="#">Transfer Point Report</a>
@@ -118,7 +118,7 @@ const Navbar = () => {
                   <a href="/withdrawal_report">Withdraw Report</a>
                 </li>
                 <li>
-                  <a href="#">Auto Deposit History</a>
+                  <a href="/auto-deposit-history">Auto Deposit History</a>
                 </li>
                 <li>
                   <a href="/bid-revert">Bid Revert</a>
