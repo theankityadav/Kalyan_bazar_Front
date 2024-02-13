@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import { addFund, getFundHistory, getuserDetails, getuserTransation, getuserTransationByid, updateUserAcitvity, updateUserPin, userBankdetails, userUpiDetails, withdrawAmountAPi } from "../service/service";
+import { addFund, getBidHistory, getFundHistory, getUserBidHistory, getuserDetails, getUserTransaction, getuserTransation, getuserTransationByid, updateUserAcitvity, updateUserPin, userBankdetails, userUpiDetails, withdrawAmountAPi } from "../service/service";
 import { Loader } from '../Common/Loader'
 import Table from "../Common/Table";
 
@@ -17,6 +17,7 @@ const UserDetails = () => {
   const [pin, setPin] = useState("")
   const [loader, setLoader] = useState(false)
   const [data, setData] = useState({})
+  const[type,setType]=useState("ALL")
   const handleClose = () => {
     setShow(false)
     setShowPin(false)
@@ -42,6 +43,8 @@ const UserDetails = () => {
     handleGetUserDetails()
     handleGetUserBankDetails()
     handleGetUserUpiDetails()
+    handleGetBidHistory()
+    
   }, [])
 
   const handleGetUserDetails = () => {
@@ -132,6 +135,35 @@ const UserDetails = () => {
       alert(err || "something went wrong ")
     })
   }
+const[bidHistoryList,setBidHistoryList]=useState([])
+
+  const handleGetBidHistory =()=>{
+    getUserBidHistory("get-bid",state?.id).then((res)=>{
+    setBidHistoryList(res.data?.data)
+    }).catch((err) => {
+      setLoader(false)
+      alert(err || "something went wrong ")
+    })
+  }
+  
+
+  
+  
+useEffect(()=>{
+  handleTransactionHistory()
+},[])
+const[transaction_history,setTransactionHistory]=useState([])
+  const handleTransactionHistory =()=>{
+    getUserTransaction(state?.id,type).then((res)=>{
+      setTransactionHistory(res.data?.data)
+    }).catch((err) => {
+      setLoader(false)
+      alert(err || "something went wrong ")
+    })
+  }
+
+console.log("transaction_history",transaction_history)
+
 
   const[userBank,setUserBank]=useState([])
   const[userUpi,setUserUpi]=useState([])
@@ -816,7 +848,17 @@ const UserDetails = () => {
                                   aria-sort="descending"
                                   aria-label="#: activate to sort column ascending"
                                 >
-                                  #
+                                  ID
+                                </th>
+                                <th
+                                  class="sorting"
+                                  tabindex="0"
+                                  aria-controls="bidHistoryTable"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Game Name: activate to sort column ascending"
+                                >
+                                  User Id
                                 </th>
                                 <th
                                   class="sorting"
@@ -836,7 +878,7 @@ const UserDetails = () => {
                                   colspan="1"
                                   aria-label="Game Type: activate to sort column ascending"
                                 >
-                                  Game Type
+                                  First Name
                                 </th>
                                 <th
                                   class="sorting"
@@ -856,7 +898,7 @@ const UserDetails = () => {
                                   colspan="1"
                                   aria-label="Digits: activate to sort column ascending"
                                 >
-                                  Digits
+                                  Pana
                                 </th>
                                 <th
                                   class="sorting"
@@ -866,7 +908,7 @@ const UserDetails = () => {
                                   colspan="1"
                                   aria-label="Close Digits: activate to sort column ascending"
                                 >
-                                  Close Digits
+                                Pana Date
                                 </th>
                                 <th
                                   class="sorting"
@@ -892,13 +934,44 @@ const UserDetails = () => {
                             </thead>
                             <tbody>
                               <tr class="odd">
-                                <td
+                              { bidHistoryList?.length>0?bidHistoryList?.map((item,index)=>{
+                              return(
+                              <>
+                               <td>
+                               {item?.id}
+                              </td>
+                              <td>
+                               {item?.user_id}
+                              </td>
+                              <td>
+                               {item?.market_inside__market_id__market_name}
+                              </td>
+                              <td>
+                               {item?.first_name}
+                              </td>
+                              <td>
+                               {item?.session}
+                              </td>
+                              <td>
+                               {item?.pana}
+                              </td>
+                              <td>
+                               {item?.pana_date}
+                              </td>
+                              <td>
+                               {item?.points}
+                              </td>
+                              <td>
+                               {moment(item?.created_at).format("DD-MM-YYYY")}
+                              </td>
+                              </>)}): 
+                              <td
                                   valign="top"
-                                  colspan="8"
+                                 
                                   class="dataTables_empty"
                                 >
                                   No data available in table
-                                </td>
+                                </td>}
                               </tr>
                             </tbody>
                           </table>
@@ -1138,14 +1211,23 @@ const UserDetails = () => {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr role="row" class="odd">
-                                    <td class="sorting_1">1</td>
-                                    <td>+ 5 ₹</td>
-                                    <td>User Welcome Bonus</td>
+                                 
+                                    {
+                                      transaction_history.map((item,index)=>{
+                                  
+                                      <tr role="row" class="odd" key={index}>
+                                     <td class="sorting_1">{item?.id}</td>
+                                    <td>{item?.user_id__id}</td>
+                                    <td>{item?.user_id__first_name}</td>
                                     <td>N/A</td>
                                     <td>20 Sep 2023 09:18:50 PM</td>
                                     <td>7437706</td>
-                                  </tr>
+                                    </tr>
+                                  
+                                      })
+                                    }
+                                    
+                               
                                 </tbody>
                               </table>
                             </div>
@@ -1338,12 +1420,18 @@ const UserDetails = () => {
                                 </thead>
                                 <tbody>
                                   <tr role="row" class="odd">
-                                    <td class="sorting_1">1</td>
-                                    <td>+ 5 ₹</td>
-                                    <td>User Welcome Bonus</td>
+                                  {
+                                      transaction_history.map((item,index)=>{
+                                     <>
+                                     <td class="sorting_1">{item?.id}</td>
+                                    <td>{item?.amount}</td>
+                                    <td>{item?.user_id__first_name}</td>
                                     <td>N/A</td>
                                     <td>20 Sep 2023 09:18:50 PM</td>
                                     <td>7437706</td>
+                                    </>
+                                      })
+                                    }
                                   </tr>
                                 </tbody>
                               </table>
