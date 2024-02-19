@@ -59,7 +59,7 @@ const AutoDepositHistory = () => {
             <div className="content-wrapper">
                 <div className='container-fluid'>
                     <div className='card p-3 flex align-center space-between mb-3'>
-                        <h4 class="card-title text-left w-100">Auto Deposit History </h4>
+                        <h4 className="card-title text-left w-100">Auto Deposit History </h4>
                         <div className='row w-100'>
                             <div className='form-group col-md-3'>
                                 <input type="date" id="start" className='form-control' value={dateSelect} onChange={(e) => {
@@ -71,7 +71,7 @@ const AutoDepositHistory = () => {
                          
                            
                             <div className='form-group col-md-2'>
-                                <button type="submit" class="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={()=>{
+                                <button type="submit" className="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={()=>{
                                   handleGetBidHistory()
                                 }}>Submit</button>
                             </div>
@@ -81,7 +81,7 @@ const AutoDepositHistory = () => {
                 
 
                     <div className='card p-3 flex align-center space-between'>
-                        <h4 class="card-title text-left w-100">Bid History List</h4>
+                        <h4 className="card-title text-left w-100">Bid History List</h4>
                         <div className='row w-100'>
 
                            
@@ -95,7 +95,7 @@ const AutoDepositHistory = () => {
                                     <thead>
                               <tr role="row">
                                 <th
-                                  class="sorting_desc"
+                                  className="sorting_desc"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -108,7 +108,7 @@ const AutoDepositHistory = () => {
                                
                               
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -118,7 +118,7 @@ const AutoDepositHistory = () => {
                                   First Name
                                 </th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -131,7 +131,7 @@ const AutoDepositHistory = () => {
                               
                               
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"

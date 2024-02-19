@@ -396,6 +396,18 @@ export const getUserBidHistory = (endpointValue,user_id) => {
         }
     });
 }
+export const getUserWinHistory = (endpointValue,user_id) => {
+
+    let url = `${BASE_URL}/v1/dashboard/${endpointValue}/?user_id=${user_id}`;
+
+    return axios.get(url, {
+        headers: {
+            "accept": 'application/json',
+            "Content-Type": 'application/json',
+
+        }
+    });
+}
 
 
 export const getSettingInformation = () => {

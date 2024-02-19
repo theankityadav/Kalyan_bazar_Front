@@ -59,7 +59,7 @@ const UserBidHistory = () => {
             <div className="content-wrapper">
                 <div className='container-fluid'>
                     <div className='card p-3 flex align-center space-between mb-3'>
-                        <h4 class="card-title text-left w-100">Bid History Report</h4>
+                        <h4 className="card-title text-left w-100">Bid History Report</h4>
                         <div className='row w-100'>
                             <div className='form-group col-md-3'>
                                 <input type="date" id="start" className='form-control' value={dateSelect} onChange={(e) => {
@@ -67,7 +67,7 @@ const UserBidHistory = () => {
                                 }} />
                             </div>
                             <div className='form-group col-md-3'>
-                            <select class="form-select" aria-label="Default select example" value={selectedGameName+"|"+marketId} onChange={(e) => {
+                            <select className="form-select" aria-label="Default select example" value={selectedGameName+"|"+marketId} onChange={(e) => {
                                     setSelectedGameName(e.target.value.split("|")[0])
                                     setMarketId(e.target.value.split("|")[1])
                                 }}>
@@ -80,7 +80,7 @@ const UserBidHistory = () => {
                                 </select>
                             </div>
                             <div className='form-group col-md-3'>
-                                <select class="form-select" aria-label="Default select example" value={gameType} onChange={(e) => {
+                                <select className="form-select" aria-label="Default select example" value={gameType} onChange={(e) => {
                                    setGameType(e.target.value)
                                 }}>
                                     <option selected>Select Game Type</option>
@@ -90,7 +90,7 @@ const UserBidHistory = () => {
                          
                            
                             <div className='form-group col-md-2'>
-                                <button type="submit" class="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={()=>{
+                                <button type="submit" className="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={()=>{
                                   handleGetBidHistory()
                                 }}>Submit</button>
                             </div>
@@ -100,7 +100,7 @@ const UserBidHistory = () => {
                 
 
                     <div className='card p-3 flex align-center space-between'>
-                        <h4 class="card-title text-left w-100">Bid History List</h4>
+                        <h4 className="card-title text-left w-100">Bid History List</h4>
                         <div className='row w-100'>
 
                            
@@ -114,7 +114,7 @@ const UserBidHistory = () => {
                                     <thead>
                               <tr role="row">
                                 <th
-                                  class="sorting_desc"
+                                  className="sorting_desc"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -126,7 +126,7 @@ const UserBidHistory = () => {
                                 </th>
                                
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -136,7 +136,7 @@ const UserBidHistory = () => {
                                   Game Name
                                 </th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -146,7 +146,7 @@ const UserBidHistory = () => {
                                   First Name
                                 </th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -156,7 +156,7 @@ const UserBidHistory = () => {
                                   Session
                                 </th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -166,7 +166,7 @@ const UserBidHistory = () => {
                                   Pana
                                 </th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -176,7 +176,7 @@ const UserBidHistory = () => {
                                 Pana Date
                                 </th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -186,7 +186,7 @@ const UserBidHistory = () => {
                                   Points
                                 </th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"

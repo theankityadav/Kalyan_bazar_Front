@@ -77,7 +77,7 @@ const BidRevert = () => {
             <div className="content-wrapper">
                 <div className='container-fluid'>
                     <div className='card p-3 flex align-center space-between mb-3'>
-                        <h4 class="card-title text-left w-100">Bid Revert</h4>
+                        <h4 className="card-title text-left w-100">Bid Revert</h4>
                         <div className='row w-100'>
                             <div className='form-group col-md-3'>
                                 <input type="date" id="start" className='form-control' value={dateSelect} onChange={(e) => {
@@ -85,7 +85,7 @@ const BidRevert = () => {
                                 }} />
                             </div>
                             <div className='form-group col-md-4'>
-                                <select class="form-select" aria-label="Default select example" value={selectedGameName + "|" + marketId} onChange={(e) => {
+                                <select className="form-select" aria-label="Default select example" value={selectedGameName + "|" + marketId} onChange={(e) => {
                                     setSelectedGameName(e.target.value.split("|")[0])
                                     setMarketId(e.target.value.split("|")[1])
                                 }}>
@@ -99,7 +99,7 @@ const BidRevert = () => {
                             </div>
 
                             <div className='form-group col-md-2'>
-                                <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn" onClick={() => {
+                                <button type="submit" className="btn btn-primary btn-block" id="srchBtn" name="srchBtn" onClick={() => {
                                     handleBidRevert(marketId)
 
 
@@ -111,7 +111,7 @@ const BidRevert = () => {
 
 
                     {/* <div className='card p-3 flex align-center space-between'>
-                        <h4 class="card-title text-left w-100">Game Result List</h4>
+                        <h4 className="card-title text-left w-100">Game Result List</h4>
                         <div className='row w-100'>
 
 

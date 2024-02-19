@@ -272,7 +272,7 @@ const Navbar = () => {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                <i class="fa fa-user"></i> Admin
+                <i className="fa fa-user"></i> Admin
               </a>
               <div className="dropdown-menu" aria-labelledby="messagesDropdown">
                 {/* <a className="dropdown-item" onClick={()=>setShow(true)}>
