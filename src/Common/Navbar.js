@@ -58,7 +58,7 @@ const Navbar = () => {
               data-placement="right"
               title="Dashboard"
             >
-              <a className="nav-link" href="/dashboard">
+              <a className="nav-link" href="/">
                 <i className="fa fa-fw fa-dashboard"></i>
                 <span className="nav-link-text">Dashboard</span>
               </a>

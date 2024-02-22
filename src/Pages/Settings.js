@@ -382,7 +382,7 @@ const Settings = () => {
                                                         <input name="withdrawl_close_time" id="withdraw_close_time" className="form-control digits" type="time" value={data?.withdrawl_close_time} onChange={hanldeChange} />
 
                                                     </div>
-                                                    <div className="form-group col-2" style={{ marginTop: "30px" }}>
+                                                    {/* <div className="form-group col-2" style={{ marginTop: "30px" }}>
                                                         <div className="media">
 
                                                             <div className="custom-control custom-switch mb-3" dir="ltr">
@@ -393,7 +393,7 @@ const Settings = () => {
                                                         </div>
 
 
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                                 <div className="form-group">
                                                     <button className="btn btn-danger waves-light m-t-10" onClick={(e) => {
