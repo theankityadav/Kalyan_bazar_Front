@@ -75,7 +75,7 @@ const Resultdeclare = () => {
             market: marketId,
             game_name: selectedGameName || null,
             result_date: dateSelect,
-            open_declare_date: moment().format("YYYY-MM-DDTHH:mm:ss.SSSSSSZ"),
+            open_declare_date: moment().add(5, 'hours').add(30, 'minutes').format("YYYY-MM-DDTHH:mm:ss.SSSSSSZ"),
 
             open_pana_result:selectedNumberOpen+"-"+numberSum?.open,
 
@@ -99,7 +99,7 @@ const Resultdeclare = () => {
             game_name: selectedGameName || null,
             result_date: dateSelect,
 
-            close_declare_date: moment().format("YYYY-MM-DDTHH:mm:ss.SSSSSSZ"),
+            close_declare_date: moment().add(5, 'hours').add(30, 'minutes').format("YYYY-MM-DDTHH:mm:ss.SSSSSSZ"),
 
             close_pana_result: numberSum?.close+"-"+selectedNumberClose
         }
