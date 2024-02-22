@@ -134,9 +134,20 @@ const Userlist = () => {
       <div className="content-wrapper">
         {/* <Table list={list} head="User List" /> */}
         <div className="container-fluid">
-          <div className="flex align-center space-center">
+          <div className="flex align-center space-between">
             <h4>Users List</h4>
-            <input type="text" name="search" id="seacrh" onChange={handleDebouncing} />
+            <div id="myTable_filter" className="dataTables_filter">
+                <label>
+                  Search:
+                  <input
+                    type="search"
+                    className="form-control form-control-sm"
+                    placeholder=""
+                    aria-controls="myTable"
+                    onChange={handleDebouncing}
+                  />
+                </label>
+              </div>
           </div>
           <div className="card p-4">
             {list.length > 0 ? (

@@ -1268,7 +1268,7 @@ const UserDetails = () => {
                                   {transaction_history?.map((item, index) => {
                                     return (
                                       <tr role="row" className="odd" key={index}>
-                                        <td>{item?.id}</td>
+                                        <td>{index+1}</td>
                                         <td>{item?.amount}</td>
                                         <td className="sorting_1">
                                           {item?.transaction_type}
@@ -1475,7 +1475,7 @@ const UserDetails = () => {
                                 {transaction_history?.map((item, index) => {
                                     return (
                                       <tr role="row" className="odd" key={index}>
-                                        <td>{item?.id}</td>
+                                        <td>{index+1}</td>
                                         <td>{item?.amount}</td>
                                         <td className="sorting_1">
                                           {item?.transaction_type}
@@ -1682,7 +1682,7 @@ const UserDetails = () => {
                                 {transaction_history?.map((item, index) => {
                                     return (
                                       <tr role="row" className="odd" key={index}>
-                                        <td>{item?.id}</td>
+                                        <td>{index+1}</td>
                                         <td>{item?.amount}</td>
                                         <td className="sorting_1">
                                           {item?.transaction_type}
