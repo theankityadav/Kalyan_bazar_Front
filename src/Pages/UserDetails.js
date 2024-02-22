@@ -1,277 +1,351 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import { addFund, getBidHistory, getFundHistory, getUserBidHistory, getuserDetails, getUserTransaction, getuserTransation, getuserTransationByid, updateUserAcitvity, updateUserPin, userBankdetails, userUpiDetails, withdrawAmountAPi } from "../service/service";
-import { Loader } from '../Common/Loader'
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import {
+  addFund,
+  getBidHistory,
+  getFundHistory,
+  getUserBidHistory,
+  getuserDetails,
+  getUserTransaction,
+  getuserTransation,
+  getuserTransationByid,
+  getUserWinHistory,
+  updateUserAcitvity,
+  updateUserPin,
+  userBankdetails,
+  userUpiDetails,
+  withdrawAmountAPi,
+} from "../service/service";
+import { Loader } from "../Common/Loader";
 import Table from "../Common/Table";
 
 const UserDetails = () => {
-  const { state } = useLocation()
-  const [show, setShow] = useState(false)
-  const [showPin, setShowPin] = useState(false)
-  const [showWithDraw, setShowWithDrawa] = useState(false)
-  const [amount, setAmount] = useState("")
-  const [withdrawAmount, setWithdrawAmount] = useState("")
-  const [pin, setPin] = useState("")
-  const [loader, setLoader] = useState(false)
-  const [data, setData] = useState({})
-  const[type,setType]=useState("ALL")
+  const { state } = useLocation();
+  const [show, setShow] = useState(false);
+  const [showPin, setShowPin] = useState(false);
+  const [showWithDraw, setShowWithDrawa] = useState(false);
+  const [amount, setAmount] = useState("");
+  const [withdrawAmount, setWithdrawAmount] = useState("");
+  const [pin, setPin] = useState("");
+  const [loader, setLoader] = useState(false);
+  const [data, setData] = useState({});
+  const [type, setType] = useState("ALL");
   const handleClose = () => {
-    setShow(false)
-    setShowPin(false)
-  }
+    setShow(false);
+    setShowPin(false);
+  };
 
   const handleSubmit = () => {
     let data = {
       amount: amount,
-      user_id: state?.id
-    }
-    addFund(data).then((res) => {
-      handleGetUserDetails()
-      alert("fund added successfully")
-      setShow(false)
-
-    }).catch((err) => {
-      alert("something went wrong")
-      console.log('error', err)
-    })
-  }
+      user_id: state?.id,
+    };
+    addFund(data)
+      .then((res) => {
+        handleGetUserDetails();
+        alert("fund added successfully");
+        setShow(false);
+      })
+      .catch((err) => {
+        alert("something went wrong");
+        console.log("error", err);
+      });
+  };
   useEffect(() => {
-    handleGetFundHistory()
-    handleGetUserDetails()
-    handleGetUserBankDetails()
-    handleGetUserUpiDetails()
-    handleGetBidHistory()
-    
-  }, [])
+    handleGetFundHistory();
+    handleGetUserDetails();
+    handleGetUserBankDetails();
+    handleGetUserUpiDetails();
+    handleGetBidHistory();
+  }, []);
 
   const handleGetUserDetails = () => {
-    setLoader(true)
-    getInformation()
-    getuserDetails(state?.id).then((res) => {
-      setLoader(false)
-      setData(res?.data?.data)
-    }).catch((err) => {
-      setLoader(false)
-      alert("something went wrong")
-      console.log('error', err)
-    })
-  }
+    setLoader(true);
+    getInformation();
+    getuserDetails(state?.id)
+      .then((res) => {
+        setLoader(false);
+        setData(res?.data?.data);
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert("something went wrong");
+        console.log("error", err);
+      });
+  };
 
   const handleUpdateUserActivity = (data) => {
-    setLoader(true)
-    updateUserAcitvity(data).then((res) => {
-      setLoader(false)
-      handleGetUserDetails()
-    }).catch((err) => {
-      setLoader(false)
-      alert("something went wrong")
-      console.log('error', err)
-    })
-  }
+    setLoader(true);
+    updateUserAcitvity(data)
+      .then((res) => {
+        setLoader(false);
+        handleGetUserDetails();
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert("something went wrong");
+        console.log("error", err);
+      });
+  };
 
   const handleUpdatePin = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let reqBody = {
       user_id: state?.id,
-      user_pin: pin
-    }
-    setLoader(true)
-    updateUserPin(reqBody).then((res) => {
-      handleGetUserDetails()
-      setLoader(false)
-      setShowPin(false)
-    }).catch((err) => {
-      setLoader(false)
-      alert("something went wrong")
-      console.log('error', err)
-    })
-  }
-
+      user_pin: pin,
+    };
+    setLoader(true);
+    updateUserPin(reqBody)
+      .then((res) => {
+        handleGetUserDetails();
+        setLoader(false);
+        setShowPin(false);
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert("something went wrong");
+        console.log("error", err);
+      });
+  };
 
   const handleWithdraw = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let reqBody = {
       user_id: state?.id,
-      amount: withdrawAmount
-    }
-    setLoader(true)
-    withdrawAmountAPi(reqBody).then((res) => {
-      handleGetUserDetails()
+      amount: withdrawAmount,
+    };
+    setLoader(true);
+    withdrawAmountAPi(reqBody)
+      .then((res) => {
+        handleGetUserDetails();
 
-      setLoader(false)
-      setShowWithDrawa(false)
-    }).catch((err) => {
-      setLoader(false)
-      alert("something went wrong")
-      console.log('error', err)
-    })
-  }
-  const [list, setList] = useState([])
+        setLoader(false);
+        setShowWithDrawa(false);
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert("something went wrong");
+        console.log("error", err);
+      });
+  };
+  const [list, setList] = useState([]);
 
   const getInformation = () => {
-    setLoader(true)
-    getuserTransationByid(state?.id).then((res) => {
-      setList(res.data.data)
-      setLoader(false)
-      console.log("res.data", res.data)
-    }).catch((err) => {
-      setLoader(false)
-      alert(err || "something went wrong ")
-    })
-  }
-  const [fundHistory, setFundHistory] = useState([])
+    setLoader(true);
+    getuserTransationByid(state?.id)
+      .then((res) => {
+        setList(res.data.data);
+        setLoader(false);
+        console.log("res.data", res.data);
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert(err || "something went wrong ");
+      });
+  };
+  const [fundHistory, setFundHistory] = useState([]);
 
   const handleGetFundHistory = () => {
-    setLoader(true)
-    getFundHistory(state?.id).then((res) => {
-      setLoader(false)
-      setFundHistory(res.data.data)
-     
-    }).catch((err) => {
-      setLoader(false)
-      alert(err || "something went wrong ")
-    })
-  }
-const[bidHistoryList,setBidHistoryList]=useState([])
+    setLoader(true);
+    getFundHistory(state?.id)
+      .then((res) => {
+        setLoader(false);
+        setFundHistory(res.data.data);
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert(err || "something went wrong ");
+      });
+  };
+  const [bidHistoryList, setBidHistoryList] = useState([]);
 
-  const handleGetBidHistory =()=>{
-    getUserBidHistory("get-bid",state?.id).then((res)=>{
-    setBidHistoryList(res.data?.data)
-    }).catch((err) => {
-      setLoader(false)
-      alert(err || "something went wrong ")
-    })
-  }
-  
+  const handleGetBidHistory = () => {
+    getUserBidHistory("get-bid", state?.id)
+      .then((res) => {
+        setBidHistoryList(res?.data?.data);
+        console.log(res?.data?.data, "get-bid");
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert(err || "something went wrong ");
+      });
+  };
+  const [winHistoryList, setWinHistoryList] = useState([]);
 
-  
-  
-useEffect(()=>{
-  handleTransactionHistory()
-},[])
-const[transaction_history,setTransactionHistory]=useState([])
-  const handleTransactionHistory =()=>{
-    getUserTransaction(state?.id,type).then((res)=>{
-      setTransactionHistory(res.data?.data)
-    }).catch((err) => {
-      setLoader(false)
-      alert(err || "something went wrong ")
-    })
-  }
+  const handleWinBidHistory = () => {
+    getUserWinHistory("get-win", state?.id)
+      .then((res) => {
+        setWinHistoryList(res?.data?.data);
+        console.log(res?.data?.data, "get-win");
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert(err || "something went wrong ");
+      });
+  };
 
-console.log("transaction_history",transaction_history)
+  useEffect(() => {
+    handleTransactionHistory();
+    handleWinBidHistory();
+  }, []);
+  const [transaction_history, setTransactionHistory] = useState([]);
+  const handleTransactionHistory = (value) => {
+    let temp = value||"ALL"
+    getUserTransaction(state?.id, temp)
+      .then((res) => {
+        setTransactionHistory(res?.data?.data);
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert(err || "something went wrong ");
+      });
+  };
 
+  // console.log("transaction_history",transaction_history)
 
-  const[userBank,setUserBank]=useState([])
-  const[userUpi,setUserUpi]=useState([])
+  const [userBank, setUserBank] = useState([]);
+  const [userUpi, setUserUpi] = useState([]);
 
-  const handleGetUserBankDetails =()=>{
-    setLoader(true)
-    userBankdetails(state?.id).then((res)=>{
-      setLoader(false)
-     console.log("res",res?.data?.data)
-     setUserBank(res?.data?.data)
-     
+  const handleGetUserBankDetails = () => {
+    setLoader(true);
+    userBankdetails(state?.id)
+      .then((res) => {
+        setLoader(false);
+        //  console.log("res",res?.data?.data)
+        setUserBank(res?.data?.data);
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert(err || "something went wrong ");
+      });
+  };
 
-     
-    }).catch((err) => {
-      setLoader(false)
-      alert(err || "something went wrong ")
-    })
-  }
-
-  const handleGetUserUpiDetails =()=>{
-    setLoader(true)
-    userUpiDetails(state?.id).then((res)=>{
-      setLoader(false)
-     setUserUpi(res?.data?.data)     
-    }).catch((err) => {
-      setLoader(false)
-      alert(err || "something went wrong ")
-    })
-  }
-  
-  
-  
+  const handleGetUserUpiDetails = () => {
+    setLoader(true);
+    userUpiDetails(state?.id)
+      .then((res) => {
+        setLoader(false);
+        setUserUpi(res?.data?.data);
+      })
+      .catch((err) => {
+        setLoader(false);
+        alert(err || "something went wrong ");
+      });
+  };
 
   return (
     <>
       {loader ? <Loader /> : null}
-      <div class="content-wrapper">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-              <div class="page-title-box d-flex align-items-center justify-content-between">
-                <h4 class="mb-2 font-size-18">User Details</h4>
+      <div className="content-wrapper">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              <div className="page-title-box d-flex align-items-center justify-content-between">
+                <h4 className="mb-2 font-size-18">User Details</h4>
               </div>
             </div>
           </div>
 
-          <div class="row row_col">
-            <div class="col-xl-4">
-              <div class="card overflow-hidden h100p mb-4">
-                <div class="bg-soft-primary">
-                  <div class="row">
-                    <div class="col-7">
-                      <div class="text-primary p-3">
-                        <h5 class="text-primary" style={{textTransform:"capitalize"}}>{data?.first_name + " " + data?.last_name}</h5>
+          <div className="row row_col">
+            <div className="col-xl-4">
+              <div className="card overflow-hidden h100p mb-4">
+                <div className="bg-soft-primary">
+                  <div className="row">
+                    <div className="col-7">
+                      <div className="text-primary p-3">
+                        <h5
+                          className="text-primary"
+                          style={{ textTransform: "capitalize" }}
+                        >
+                          {data?.first_name + " " + data?.last_name}
+                        </h5>
                         <p>
                           {data?.phone_number}
                           <a href={`tel:${data?.phone_number}`}>
-                            <i class="mdi mdi-cellphone-iphone"></i>
+                            <i className="mdi mdi-cellphone-iphone"></i>
                           </a>
-                          <a href={`https://wa.me/91${data?.phone_number}`} target="blank">
-                            <i class="mdi mdi-whatsapp"></i>
+                          <a
+                            href={`https://wa.me/91${data?.phone_number}`}
+                            target="blank"
+                          >
+                            <i className="mdi mdi-whatsapp"></i>
                           </a>
                         </p>
                       </div>
                     </div>
-                    <div class="col-5 align-center">
-                      <div class="p-3 text-right">
-                        <div class="mb-2">
-                          Active :  
+                    <div className="col-5 align-center">
+                      <div className="p-3 text-right">
+                        <div className="mb-2">
+                          Active :
                           <a
                             role="button"
-                            class="activeDeactiveStatus ml-1"
+                            className="activeDeactiveStatus ml-1"
                             id="success-10603-tb_user-user_id-status"
                             onClick={() => {
-                              handleUpdateUserActivity({ user_status: !data?.user_status ? "True" : "False", user_id: state?.id })
+                              handleUpdateUserActivity({
+                                user_status: !data?.user_status
+                                  ? "True"
+                                  : "False",
+                                user_id: state?.id,
+                              });
                             }}
                           >
-                            <span class={`badge badge-pill ${data?.user_status ? "badge-success" : "badge-danger"} font-size-12`}>
+                            <span
+                              className={`badge badge-pill ${
+                                data?.user_status
+                                  ? "badge-success"
+                                  : "badge-danger"
+                              } font-size-12`}
+                            >
                               {data?.user_status ? "Yes" : "No"}
                             </span>
                           </a>
                         </div>
-                        <div class="mb-2">
-                          Betting : 
+                        <div className="mb-2">
+                          Betting :
                           <a
                             role="button"
-                            class="activeDeactiveStatus ml-1"
+                            className="activeDeactiveStatus ml-1"
                             id="success-10603-tb_user-user_id-betting_status"
                             onClick={() => {
-                              handleUpdateUserActivity({ betting: !data?.betting ? "True" : "False", user_id: state?.id })
+                              handleUpdateUserActivity({
+                                betting: !data?.betting ? "True" : "False",
+                                user_id: state?.id,
+                              });
                             }}
                           >
-                            <span class={`badge badge-pill ${data?.betting ? "badge-success" : "badge-danger"} font-size-12`}>
+                            <span
+                              className={`badge badge-pill ${
+                                data?.betting ? "badge-success" : "badge-danger"
+                              } font-size-12`}
+                            >
                               {data?.betting ? "Yes" : "No"}
                             </span>
                           </a>
                         </div>
-                        <div class="mb-2">
-                          TP : 
+                        <div className="mb-2">
+                          TP :
                           <a
                             role="button"
-                            class="activeDeactiveStatus ml-1"
+                            className="activeDeactiveStatus ml-1"
                             id="danger-10603-tb_user-user_id-transfer_point_status"
                             onClick={() => {
-                              handleUpdateUserActivity({ transfer: !data?.transfer ? "True" : "False", user_id: state?.id })
+                              handleUpdateUserActivity({
+                                transfer: !data?.transfer ? "True" : "False",
+                                user_id: state?.id,
+                              });
                             }}
                           >
-                            <span class={`badge badge-pill ${data?.transfer ? "badge-success" : "badge-danger"} font-size-12`}>
+                            <span
+                              className={`badge badge-pill ${
+                                data?.transfer
+                                  ? "badge-success"
+                                  : "badge-danger"
+                              } font-size-12`}
+                            >
                               {data?.transfer ? "Yes" : "No"}
                             </span>
                           </a>
@@ -280,31 +354,33 @@ console.log("transaction_history",transaction_history)
                     </div>
                   </div>
                 </div>
-                <div class="card-body pt-0">
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <div class="avatar-md profile-user-wid mb-4">
+                <div className="card-body pt-0">
+                  <div className="row">
+                    <div className="col-sm-4">
+                      <div className="avatar-md profile-user-wid mb-4">
                         <img
                           src="http://greatmatka.club/adminassets/images/user.png"
                           alt=""
-                          class="img-thumbnail rounded-circle"
+                          className="img-thumbnail rounded-circle"
                         />
                       </div>
                     </div>
 
-                    <div class="col-sm-8">
-                      <div class="pt-4">
-                        <div class="row">
-                          <div class="col-6">
-                            <p class="text-muted mb-0">Security Pin</p>
-                            <h5 class="font-size-15 mb-0">{data?.user_pin || "NA"}</h5>
+                    <div className="col-sm-8">
+                      <div className="pt-4">
+                        <div className="row">
+                          <div className="col-6">
+                            <p className="text-muted mb-0">Security Pin</p>
+                            <h5 className="font-size-15 mb-0">
+                              {data?.user_pin || "NA"}
+                            </h5>
                           </div>
-                          <div class="col-6">
+                          <div className="col-6">
                             <button
-                              class="btn btn-primary btn-sm"
+                              className="btn btn-primary btn-sm"
                               id="changePin"
                               onClick={() => {
-                                setShowPin(true)
+                                setShowPin(true);
                               }}
                             >
                               Change
@@ -315,19 +391,19 @@ console.log("transaction_history",transaction_history)
                     </div>
                   </div>
                 </div>
-                <div class="card-body border-top">
-                  <div class="row">
-                    <div class="col-sm-12">
+                <div className="card-body border-top">
+                  <div className="row">
+                    <div className="col-sm-12">
                       <div>
-                        <p class="text-muted mb-2">Available Balance</p>
+                        <p className="text-muted mb-2">Available Balance</p>
                         <h5>{data?.total_amount}</h5>
                       </div>
                     </div>
 
-                    <div class="col-sm-6">
-                      <div class="mt-3">
+                    <div className="col-sm-6">
+                      <div className="mt-3">
                         <button
-                          class="btn btn-success btn-sm w-md btn-block"
+                          className="btn btn-success btn-sm w-md btn-block"
                           id="adFund"
                           onClick={() => setShow(true)}
                         >
@@ -335,13 +411,13 @@ console.log("transaction_history",transaction_history)
                         </button>
                       </div>
                     </div>
-                    <div class="col-sm-6">
-                      <div class="mt-3">
+                    <div className="col-sm-6">
+                      <div className="mt-3">
                         <button
-                          class="btn btn-danger btn-sm w-md btn-block"
+                          className="btn btn-danger btn-sm w-md btn-block"
                           id="withdrawFund"
                           onClick={() => {
-                            setShowWithDrawa(true)
+                            setShowWithDrawa(true);
                           }}
                         >
                           Withdraw Fund
@@ -353,12 +429,12 @@ console.log("transaction_history",transaction_history)
               </div>
             </div>
 
-            <div class="col-xl-8">
-              <div class="card h100p">
-                <div class="card-body">
-                  <h4 class="card-title mb-4">Personal Information</h4>
-                  <div class="table-responsive">
-                    <table class="table table-nowrap mb-0">
+            <div className="col-xl-8">
+              <div className="card h100p">
+                <div className="card-body">
+                  <h4 className="card-title mb-4">Personal Information</h4>
+                  <div className="table-responsive">
+                    <table className="table table-nowrap mb-0">
                       <tbody>
                         <tr>
                           <th scope="row">Full Name :</th>
@@ -371,10 +447,10 @@ console.log("transaction_history",transaction_history)
                           <td>
                             {state?.phone_number}{" "}
                             <a href="tel:917847967695">
-                              <i class="mdi mdi-cellphone-iphone"></i>
+                              <i className="mdi mdi-cellphone-iphone"></i>
                             </a>
                             <a href="https://wa.me/917847967695" target="blank">
-                              <i class="mdi mdi-whatsapp"></i>
+                              <i className="mdi mdi-whatsapp"></i>
                             </a>
                           </td>
                           <th scope="row">Password :</th>
@@ -406,9 +482,17 @@ console.log("transaction_history",transaction_history)
                         </tr>
                         <tr>
                           <th scope="row">Creation Date :</th>
-                          <td>{moment(state?.created_at).format('MMMM Do YYYY, h:mm a')}</td>
+                          <td>
+                            {moment(state?.created_at).format(
+                              "MMMM Do YYYY, h:mm a"
+                            )}
+                          </td>
                           <th scope="row">Last Seen :</th>
-                          <td>{moment(state?.updated_at).format('MMMM Do YYYY, h:mm a')}</td>
+                          <td>
+                            {moment(state?.updated_at).format(
+                              "MMMM Do YYYY, h:mm a"
+                            )}
+                          </td>
                         </tr>
                       </tbody>
                     </table>
@@ -416,40 +500,79 @@ console.log("transaction_history",transaction_history)
                 </div>
               </div>
             </div>
-            {userBank.length>0?
-            userBank?.map((item,index)=>{
-              return(
-                <div key={index} class="col-xl-12">
-                <div class="card mb-4">
-                  <div class="card-body">
-                    <h4 class="card-title mb-4">Payment Information</h4>
-                    <div class="table-responsive">
-                      <table class="table table-nowrap mb-0">
+            {userBank.length > 0 ? (
+              userBank?.map((item, index) => {
+                return (
+                  <div key={index} className="col-xl-12">
+                    <div className="card mb-4">
+                      <div className="card-body">
+                        <h4 className="card-title mb-4">Payment Information</h4>
+                        <div className="table-responsive">
+                          <table className="table table-nowrap mb-0">
+                            <tbody>
+                              <tr>
+                                <th scope="row">Bank Name :</th>
+                                <td>{item?.bank_name}</td>
+                                <th scope="row">Branch Address :</th>
+                                <td>{item?.bank_address}</td>
+                                <th scope="row"></th>
+                                <td></td>
+                              </tr>
+                              <tr>
+                                <th scope="row">A/c Holder Name :</th>
+                                <td>{item?.account_holder_name}</td>
+                                <th scope="row">A/c Number :</th>
+                                <td>{item?.account_number}</td>
+                                <th scope="row">IFSC Code :</th>
+                                <td>{item?.ifsc_code}</td>
+                              </tr>
+                              <tr>
+                                <th scope="row">Google Pay No. :</th>
+                                <td>{userUpi[0]?.upi_id}</td>
+                                <th scope="row">PhonePe No. :</th>
+                                <td>{userUpi[1]?.upi_id}</td>
+                                <th scope="row">Paytm No. :</th>
+                                <td>{userUpi[2]?.upi_id}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="col-xl-12">
+                <div className="card mb-4">
+                  <div className="card-body">
+                    <h4 className="card-title mb-4">Payment Information</h4>
+                    <div className="table-responsive">
+                      <table className="table table-nowrap mb-0">
                         <tbody>
                           <tr>
                             <th scope="row">Bank Name :</th>
-                            <td>{item?.bank_name}</td>
+                            <td>{"NA"}</td>
                             <th scope="row">Branch Address :</th>
-                            <td>{item?.bank_address}</td>
+                            <td>{"NA"}</td>
                             <th scope="row"></th>
                             <td></td>
                           </tr>
                           <tr>
                             <th scope="row">A/c Holder Name :</th>
-                            <td>{item?.account_holder_name}</td>
+                            <td>{"NA"}</td>
                             <th scope="row">A/c Number :</th>
-                            <td>{item?.account_number}</td>
+                            <td>{"NA"}</td>
                             <th scope="row">IFSC Code :</th>
-                            <td>{item?.ifsc_code}</td>
+                            <td>{"NA"}</td>
                           </tr>
                           <tr>
-                          
                             <th scope="row">Google Pay No. :</th>
-                            <td>{userUpi[0]?.upi_id}</td>
+                            <td>{"NA"}</td>
                             <th scope="row">PhonePe No. :</th>
-                            <td>{userUpi[1]?.upi_id}</td>
+                            <td>{"NA"}</td>
                             <th scope="row">Paytm No. :</th>
-                            <td>{userUpi[2]?.upi_id}</td>
+                            <td>{"NA"}</td>
                           </tr>
                         </tbody>
                       </table>
@@ -457,71 +580,30 @@ console.log("transaction_history",transaction_history)
                   </div>
                 </div>
               </div>
-              )
-            }):  <div  class="col-xl-12">
-            <div class="card mb-4">
-              <div class="card-body">
-                <h4 class="card-title mb-4">Payment Information</h4>
-                <div class="table-responsive">
-                  <table class="table table-nowrap mb-0">
-                    <tbody>
-                      <tr>
-                        <th scope="row">Bank Name :</th>
-                        <td>{"NA"}</td>
-                        <th scope="row">Branch Address :</th>
-                        <td>{"NA"}</td>
-                        <th scope="row"></th>
-                        <td></td>
-                      </tr>
-                      <tr>
-                        <th scope="row">A/c Holder Name :</th>
-                        <td>{"NA"}</td>
-                        <th scope="row">A/c Number :</th>
-                        <td>{"NA"}</td>
-                        <th scope="row">IFSC Code :</th>
-                        <td>{"NA"}</td>
-                      </tr>
-                      <tr>
-                      
-                        <th scope="row">Google Pay No. :</th>
-                        <td>{"NA"}</td>
-                        <th scope="row">PhonePe No. :</th>
-                        <td>{"NA"}</td>
-                        <th scope="row">Paytm No. :</th>
-                        <td>{"NA"}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-            }
-
-           
+            )}
           </div>
         </div>
 
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <h4 class="card-title">Add Fund Request List</h4>
-                  <div class="demo-gallery">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              <div className="card mb-4">
+                <div className="card-body">
+                  <h4 className="card-title">Add Fund Request List</h4>
+                  <div className="demo-gallery">
                     <div
                       id="myTable_wrapper"
-                      class="dataTables_wrapper dt-bootstrap4 no-footer"
+                      className="dataTables_wrapper dt-bootstrap4 no-footer"
                     >
-                      <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                          <div class="dataTables_length" id="myTable_length">
+                      <div className="row">
+                        <div className="col-sm-12 col-md-6">
+                          <div className="dataTables_length" id="myTable_length">
                             <label>
                               Show{" "}
                               <select
                                 name="myTable_length"
                                 aria-controls="myTable"
-                                class="custom-select custom-select-sm form-control form-control-sm"
+                                className="custom-select custom-select-sm form-control form-control-sm"
                               >
                                 <option value="10">10</option>
                                 <option value="25">25</option>
@@ -532,13 +614,13 @@ console.log("transaction_history",transaction_history)
                             </label>
                           </div>
                         </div>
-                        <div class="col-sm-12 col-md-6">
-                          <div id="myTable_filter" class="dataTables_filter">
+                        <div className="col-sm-12 col-md-6">
+                          <div id="myTable_filter" className="dataTables_filter">
                             <label>
                               Search:
                               <input
                                 type="search"
-                                class="form-control form-control-sm"
+                                className="form-control form-control-sm"
                                 placeholder=""
                                 aria-controls="myTable"
                               />
@@ -546,21 +628,19 @@ console.log("transaction_history",transaction_history)
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-sm-12">
+                      <div className="row">
+                        <div className="col-sm-12">
                           <table
                             id="myTable"
-                            class="table table-striped table-bordered list-unstyled dataTable no-footer"
+                            className="table table-striped table-bordered list-unstyled dataTable no-footer"
                             role="grid"
                             aria-describedby="myTable_info"
                           >
                             <thead>
                               <tr>
-                                <th>
-                                  User Name
-                                </th>
+                                <th>User Name</th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="myTable"
                                   rowspan="1"
@@ -570,9 +650,8 @@ console.log("transaction_history",transaction_history)
                                   Amount
                                 </th>
 
-
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="myTable"
                                   rowspan="1"
@@ -581,36 +660,30 @@ console.log("transaction_history",transaction_history)
                                 >
                                   Date
                                 </th>
-
                               </tr>
                             </thead>
                             <tbody>
-                            
-                                {fundHistory?.map((item, index) => {
-                                  return (
-                                    <tr>
-                                      <td  >
-                                       {item?.user_id__first_name}
-                                      </td>
-                                      <td  >
-                                      {item?.amount}
-                                      </td>
-                                      <td  >
-                                      {moment(item?.created_at).format("YYYY-MM-DD")}
-                                      </td>
-                                    
-                                    </tr>
-                                  )
-                                })}
-                             
+                              {fundHistory?.map((item, index) => {
+                                return (
+                                  <tr>
+                                    <td>{item?.user_id__first_name}</td>
+                                    <td>{item?.amount}</td>
+                                    <td>
+                                      {moment(item?.created_at).format(
+                                        "YYYY-MM-DD"
+                                      )}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
                             </tbody>
                           </table>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-sm-12 col-md-5">
+                      <div className="row">
+                        <div className="col-sm-12 col-md-5">
                           <div
-                            class="dataTables_info"
+                            className="dataTables_info"
                             id="myTable_info"
                             role="status"
                             aria-live="polite"
@@ -618,14 +691,14 @@ console.log("transaction_history",transaction_history)
                             Showing 0 to 0 of 0 entries
                           </div>
                         </div>
-                        <div class="col-sm-12 col-md-7">
+                        <div className="col-sm-12 col-md-7">
                           <div
-                            class="dataTables_paginate paging_simple_numbers"
+                            className="dataTables_paginate paging_simple_numbers"
                             id="myTable_paginate"
                           >
-                            <ul class="pagination">
+                            <ul className="pagination">
                               <li
-                                class="paginate_button page-item previous disabled"
+                                className="paginate_button page-item previous disabled"
                                 id="myTable_previous"
                               >
                                 <a
@@ -633,13 +706,13 @@ console.log("transaction_history",transaction_history)
                                   aria-controls="myTable"
                                   data-dt-idx="0"
                                   tabindex="0"
-                                  class="page-link"
+                                  className="page-link"
                                 >
                                   Previous
                                 </a>
                               </li>
                               <li
-                                class="paginate_button page-item next disabled"
+                                className="paginate_button page-item next disabled"
                                 id="myTable_next"
                               >
                                 <a
@@ -647,7 +720,7 @@ console.log("transaction_history",transaction_history)
                                   aria-controls="myTable"
                                   data-dt-idx="1"
                                   tabindex="0"
-                                  class="page-link"
+                                  className="page-link"
                                 >
                                   Next
                                 </a>
@@ -665,21 +738,21 @@ console.log("transaction_history",transaction_history)
           </div>
         </div>
 
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <h4 class="card-title">Withdraw Fund Request List</h4>
-                  <div class="demo-gallery">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              <div className="card mb-4">
+                <div className="card-body">
+                  <h4 className="card-title">Withdraw Fund Request List</h4>
+                  <div className="demo-gallery">
                     <div
                       id="withdrawTable_wrapper"
-                      class="dataTables_wrapper dt-bootstrap4 no-footer"
+                      className="dataTables_wrapper dt-bootstrap4 no-footer"
                     >
-                      <div class="row">
-                        <div class="col-sm-12 col-md-6">
+                      <div className="row">
+                        <div className="col-sm-12 col-md-6">
                           <div
-                            class="dataTables_length"
+                            className="dataTables_length"
                             id="withdrawTable_length"
                           >
                             <label>
@@ -687,7 +760,7 @@ console.log("transaction_history",transaction_history)
                               <select
                                 name="withdrawTable_length"
                                 aria-controls="withdrawTable"
-                                class="custom-select custom-select-sm form-control form-control-sm"
+                                className="custom-select custom-select-sm form-control form-control-sm"
                               >
                                 <option value="10">10</option>
                                 <option value="25">25</option>
@@ -698,16 +771,16 @@ console.log("transaction_history",transaction_history)
                             </label>
                           </div>
                         </div>
-                        <div class="col-sm-12 col-md-6">
+                        <div className="col-sm-12 col-md-6">
                           <div
                             id="withdrawTable_filter"
-                            class="dataTables_filter"
+                            className="dataTables_filter"
                           >
                             <label>
                               Search:
                               <input
                                 type="search"
-                                class="form-control form-control-sm"
+                                className="form-control form-control-sm"
                                 placeholder=""
                                 aria-controls="withdrawTable"
                               />
@@ -715,15 +788,20 @@ console.log("transaction_history",transaction_history)
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-sm-12">
-                          <Table list={list} handleGetUserDetails={handleGetUserDetails} getInformation={getInformation} head="Fund Request Auto Deposit History" />
+                      <div className="row">
+                        <div className="col-sm-12">
+                          <Table
+                            list={list}
+                            handleGetUserDetails={handleGetUserDetails}
+                            getInformation={getInformation}
+                            head="Fund Request Auto Deposit History"
+                          />
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-sm-12 col-md-5">
+                      <div className="row">
+                        <div className="col-sm-12 col-md-5">
                           <div
-                            class="dataTables_info"
+                            className="dataTables_info"
                             id="withdrawTable_info"
                             role="status"
                             aria-live="polite"
@@ -731,14 +809,14 @@ console.log("transaction_history",transaction_history)
                             Showing 0 to 0 of 0 entries
                           </div>
                         </div>
-                        <div class="col-sm-12 col-md-7">
+                        <div className="col-sm-12 col-md-7">
                           <div
-                            class="dataTables_paginate paging_simple_numbers"
+                            className="dataTables_paginate paging_simple_numbers"
                             id="withdrawTable_paginate"
                           >
-                            <ul class="pagination">
+                            <ul className="pagination">
                               <li
-                                class="paginate_button page-item previous disabled"
+                                className="paginate_button page-item previous disabled"
                                 id="withdrawTable_previous"
                               >
                                 <a
@@ -746,13 +824,13 @@ console.log("transaction_history",transaction_history)
                                   aria-controls="withdrawTable"
                                   data-dt-idx="0"
                                   tabindex="0"
-                                  class="page-link"
+                                  className="page-link"
                                 >
                                   Previous
                                 </a>
                               </li>
                               <li
-                                class="paginate_button page-item next disabled"
+                                className="paginate_button page-item next disabled"
                                 id="withdrawTable_next"
                               >
                                 <a
@@ -760,7 +838,7 @@ console.log("transaction_history",transaction_history)
                                   aria-controls="withdrawTable"
                                   data-dt-idx="1"
                                   tabindex="0"
-                                  class="page-link"
+                                  className="page-link"
                                 >
                                   Next
                                 </a>
@@ -779,21 +857,21 @@ console.log("transaction_history",transaction_history)
         </div>
         <input type="hidden" id="user_id" value="10603" />
 
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-12">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <h4 class="card-title">Bid History</h4>
-                  <div class="">
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-12">
+              <div className="card mb-4">
+                <div className="card-body">
+                  <h4 className="card-title">Bid History</h4>
+                  <div className="">
                     <div
                       id="bidHistoryTable_wrapper"
-                      class="dataTables_wrapper dt-bootstrap4 no-footer"
+                      className="dataTables_wrapper dt-bootstrap4 no-footer"
                     >
-                      <div class="row">
-                        <div class="col-sm-12 col-md-6">
+                      <div className="row">
+                        <div className="col-sm-12 col-md-6">
                           <div
-                            class="dataTables_length"
+                            className="dataTables_length"
                             id="bidHistoryTable_length"
                           >
                             <label>
@@ -801,7 +879,7 @@ console.log("transaction_history",transaction_history)
                               <select
                                 name="bidHistoryTable_length"
                                 aria-controls="bidHistoryTable"
-                                class="custom-select custom-select-sm form-control form-control-sm"
+                                className="custom-select custom-select-sm form-control form-control-sm"
                               >
                                 <option value="10">10</option>
                                 <option value="25">25</option>
@@ -812,16 +890,16 @@ console.log("transaction_history",transaction_history)
                             </label>
                           </div>
                         </div>
-                        <div class="col-sm-12 col-md-6">
+                        <div className="col-sm-12 col-md-6">
                           <div
                             id="bidHistoryTable_filter"
-                            class="dataTables_filter"
+                            className="dataTables_filter"
                           >
                             <label>
                               Search:
                               <input
                                 type="search"
-                                class="form-control form-control-sm"
+                                className="form-control form-control-sm"
                                 placeholder=""
                                 aria-controls="bidHistoryTable"
                               />
@@ -829,18 +907,18 @@ console.log("transaction_history",transaction_history)
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-sm-12">
+                      <div className="row">
+                        <div className="col-sm-12">
                           <table
                             id="bidHistoryTable"
-                            class="table table-striped table-bordered dataTable no-footer"
+                            className="table table-striped table-bordered dataTable no-footer"
                             role="grid"
                             aria-describedby="bidHistoryTable_info"
                           >
                             <thead>
                               <tr role="row">
                                 <th
-                                  class="sorting_desc"
+                                  className="sorting_desc"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -848,20 +926,10 @@ console.log("transaction_history",transaction_history)
                                   aria-sort="descending"
                                   aria-label="#: activate to sort column ascending"
                                 >
-                                  ID
+                                  #
                                 </th>
                                 <th
-                                  class="sorting"
-                                  tabindex="0"
-                                  aria-controls="bidHistoryTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Game Name: activate to sort column ascending"
-                                >
-                                  User Id
-                                </th>
-                                <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -871,57 +939,67 @@ console.log("transaction_history",transaction_history)
                                   Game Name
                                 </th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
+                                  tabindex="0"
+                                  aria-controls="bidHistoryTable"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Game Name: activate to sort column ascending"
+                                >
+                                  Game Type
+                                </th>
+                                <th
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
                                   colspan="1"
                                   aria-label="Game Type: activate to sort column ascending"
                                 >
-                                  First Name
+                                  Session
                                 </th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
                                   colspan="1"
                                   aria-label="Session: activate to sort column ascending"
                                 >
-                                  Session
+                                  Bid Digit
                                 </th>
-                                <th
-                                  class="sorting"
+                                {/* <th
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
                                   colspan="1"
                                   aria-label="Digits: activate to sort column ascending"
                                 >
-                                  Pana
-                                </th>
+                                  Close Digit
+                                </th> */}
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
                                   colspan="1"
                                   aria-label="Close Digits: activate to sort column ascending"
                                 >
-                                Pana Date
+                                  Points
                                 </th>
                                 <th
-                                  class="sorting"
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
                                   colspan="1"
                                   aria-label="Points: activate to sort column ascending"
                                 >
-                                  Points
+                                  Date
                                 </th>
-                                <th
-                                  class="sorting"
+                                {/* <th
+                                  className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
@@ -929,58 +1007,51 @@ console.log("transaction_history",transaction_history)
                                   aria-label="Date: activate to sort column ascending"
                                 >
                                   Date
-                                </th>
+                                </th> */}
                               </tr>
                             </thead>
                             <tbody>
-                              <tr class="odd">
-                              { bidHistoryList?.length>0?bidHistoryList?.map((item,index)=>{
-                              return(
-                              <>
-                               <td>
-                               {item?.id}
-                              </td>
-                              <td>
-                               {item?.user_id}
-                              </td>
-                              <td>
-                               {item?.market_inside__market_id__market_name}
-                              </td>
-                              <td>
-                               {item?.first_name}
-                              </td>
-                              <td>
-                               {item?.session}
-                              </td>
-                              <td>
-                               {item?.pana}
-                              </td>
-                              <td>
-                               {item?.pana_date}
-                              </td>
-                              <td>
-                               {item?.points}
-                              </td>
-                              <td>
-                               {moment(item?.created_at).format("DD-MM-YYYY")}
-                              </td>
-                              </>)}): 
-                              <td
-                                  valign="top"
-                                 
-                                  class="dataTables_empty"
-                                >
-                                  No data available in table
-                                </td>}
-                              </tr>
+                                {bidHistoryList?.length > 0 ? (
+                                  bidHistoryList?.map((item, index) => {
+                                    return (
+                                    <tr className="odd" key={index}> 
+                                      <>
+                                        <td>{index+1}</td>
+                                        <td>{item?.market_name}</td>
+                                        <td>
+                                          {
+                                            item?.market_inside_name
+                                          }
+                                        </td>
+                                        <td>
+                                          {item?.session === true ? "Open" : "Close"}
+                                        </td>
+                                        <td>{item?.pana}</td>
+                                        <td>{item?.points}</td>
+                                        <td>
+                                          {moment(item?.created_at).format(
+                                            "DD-MM-YYYY"
+                                          )}
+                                        </td>
+                                      </>
+                                    </tr>
+                                    );
+                                  })
+                                ) : (
+                                  <tr>
+                                    <td valign="top" className="dataTables_empty">
+                                      No data available in table
+                                    </td>
+                                  </tr>
+                                )}
                             </tbody>
                           </table>
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-sm-12 col-md-5">
+                      <div className="row">
+                        <div className="col-sm-12 col-md-5">
                           <div
-                            class="dataTables_info"
+                            className="dataTables_info"
                             id="bidHistoryTable_info"
                             role="status"
                             aria-live="polite"
@@ -988,14 +1059,14 @@ console.log("transaction_history",transaction_history)
                             Showing 0 to 0 of 0 entries
                           </div>
                         </div>
-                        <div class="col-sm-12 col-md-7">
+                        <div className="col-sm-12 col-md-7">
                           <div
-                            class="dataTables_paginate paging_simple_numbers"
+                            className="dataTables_paginate paging_simple_numbers"
                             id="bidHistoryTable_paginate"
                           >
-                            <ul class="pagination">
+                            <ul className="pagination">
                               <li
-                                class="paginate_button page-item previous disabled"
+                                className="paginate_button page-item previous disabled"
                                 id="bidHistoryTable_previous"
                               >
                                 <a
@@ -1003,13 +1074,13 @@ console.log("transaction_history",transaction_history)
                                   aria-controls="bidHistoryTable"
                                   data-dt-idx="0"
                                   tabindex="0"
-                                  class="page-link"
+                                  className="page-link"
                                 >
                                   Previous
                                 </a>
                               </li>
                               <li
-                                class="paginate_button page-item next disabled"
+                                className="paginate_button page-item next disabled"
                                 id="bidHistoryTable_next"
                               >
                                 <a
@@ -1017,7 +1088,7 @@ console.log("transaction_history",transaction_history)
                                   aria-controls="bidHistoryTable"
                                   data-dt-idx="1"
                                   tabindex="0"
-                                  class="page-link"
+                                  className="page-link"
                                 >
                                   Next
                                 </a>
@@ -1035,73 +1106,76 @@ console.log("transaction_history",transaction_history)
           </div>
         </div>
 
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-12 col-xl-12 xl-100">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <h4 class="card-title">Wallet Transaction History</h4>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-sm-12 col-xl-12 xl-100">
+              <div className="card mb-4">
+                <div className="card-body">
+                  <h4 className="card-title">Wallet Transaction History</h4>
                   <ul
-                    class="nav nav-tabs nav-tabs-custom nav-justified"
+                    className="nav nav-tabs nav-tabs-custom nav-justified"
                     id="top-tab"
                     role="tablist"
                   >
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <a
-                        class="nav-link active"
+                        className="nav-link active"
                         id="top-allr-tab"
                         data-toggle="tab"
                         href="#top-allr"
                         role="tab"
                         aria-controls="top-allr"
                         aria-selected="true"
+                        onClick={() => handleTransactionHistory()}
                       >
                         All
                       </a>
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <a
-                        class="nav-link"
+                        className="nav-link"
                         id="inr-top-tab"
                         data-toggle="tab"
                         href="#top-inr"
                         role="tab"
                         aria-controls="top-inr"
                         aria-selected="false"
+                        onClick={() => handleTransactionHistory("CREDIT")}
                       >
                         Credit
                       </a>
                     </li>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <a
-                        class="nav-link"
+                        className="nav-link"
                         id="outr-top-tab"
                         data-toggle="tab"
                         href="#top-outr"
                         role="tab"
                         aria-controls="top-outr"
                         aria-selected="false"
+                        onClick={() => handleTransactionHistory("DEBIT")}
                       >
                         Debit
                       </a>
                     </li>
                   </ul>
-                  <div class="tab-content p-3" id="top-tabContent">
+                  <div className="tab-content p-3" id="top-tabContent">
                     <div
-                      class="tab-pane fade show active"
+                      className="tab-pane fade show active"
                       id="top-allr"
                       role="tabpanel"
                       aria-labelledby="top-allr-tab"
                     >
-                      <div class="">
+                      <div className="">
                         <div
                           id="allTransactionTable_wrapper"
-                          class="dataTables_wrapper dt-bootstrap4 no-footer"
+                          className="dataTables_wrapper dt-bootstrap4 no-footer"
                         >
-                          <div class="row">
-                            <div class="col-sm-12 col-md-6">
+                          <div className="row">
+                            <div className="col-sm-12 col-md-6">
                               <div
-                                class="dataTables_length"
+                                className="dataTables_length"
                                 id="allTransactionTable_length"
                               >
                                 <label>
@@ -1109,7 +1183,7 @@ console.log("transaction_history",transaction_history)
                                   <select
                                     name="allTransactionTable_length"
                                     aria-controls="allTransactionTable"
-                                    class="custom-select custom-select-sm form-control form-control-sm"
+                                    className="custom-select custom-select-sm form-control form-control-sm"
                                   >
                                     <option value="10">10</option>
                                     <option value="25">25</option>
@@ -1120,16 +1194,16 @@ console.log("transaction_history",transaction_history)
                                 </label>
                               </div>
                             </div>
-                            <div class="col-sm-12 col-md-6">
+                            <div className="col-sm-12 col-md-6">
                               <div
                                 id="allTransactionTable_filter"
-                                class="dataTables_filter"
+                                className="dataTables_filter"
                               >
                                 <label>
                                   Search:
                                   <input
                                     type="search"
-                                    class="form-control form-control-sm"
+                                    className="form-control form-control-sm"
                                     placeholder=""
                                     aria-controls="allTransactionTable"
                                   />
@@ -1137,18 +1211,18 @@ console.log("transaction_history",transaction_history)
                               </div>
                             </div>
                           </div>
-                          <div class="row">
-                            <div class="col-sm-12">
+                          <div className="row">
+                            <div className="col-sm-12">
                               <table
                                 id="allTransactionTable"
-                                class="table table-striped table-bordered dataTable no-footer"
+                                className="table table-striped table-bordered dataTable no-footer"
                                 role="grid"
                                 aria-describedby="allTransactionTable_info"
                               >
                                 <thead>
                                   <tr role="row">
                                     <th
-                                      class="sorting_desc"
+                                      className="sorting_desc"
                                       tabindex="0"
                                       aria-controls="allTransactionTable"
                                       rowspan="1"
@@ -1159,7 +1233,7 @@ console.log("transaction_history",transaction_history)
                                       #
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="allTransactionTable"
                                       rowspan="1"
@@ -1169,7 +1243,7 @@ console.log("transaction_history",transaction_history)
                                       Amount
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="allTransactionTable"
                                       rowspan="1"
@@ -1179,17 +1253,7 @@ console.log("transaction_history",transaction_history)
                                       Transaction Note
                                     </th>
                                     <th
-                                      class="sorting"
-                                      tabindex="0"
-                                      aria-controls="allTransactionTable"
-                                      rowspan="1"
-                                      colspan="1"
-                                      aria-label="Transfer Note: activate to sort column ascending"
-                                    >
-                                      Transfer Note
-                                    </th>
-                                    <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="allTransactionTable"
                                       rowspan="1"
@@ -1198,44 +1262,33 @@ console.log("transaction_history",transaction_history)
                                     >
                                       Date
                                     </th>
-                                    <th
-                                      class="sorting"
-                                      tabindex="0"
-                                      aria-controls="allTransactionTable"
-                                      rowspan="1"
-                                      colspan="1"
-                                      aria-label="Tx Req. No.: activate to sort column ascending"
-                                    >
-                                      Tx Req. No.
-                                    </th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                 
-                                    {
-                                      transaction_history.map((item,index)=>{
-                                  
-                                      <tr role="row" class="odd" key={index}>
-                                     <td class="sorting_1">{item?.id}</td>
-                                    <td>{item?.user_id__id}</td>
-                                    <td>{item?.user_id__first_name}</td>
-                                    <td>N/A</td>
-                                    <td>20 Sep 2023 09:18:50 PM</td>
-                                    <td>7437706</td>
-                                    </tr>
-                                  
-                                      })
-                                    }
-                                    
-                               
+                                  {transaction_history?.map((item, index) => {
+                                    return (
+                                      <tr role="row" className="odd" key={index}>
+                                        <td>{item?.id}</td>
+                                        <td>{item?.amount}</td>
+                                        <td className="sorting_1">
+                                          {item?.transaction_type}
+                                        </td>
+                                        <td>
+                                          {moment(item?.created_at).format(
+                                            "YYYY-MM-DD"
+                                          )}
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
                                 </tbody>
                               </table>
                             </div>
                           </div>
-                          <div class="row">
-                            <div class="col-sm-12 col-md-5">
+                          <div className="row">
+                            <div className="col-sm-12 col-md-5">
                               <div
-                                class="dataTables_info"
+                                className="dataTables_info"
                                 id="allTransactionTable_info"
                                 role="status"
                                 aria-live="polite"
@@ -1243,14 +1296,14 @@ console.log("transaction_history",transaction_history)
                                 Showing 1 to 1 of 1 entries
                               </div>
                             </div>
-                            <div class="col-sm-12 col-md-7">
+                            <div className="col-sm-12 col-md-7">
                               <div
-                                class="dataTables_paginate paging_simple_numbers"
+                                className="dataTables_paginate paging_simple_numbers"
                                 id="allTransactionTable_paginate"
                               >
-                                <ul class="pagination">
+                                <ul className="pagination">
                                   <li
-                                    class="paginate_button page-item previous disabled"
+                                    className="paginate_button page-item previous disabled"
                                     id="allTransactionTable_previous"
                                   >
                                     <a
@@ -1258,24 +1311,24 @@ console.log("transaction_history",transaction_history)
                                       aria-controls="allTransactionTable"
                                       data-dt-idx="0"
                                       tabindex="0"
-                                      class="page-link"
+                                      className="page-link"
                                     >
                                       Previous
                                     </a>
                                   </li>
-                                  <li class="paginate_button page-item active">
+                                  <li className="paginate_button page-item active">
                                     <a
                                       href="#"
                                       aria-controls="allTransactionTable"
                                       data-dt-idx="1"
                                       tabindex="0"
-                                      class="page-link"
+                                      className="page-link"
                                     >
                                       1
                                     </a>
                                   </li>
                                   <li
-                                    class="paginate_button page-item next disabled"
+                                    className="paginate_button page-item next disabled"
                                     id="allTransactionTable_next"
                                   >
                                     <a
@@ -1283,7 +1336,7 @@ console.log("transaction_history",transaction_history)
                                       aria-controls="allTransactionTable"
                                       data-dt-idx="2"
                                       tabindex="0"
-                                      class="page-link"
+                                      className="page-link"
                                     >
                                       Next
                                     </a>
@@ -1296,20 +1349,20 @@ console.log("transaction_history",transaction_history)
                       </div>
                     </div>
                     <div
-                      class="tab-pane fade"
+                      className="tab-pane fade"
                       id="top-inr"
                       role="tabpanel"
                       aria-labelledby="inr-top-tab"
                     >
-                      <div class="">
+                      <div className="">
                         <div
                           id="inTransactionTable_wrapper"
-                          class="dataTables_wrapper dt-bootstrap4 no-footer"
+                          className="dataTables_wrapper dt-bootstrap4 no-footer"
                         >
-                          <div class="row">
-                            <div class="col-sm-12 col-md-6">
+                          <div className="row">
+                            <div className="col-sm-12 col-md-6">
                               <div
-                                class="dataTables_length"
+                                className="dataTables_length"
                                 id="inTransactionTable_length"
                               >
                                 <label>
@@ -1317,7 +1370,7 @@ console.log("transaction_history",transaction_history)
                                   <select
                                     name="inTransactionTable_length"
                                     aria-controls="inTransactionTable"
-                                    class="custom-select custom-select-sm form-control form-control-sm"
+                                    className="custom-select custom-select-sm form-control form-control-sm"
                                   >
                                     <option value="10">10</option>
                                     <option value="25">25</option>
@@ -1328,16 +1381,16 @@ console.log("transaction_history",transaction_history)
                                 </label>
                               </div>
                             </div>
-                            <div class="col-sm-12 col-md-6">
+                            <div className="col-sm-12 col-md-6">
                               <div
                                 id="inTransactionTable_filter"
-                                class="dataTables_filter"
+                                className="dataTables_filter"
                               >
                                 <label>
                                   Search:
                                   <input
                                     type="search"
-                                    class="form-control form-control-sm"
+                                    className="form-control form-control-sm"
                                     placeholder=""
                                     aria-controls="inTransactionTable"
                                   />
@@ -1345,18 +1398,18 @@ console.log("transaction_history",transaction_history)
                               </div>
                             </div>
                           </div>
-                          <div class="row">
-                            <div class="col-sm-12">
+                          <div className="row">
+                            <div className="col-sm-12">
                               <table
                                 id="inTransactionTable"
-                                class="table table-striped table-bordered dataTable no-footer"
+                                className="table table-striped table-bordered dataTable no-footer"
                                 role="grid"
                                 aria-describedby="inTransactionTable_info"
                               >
                                 <thead>
                                   <tr role="row">
                                     <th
-                                      class="sorting_desc"
+                                      className="sorting_desc"
                                       tabindex="0"
                                       aria-controls="inTransactionTable"
                                       rowspan="1"
@@ -1367,7 +1420,7 @@ console.log("transaction_history",transaction_history)
                                       #
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="inTransactionTable"
                                       rowspan="1"
@@ -1377,7 +1430,7 @@ console.log("transaction_history",transaction_history)
                                       Amount
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="inTransactionTable"
                                       rowspan="1"
@@ -1387,7 +1440,7 @@ console.log("transaction_history",transaction_history)
                                       Transaction Note
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="inTransactionTable"
                                       rowspan="1"
@@ -1397,7 +1450,7 @@ console.log("transaction_history",transaction_history)
                                       Transfer Note
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="inTransactionTable"
                                       rowspan="1"
@@ -1407,7 +1460,7 @@ console.log("transaction_history",transaction_history)
                                       Date
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="inTransactionTable"
                                       rowspan="1"
@@ -1419,28 +1472,30 @@ console.log("transaction_history",transaction_history)
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr role="row" class="odd">
-                                  {
-                                      transaction_history.map((item,index)=>{
-                                     <>
-                                     <td class="sorting_1">{item?.id}</td>
-                                    <td>{item?.amount}</td>
-                                    <td>{item?.user_id__first_name}</td>
-                                    <td>N/A</td>
-                                    <td>20 Sep 2023 09:18:50 PM</td>
-                                    <td>7437706</td>
-                                    </>
-                                      })
-                                    }
-                                  </tr>
+                                {transaction_history?.map((item, index) => {
+                                    return (
+                                      <tr role="row" className="odd" key={index}>
+                                        <td>{item?.id}</td>
+                                        <td>{item?.amount}</td>
+                                        <td className="sorting_1">
+                                          {item?.transaction_type}
+                                        </td>
+                                        <td>
+                                          {moment(item?.created_at).format(
+                                            "YYYY-MM-DD"
+                                          )}
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
                                 </tbody>
                               </table>
                             </div>
                           </div>
-                          <div class="row">
-                            <div class="col-sm-12 col-md-5">
+                          <div className="row">
+                            <div className="col-sm-12 col-md-5">
                               <div
-                                class="dataTables_info"
+                                className="dataTables_info"
                                 id="inTransactionTable_info"
                                 role="status"
                                 aria-live="polite"
@@ -1448,14 +1503,14 @@ console.log("transaction_history",transaction_history)
                                 Showing 1 to 1 of 1 entries
                               </div>
                             </div>
-                            <div class="col-sm-12 col-md-7">
+                            <div className="col-sm-12 col-md-7">
                               <div
-                                class="dataTables_paginate paging_simple_numbers"
+                                className="dataTables_paginate paging_simple_numbers"
                                 id="inTransactionTable_paginate"
                               >
-                                <ul class="pagination">
+                                <ul className="pagination">
                                   <li
-                                    class="paginate_button page-item previous disabled"
+                                    className="paginate_button page-item previous disabled"
                                     id="inTransactionTable_previous"
                                   >
                                     <a
@@ -1463,24 +1518,24 @@ console.log("transaction_history",transaction_history)
                                       aria-controls="inTransactionTable"
                                       data-dt-idx="0"
                                       tabindex="0"
-                                      class="page-link"
+                                      className="page-link"
                                     >
                                       Previous
                                     </a>
                                   </li>
-                                  <li class="paginate_button page-item active">
+                                  <li className="paginate_button page-item active">
                                     <a
                                       href="#"
                                       aria-controls="inTransactionTable"
                                       data-dt-idx="1"
                                       tabindex="0"
-                                      class="page-link"
+                                      className="page-link"
                                     >
                                       1
                                     </a>
                                   </li>
                                   <li
-                                    class="paginate_button page-item next disabled"
+                                    className="paginate_button page-item next disabled"
                                     id="inTransactionTable_next"
                                   >
                                     <a
@@ -1488,7 +1543,7 @@ console.log("transaction_history",transaction_history)
                                       aria-controls="inTransactionTable"
                                       data-dt-idx="2"
                                       tabindex="0"
-                                      class="page-link"
+                                      className="page-link"
                                     >
                                       Next
                                     </a>
@@ -1501,20 +1556,20 @@ console.log("transaction_history",transaction_history)
                       </div>
                     </div>
                     <div
-                      class="tab-pane fade"
+                      className="tab-pane fade"
                       id="top-outr"
                       role="tabpanel"
                       aria-labelledby="outr-top-tab"
                     >
-                      <div class="">
+                      <div className="">
                         <div
                           id="outTransactionTable_wrapper"
-                          class="dataTables_wrapper dt-bootstrap4 no-footer"
+                          className="dataTables_wrapper dt-bootstrap4 no-footer"
                         >
-                          <div class="row">
-                            <div class="col-sm-12 col-md-6">
+                          <div className="row">
+                            <div className="col-sm-12 col-md-6">
                               <div
-                                class="dataTables_length"
+                                className="dataTables_length"
                                 id="outTransactionTable_length"
                               >
                                 <label>
@@ -1522,7 +1577,7 @@ console.log("transaction_history",transaction_history)
                                   <select
                                     name="outTransactionTable_length"
                                     aria-controls="outTransactionTable"
-                                    class="custom-select custom-select-sm form-control form-control-sm"
+                                    className="custom-select custom-select-sm form-control form-control-sm"
                                   >
                                     <option value="10">10</option>
                                     <option value="25">25</option>
@@ -1533,16 +1588,16 @@ console.log("transaction_history",transaction_history)
                                 </label>
                               </div>
                             </div>
-                            <div class="col-sm-12 col-md-6">
+                            <div className="col-sm-12 col-md-6">
                               <div
                                 id="outTransactionTable_filter"
-                                class="dataTables_filter"
+                                className="dataTables_filter"
                               >
                                 <label>
                                   Search:
                                   <input
                                     type="search"
-                                    class="form-control form-control-sm"
+                                    className="form-control form-control-sm"
                                     placeholder=""
                                     aria-controls="outTransactionTable"
                                   />
@@ -1550,18 +1605,18 @@ console.log("transaction_history",transaction_history)
                               </div>
                             </div>
                           </div>
-                          <div class="row">
-                            <div class="col-sm-12">
+                          <div className="row">
+                            <div className="col-sm-12">
                               <table
                                 id="outTransactionTable"
-                                class="table table-striped table-bordered dataTable no-footer"
+                                className="table table-striped table-bordered dataTable no-footer"
                                 role="grid"
                                 aria-describedby="outTransactionTable_info"
                               >
                                 <thead>
                                   <tr role="row">
                                     <th
-                                      class="sorting_desc"
+                                      className="sorting_desc"
                                       tabindex="0"
                                       aria-controls="outTransactionTable"
                                       rowspan="1"
@@ -1572,7 +1627,7 @@ console.log("transaction_history",transaction_history)
                                       #
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="outTransactionTable"
                                       rowspan="1"
@@ -1582,7 +1637,7 @@ console.log("transaction_history",transaction_history)
                                       Amount
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="outTransactionTable"
                                       rowspan="1"
@@ -1592,7 +1647,7 @@ console.log("transaction_history",transaction_history)
                                       Transaction Note
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="outTransactionTable"
                                       rowspan="1"
@@ -1602,7 +1657,7 @@ console.log("transaction_history",transaction_history)
                                       Transfer Note
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="outTransactionTable"
                                       rowspan="1"
@@ -1612,7 +1667,7 @@ console.log("transaction_history",transaction_history)
                                       Date
                                     </th>
                                     <th
-                                      class="sorting"
+                                      className="sorting"
                                       tabindex="0"
                                       aria-controls="outTransactionTable"
                                       rowspan="1"
@@ -1624,23 +1679,30 @@ console.log("transaction_history",transaction_history)
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr class="odd">
-                                    <td
-                                      valign="top"
-                                      colspan="6"
-                                      class="dataTables_empty"
-                                    >
-                                      No data available in table
-                                    </td>
-                                  </tr>
+                                {transaction_history?.map((item, index) => {
+                                    return (
+                                      <tr role="row" className="odd" key={index}>
+                                        <td>{item?.id}</td>
+                                        <td>{item?.amount}</td>
+                                        <td className="sorting_1">
+                                          {item?.transaction_type}
+                                        </td>
+                                        <td>
+                                          {moment(item?.created_at).format(
+                                            "YYYY-MM-DD"
+                                          )}
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
                                 </tbody>
                               </table>
                             </div>
                           </div>
-                          <div class="row">
-                            <div class="col-sm-12 col-md-5">
+                          <div className="row">
+                            <div className="col-sm-12 col-md-5">
                               <div
-                                class="dataTables_info"
+                                className="dataTables_info"
                                 id="outTransactionTable_info"
                                 role="status"
                                 aria-live="polite"
@@ -1648,14 +1710,14 @@ console.log("transaction_history",transaction_history)
                                 Showing 0 to 0 of 0 entries
                               </div>
                             </div>
-                            <div class="col-sm-12 col-md-7">
+                            <div className="col-sm-12 col-md-7">
                               <div
-                                class="dataTables_paginate paging_simple_numbers"
+                                className="dataTables_paginate paging_simple_numbers"
                                 id="outTransactionTable_paginate"
                               >
-                                <ul class="pagination">
+                                <ul className="pagination">
                                   <li
-                                    class="paginate_button page-item previous disabled"
+                                    className="paginate_button page-item previous disabled"
                                     id="outTransactionTable_previous"
                                   >
                                     <a
@@ -1663,13 +1725,13 @@ console.log("transaction_history",transaction_history)
                                       aria-controls="outTransactionTable"
                                       data-dt-idx="0"
                                       tabindex="0"
-                                      class="page-link"
+                                      className="page-link"
                                     >
                                       Previous
                                     </a>
                                   </li>
                                   <li
-                                    class="paginate_button page-item next disabled"
+                                    className="paginate_button page-item next disabled"
                                     id="outTransactionTable_next"
                                   >
                                     <a
@@ -1677,7 +1739,7 @@ console.log("transaction_history",transaction_history)
                                       aria-controls="outTransactionTable"
                                       data-dt-idx="1"
                                       tabindex="0"
-                                      class="page-link"
+                                      className="page-link"
                                     >
                                       Next
                                     </a>
@@ -1696,27 +1758,27 @@ console.log("transaction_history",transaction_history)
           </div>
         </div>
 
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-sm-12 col-xl-12 col-md-12">
-              <div class="row">
-                <div class="col-sm-12">
-                  <div class="card mb-4">
-                    <div class="card-body">
-                      <h4 class="card-title">Winning History Report</h4>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-sm-12 col-xl-12 col-md-12">
+              <div className="row">
+                <div className="col-sm-12">
+                  <div className="card mb-4">
+                    <div className="card-body">
+                      <h4 className="card-title">Winning History Report</h4>
                       <form
-                        class="theme-form mega-form"
+                        className="theme-form mega-form"
                         id="userWinningHistoryFrm"
                         name="userWinningHistoryFrm"
                         method="post"
                       >
-                        <div class="row">
-                          <div class="form-group col-md-3">
+                        <div className="row">
+                          <div className="form-group col-md-3">
                             <label>Date</label>
-                            <div class="date-picker">
-                              <div class="input-group">
+                            <div className="date-picker">
+                              <div className="input-group">
                                 <input
-                                  class="form-control digits"
+                                  className="form-control digits"
                                   type="date"
                                   value="2023-09-20"
                                   name="result_date"
@@ -1731,11 +1793,11 @@ console.log("transaction_history",transaction_history)
                             id="user_id"
                             value="10603"
                           />
-                          <div class="form-group col-md-2">
+                          <div className="form-group col-md-2">
                             <label>&nbsp;</label>
                             <button
                               type="submit"
-                              class="btn btn-danger waves-light btn-block"
+                              className="btn btn-danger waves-light btn-block"
                               id="submitBtn_2"
                               name="submitBtn_2"
                             >
@@ -1743,7 +1805,7 @@ console.log("transaction_history",transaction_history)
                             </button>
                           </div>
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                           <div id="error_msg"></div>
                         </div>
                         <input type="hidden" id="result_date" />
@@ -1752,17 +1814,35 @@ console.log("transaction_history",transaction_history)
 
                       <table
                         id="resultHistory"
-                        class="table table-striped table-bordered"
+                        className="table table-striped table-bordered"
                       >
                         <thead>
                           <tr>
                             <th>Amount(₹)</th>
                             <th>Game Name</th>
-                            <th>Tx Id</th>
                             <th>Tx Date</th>
                           </tr>
                         </thead>
-                        <tbody id="result_data"></tbody>
+                        <tbody id="result_data">
+                          
+                            {winHistoryList.map((item, index) => {
+                              return(
+                              <tr role="row" className="odd" key={index}>
+                                <>
+                                  <td>{index+1}</td>
+                                  <td>{item?.points}</td>
+                                  <td>
+                                          {moment(item?.created_at).format(
+                                            "YYYY-MM-DD"
+                                          )}
+                                  </td>
+                                </>
+                              
+                              </tr>
+                              );
+                            })}
+                          
+                        </tbody>
                       </table>
                     </div>
                   </div>
@@ -1777,7 +1857,15 @@ console.log("transaction_history",transaction_history)
           <Modal.Title>Add Fund</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Amount " className="form-control" value={amount} onChange={(e) => setAmount(e.target.value.slice(0, 5))} />
+          <input
+            name="amount"
+            type="number"
+            onWheel={(e) => e.target.blur()}
+            placeholder="Enter Amount "
+            className="form-control"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value.slice(0, 5))}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -1794,7 +1882,15 @@ console.log("transaction_history",transaction_history)
           <Modal.Title>Withdraw Fund</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Amount " className="form-control" value={withdrawAmount} onChange={(e) => setWithdrawAmount(e.target.value.slice(0, 5))} />
+          <input
+            name="amount"
+            type="number"
+            onWheel={(e) => e.target.blur()}
+            placeholder="Enter Amount "
+            className="form-control"
+            value={withdrawAmount}
+            onChange={(e) => setWithdrawAmount(e.target.value.slice(0, 5))}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
@@ -1806,13 +1902,20 @@ console.log("transaction_history",transaction_history)
         </Modal.Footer>
       </Modal>
 
-
       <Modal show={showPin} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Change Pin</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input name="amount" type="number" onWheel={(e) => e.target.blur()} placeholder="Enter Pin " className="form-control" value={pin} onChange={(e) => setPin(e.target.value.slice(0, 4))} />
+          <input
+            name="amount"
+            type="number"
+            onWheel={(e) => e.target.blur()}
+            placeholder="Enter Pin "
+            className="form-control"
+            value={pin}
+            onChange={(e) => setPin(e.target.value.slice(0, 4))}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

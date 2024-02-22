@@ -1,143 +1,156 @@
-import React, { useEffect, useState } from 'react'
-import { getuserList } from '../service/service'
-import DataTable, { createTheme } from 'react-data-table-component';
-import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
-import { Loader } from '../Common/Loader';
+import React, { useEffect, useState } from "react";
+import { getuserList } from "../service/service";
+import DataTable, { createTheme } from "react-data-table-component";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
+import { Loader } from "../Common/Loader";
 
 const Userlist = () => {
-
-  const navigate = useNavigate()
-  const [list, setList] = useState([])
+  const navigate = useNavigate();
+  const [list, setList] = useState([]);
   useEffect(() => {
-    getInformation()
-  }, [])
+    getInformation();
+  }, []);
 
+  const getInformation = (value) => {
+    
+    getuserList(value||"")
+      .then((res) => {
+        setList(res.data.data);
+      })
+      .catch((err) => {
+        alert(err || "something went wrong ");
+      });
+  };
+  const handleSearch = (e) => {
+    getInformation(e.target.value);
+  };
 
-  const getInformation = () => {
-    getuserList().then((res) => {
-      setList(res.data.data)
-    }).catch((err) => {
-      alert(err || "something went wrong ")
-    })
-  }
+  const debouncing = (func, delay) => {
+    let timmerId;
+    return function (...args) {
+      const context = this;
+      clearTimeout(timmerId);
+      timmerId = setTimeout(() => {
+        func.apply(context, args);
+      }, delay);
+    };
+  };
 
   const columns = [
     {
-      name: '#',
+      name: "#",
+      width: "5%",
       cell: (row, index) => {
-        return (
-          <p >
-            {row?.id}
-          </p>
-        )
+        return <p>{index + 1}</p>;
       },
 
       sortable: true,
-
     },
-   
+
     {
-      name: 'Name',
-
+      name: "Name",
+      width: "15%",
       cell: (row, index) => {
-
-
         return (
-          <span className='link' onClick={() => navigate("/user-details",
-            { state: row }
-          )}>
-           {row?.first_name + " " + row?.last_name}
+          <span
+            className="link"
+            onClick={() => navigate("/user-details", { state: row })}
+          >
+            {row?.first_name + " " + row?.last_name}
           </span>
-        )
-      }
+        );
+      },
     },
     {
-      name: 'Phone Number',
-      selector: row => row.phone_number,
+      name: "Phone Number",
+      selector: (row) => row.phone_number,
       width: "10%",
       sortable: true,
     },
     {
-      name: 'Email',
-      selector: row => row.email,
+      name: "Email",
+      selector: (row) => row.email,
+      width: "20%",
+      sortable: true,
+    },
+    {
+      name: "Date",
+      selector: (row) => moment(row?.created_at).format("DD-MM-YYYY"),
+      width: "9%",
+      sortable: true,
+    },
+    {
+      name: "Balance",
+      selector: (row) => row.total_amount,
       width: "10%",
       sortable: true,
     },
     {
-      name: 'Date',
-      selector: row => moment(row?.created_at).format("DD-MM-YYYY"),
-      width: "11%",
-      sortable: true,
-    },
-    {
-      name: 'Action',
+      name: "Action",
 
       cell: (row, index) => {
-
-
         return (
-          <span className={row?.user_status ? "btnspan success" : "btnspan danger"}>
+          <span
+            className={row?.user_status ? "btnspan success" : "btnspan danger"}
+          >
             {row?.user_status ? "Yes" : "No"}
           </span>
-        )
-      }
+        );
+      },
     },
     {
-      name: 'Betting',
+      name: "Betting",
 
       cell: (row, index) => {
-
-
         return (
           <span className={row?.betting ? "btnspan success" : "btnspan danger"}>
             {row?.betting ? "Yes" : "No"}
           </span>
-        )
-      }
+        );
+      },
     },
     {
-      name: 'Action',
+      name: "Action",
 
       cell: (row, index) => {
-
-
         return (
-          <i className="fa fa-eye primary" onClick={() => navigate("/user-details",
-            { state: row }
-          )}></i>
-        )
-      }
+          <i
+            className="fa fa-eye primary"
+            onClick={() => navigate("/user-details", { state: row })}
+          ></i>
+        );
+      },
     },
-
   ];
-  createTheme('dark', {
+  createTheme("dark", {
     background: {
-      default: 'transparent',
+      default: "transparent",
     },
   });
-
-
+  const handleDebouncing =  debouncing(handleSearch,800)
   return (
     <div>
-
       <div className="content-wrapper">
         {/* <Table list={list} head="User List" /> */}
-        {list.length > 0 ?
-          <DataTable
-            columns={columns}
-            data={list}
-            pagination
-            sortable
-          />
-
-          : <div className='nosimilar_torrent text-gray-700 '>
-            <Loader />  
-            </div>
-        }
+        <div className="container-fluid">
+          <div className="flex align-center space-center">
+            <h4>Users List</h4>
+            <input type="text" name="search" id="seacrh" onChange={handleDebouncing} />
+          </div>
+          <div className="card p-4">
+            {list.length > 0 ? (
+              <DataTable columns={columns} data={list} pagination sortable />
+            ) : (
+              <div className="nosimilar_torrent text-gray-700 ">
+                <Loader />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Userlist
+export default Userlist;

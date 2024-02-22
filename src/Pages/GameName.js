@@ -271,99 +271,99 @@ const handleAddGame =()=>{
             </Modal>
 
             {/* market day off popup */}
-            {/* <div class="modal-body modal_off_day">		
-              <form class="theme-form" id="offdayFrm" name="offdayFrm" method="post">
-                <div class="row">
+            {/* <div className="modal-body modal_off_day">		
+              <form className="theme-form" id="offdayFrm" name="offdayFrm" method="post">
+                <div className="row">
                   <input type="hidden" id="up_game_id" name="game_id" value="28"/>							
-                    <div class="form-group col-3">
+                    <div className="form-group col-3">
                       <input type="checkbox" name="day[]" checked="" value="monday"/>
                       <label>Monday</label><br/>				
                     </div>				
-                    <div class="form-group col-4">					
+                    <div className="form-group col-4">					
                       <label for="open_time">Open Time</label>					
-                      <input name="open_time[]" id="open_time" class="form-control digits" type="time" value="08:00"/>                
+                      <input name="open_time[]" id="open_time" className="form-control digits" type="time" value="08:00"/>                
                     </div>                
-                    <div class="form-group col-4">                    
+                    <div className="form-group col-4">                    
                       <label for="close_time">Close Time</label>                    
-                      <input name="close_time[]" id="close_time" class="form-control digits" type="time" value="20:00"/>                
+                      <input name="close_time[]" id="close_time" className="form-control digits" type="time" value="20:00"/>                
                     </div>							
-                    <div class="form-group col-3">
+                    <div className="form-group col-3">
                       <input type="checkbox" name="day[]" checked="" value="tuesday"/>
                       <label>Tuesday</label><br/>				
                     </div>				
-                    <div class="form-group col-4">					
+                    <div className="form-group col-4">					
                       <label for="open_time">Open Time</label>					
-                      <input name="open_time[]" id="open_time" class="form-control digits" type="time" value="08:00"/>                
+                      <input name="open_time[]" id="open_time" className="form-control digits" type="time" value="08:00"/>                
                     </div>                
-                    <div class="form-group col-4">                    
+                    <div className="form-group col-4">                    
                       <label for="close_time">Close Time</label>                    
-                      <input name="close_time[]" id="close_time" class="form-control digits" type="time" value="20:00"/>                
+                      <input name="close_time[]" id="close_time" className="form-control digits" type="time" value="20:00"/>                
                     </div>							
-                    <div class="form-group col-3">
+                    <div className="form-group col-3">
                       <input type="checkbox" name="day[]" checked="" value="wednesday"/>
                       <label>Wednesday</label><br/>				
                     </div>				
-                    <div class="form-group col-4">					
+                    <div className="form-group col-4">					
                       <label for="open_time">Open Time</label>					
-                      <input name="open_time[]" id="open_time" class="form-control digits" type="time" value="08:00"/>                
+                      <input name="open_time[]" id="open_time" className="form-control digits" type="time" value="08:00"/>                
                     </div>                
-                    <div class="form-group col-4">                    
+                    <div className="form-group col-4">                    
                       <label for="close_time">Close Time</label>                    
-                      <input name="close_time[]" id="close_time" class="form-control digits" type="time" value="20:00"/>                
+                      <input name="close_time[]" id="close_time" className="form-control digits" type="time" value="20:00"/>                
                     </div>							
-                    <div class="form-group col-3">
+                    <div className="form-group col-3">
                       <input type="checkbox" name="day[]" checked="" value="thursday"/>
                       <label>Thursday</label><br>				</br>
                     </div>				
-                    <div class="form-group col-4">					
+                    <div className="form-group col-4">					
                       <label for="open_time">Open Time</label>					
-                      <input name="open_time[]" id="open_time" class="form-control digits" type="time" value="08:00"/>                
+                      <input name="open_time[]" id="open_time" className="form-control digits" type="time" value="08:00"/>                
                     </div>                
-                    <div class="form-group col-4">                    
+                    <div className="form-group col-4">                    
                       <label for="close_time">Close Time</label>                    
-                      <input name="close_time[]" id="close_time" class="form-control digits" type="time" value="20:00"/>                
+                      <input name="close_time[]" id="close_time" className="form-control digits" type="time" value="20:00"/>                
                     </div>							
-                    <div class="form-group col-3">
+                    <div className="form-group col-3">
                       <input type="checkbox" name="day[]" checked="" value="friday"/>
                       <label>Friday</label><br/>				
                     </div>				
-                    <div class="form-group col-4">					
+                    <div className="form-group col-4">					
                       <label for="open_time">Open Time</label>					
-                      <input name="open_time[]" id="open_time" class="form-control digits" type="time" value="08:00"/>                
+                      <input name="open_time[]" id="open_time" className="form-control digits" type="time" value="08:00"/>                
                     </div>                
-                    <div class="form-group col-4">                    
+                    <div className="form-group col-4">                    
                       <label for="close_time">Close Time</label>                    
-                      <input name="close_time[]" id="close_time" class="form-control digits" type="time" value="20:00"/>                
+                      <input name="close_time[]" id="close_time" className="form-control digits" type="time" value="20:00"/>                
                     </div>							
-                    <div class="form-group col-3">
+                    <div className="form-group col-3">
                       <input type="checkbox" name="day[]" checked="" value="saturday"/>
                       <label>Saturday</label><br/>				
                     </div>				
-                    <div class="form-group col-4">					
+                    <div className="form-group col-4">					
                       <label for="open_time">Open Time</label>					
-                      <input name="open_time[]" id="open_time" class="form-control digits" type="time" value="08:00"/>                
+                      <input name="open_time[]" id="open_time" className="form-control digits" type="time" value="08:00"/>                
                     </div>                
-                    <div class="form-group col-4">                    
+                    <div className="form-group col-4">                    
                       <label for="close_time">Close Time</label>                    
-                      <input name="close_time[]" id="close_time" class="form-control digits" type="time" value="20:00"/>                
+                      <input name="close_time[]" id="close_time" className="form-control digits" type="time" value="20:00"/>                
                     </div>							
-                    <div class="form-group col-3">
+                    <div className="form-group col-3">
                       <input type="checkbox" name="day[]" checked="" value="sunday"/>
                       <label>Sunday</label><br/>				
                     </div>				
-                    <div class="form-group col-4">					
+                    <div className="form-group col-4">					
                       <label for="open_time">Open Time</label>					
-                      <input name="open_time[]" id="open_time" class="form-control digits" type="time" value="08:00"/>                
+                      <input name="open_time[]" id="open_time" className="form-control digits" type="time" value="08:00"/>                
                     </div>                
-                    <div class="form-group col-4">                    
+                    <div className="form-group col-4">                    
                       <label for="close_time">Close Time</label>                    
-                      <input name="close_time[]" id="close_time" class="form-control digits" type="time" value="20:00"/>                
+                      <input name="close_time[]" id="close_time" className="form-control digits" type="time" value="20:00"/>                
                     </div>				
                 </div>
-                <div class="form-group col-12">
-                  <button type="submit" class="btn btn-primary waves-light m-t-10" id="submitBtn" name="submitBtn">Submit</button>
+                <div className="form-group col-12">
+                  <button type="submit" className="btn btn-primary waves-light m-t-10" id="submitBtn" name="submitBtn">Submit</button>
                 </div>
-                <div class="form-group">
+                <div className="form-group">
                   <div id="u_msg"></div>
                 </div>		
               </form>

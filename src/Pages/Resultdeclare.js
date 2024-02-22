@@ -149,7 +149,7 @@ console.log("selectedNumberOpen",numberSum)
             <div className="content-wrapper">
                 <div className='container-fluid'>
                     <div className='card p-3 flex align-center space-between mb-3'>
-                        <h4 class="card-title text-left w-100">Select Game</h4>
+                        <h4 className="card-title text-left w-100">Select Game</h4>
                         <div className='row w-100'>
                             <div className='form-group col-md-3'>
                                 <input type="date" id="start" className='form-control' value={dateSelect} onChange={(e) => {
@@ -157,7 +157,7 @@ console.log("selectedNumberOpen",numberSum)
                                 }} />
                             </div>
                             <div className='form-group col-md-4'>
-                                <select class="form-select" aria-label="Default select example" value={selectedGameName+"|"+marketId} onChange={(e) => {
+                                <select className="form-select" aria-label="Default select example" value={selectedGameName+"|"+marketId} onChange={(e) => {
                                     setSelectedGameName(e.target.value.split("|")[0])
                                     setMarketId(e.target.value.split("|")[1])
                                 }}>
@@ -170,14 +170,14 @@ console.log("selectedNumberOpen",numberSum)
                                 </select>
                             </div>
                             <div className='form-group col-md-3'>
-                                <select class="form-select" value={selectsession} aria-label="Default select example" onChange={(e) => setSelectSession(e.target.value)}>
+                                <select className="form-select" value={selectsession} aria-label="Default select example" onChange={(e) => setSelectSession(e.target.value)}>
                                     <option value="0" >Both Session</option>
                                     <option value="1">open</option>
                                     <option value="2">close</option>
                                 </select>
                             </div>
                             <div className='form-group col-md-2'>
-                                <button type="submit" class="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={() => {
+                                <button type="submit" className="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={() => {
                                     setShowResultDeclare(true)
                                     setNumberSum("")
 
@@ -189,11 +189,11 @@ console.log("selectedNumberOpen",numberSum)
                         showResultDeclare ?
 
                             <div className='card p-3 flex align-center space-between mb-3'>
-                                <h4 class="card-title text-left w-100">Declare Result</h4>
+                                <h4 className="card-title text-left w-100">Declare Result</h4>
                                 {selectsession !== "0" ?
                                     <div className='row w-100'>
                                         <div className='form-group col-md-4'>
-                                            <select class="form-select" aria-label="Default select example" value={selectedNumberOpen||selectedNumberClose} onChange={(e) => {
+                                            <select className="form-select" aria-label="Default select example" value={selectedNumberOpen||selectedNumberClose} onChange={(e) => {
                                                 handleGetAddNumbers(e.target.value, selectsession)
                                             }}>
                                                 <option selected>{"Select " + (selectsession === "1" ? "Open" : "Close") + " Panna"}</option>
@@ -215,10 +215,10 @@ console.log("selectedNumberOpen",numberSum)
                                             <input type="text" id="start" className='form-control' value={numberSum?.close || numberSum?.open} placeholder='Digit' />
                                         </div>
                                         {/* <div className='form-group col-md-2'>
-                                            <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn">Save</button>
+                                            <button type="submit" className="btn btn-primary btn-block" id="srchBtn" name="srchBtn">Save</button>
                                         </div> */}
                                         <div className='form-group col-md-2'>
-                                            <button type="submit" class="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={(e) => {
+                                            <button type="submit" className="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={(e) => {
                                                 e.preventDefault()
                                                 selectsession === "1" ? handleDeclaireResultOpen() : handleDeclaireResultClose();
                                             }}>Declare</button>
@@ -226,7 +226,7 @@ console.log("selectedNumberOpen",numberSum)
                                     </div> :
                                     <>  <div className='row w-100'>
                                         <div className='form-group col-md-4'>
-                                            <select class="form-select" aria-label="Default select example" value={selectedNumberOpen} onChange={(e) => {
+                                            <select className="form-select" aria-label="Default select example" value={selectedNumberOpen} onChange={(e) => {
                                                 handleGetAddNumbers(e.target.value, "1")
                                             }}>
                                                 <option selected>Select Open Panna</option>
@@ -244,16 +244,16 @@ console.log("selectedNumberOpen",numberSum)
                                             <input type="text" id="start" className='form-control' value={numberSum?.open} placeholder='Digit' />
                                         </div>
                                         {/* <div className='form-group col-md-2'>
-                                            <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn">Save</button>
+                                            <button type="submit" className="btn btn-primary btn-block" id="srchBtn" name="srchBtn">Save</button>
                                         </div> */}
                                         <div className='form-group col-md-2'>
-                                            <button type="submit" class="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={handleDeclaireResultOpen}>Declare</button>
+                                            <button type="submit" className="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={handleDeclaireResultOpen}>Declare</button>
                                         </div>
                                     </div>
                                         <br></br>
                                         <div className='row w-100'>
                                             <div className='form-group col-md-4'>
-                                                <select class="form-select" aria-label="Default select example" value={selectedNumberClose} onChange={(e) => {
+                                                <select className="form-select" aria-label="Default select example" value={selectedNumberClose} onChange={(e) => {
                                                     handleGetAddNumbers(e.target.value, "2")
                                                 }}>
                                                     <option selected>Select Close Panna </option>
@@ -271,16 +271,16 @@ console.log("selectedNumberOpen",numberSum)
                                                 <input type="text" id="start" className='form-control' value={numberSum?.close} placeholder='Digit' />
                                             </div>
                                             {/* <div className='form-group col-md-2'>
-                                                <button type="submit" class="btn btn-primary btn-block" id="srchBtn" name="srchBtn">Save</button>
+                                                <button type="submit" className="btn btn-primary btn-block" id="srchBtn" name="srchBtn">Save</button>
                                             </div> */}
                                             <div className='form-group col-md-2'>
-                                                <button type="submit" class="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={handleDeclaireResultClose}>Declare</button>
+                                                <button type="submit" className="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={handleDeclaireResultClose}>Declare</button>
                                             </div>
                                         </div></>}
                             </div>
                             : null}
                     <div className='card p-3 flex align-center space-between'>
-                        <h4 class="card-title text-left w-100">Game Result History</h4>
+                        <h4 className="card-title text-left w-100">Game Result History</h4>
                         <div className='row w-100'>
                             <div className='form-group col-md-3'>
                                 <label>Select Result Date</label>
@@ -291,7 +291,7 @@ console.log("selectedNumberOpen",numberSum)
                     </div>
 
                     <div className='card p-3 flex align-center space-between'>
-                        <h4 class="card-title text-left w-100">Game Result List</h4>
+                        <h4 className="card-title text-left w-100">Game Result List</h4>
                         <div className='row w-100'>
 
                            
