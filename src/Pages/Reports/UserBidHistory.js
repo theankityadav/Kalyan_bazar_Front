@@ -11,23 +11,20 @@ const UserBidHistory = () => {
     const [dateSelect, setDateSelect] = useState(moment().format("YYYY-MM-DD"))
     const [selectedGameName, setSelectedGameName] = useState("")
     const [marketId, setMarketId] = useState("")
-    const [resultList, setResultList] = useState([])
-    const[startDate,setStartDate]=useState(new Date())
-    const [endDate,setEndDate]=useState(new Date())
-    const[gameType,setGameType]=useState("market")
-  
+    const[gameName]=useState("market")
+    const[gameType]=useState("game_type")
+    const[gameValue, setGameValue]=useState("")
     const[bidHistoryList,setBidHistoryList]=useState([])
 
     useEffect(()=>{
         handleGetBidHistory()
         handleGetGameList()
     },[])
-
     const handleGetBidHistory =()=>{
       setLoader(true)
-      let start_date = moment(startDate).format("YYYY-MM-DD")
-      let end_date = moment(startDate).format("YYYY-MM-DD")
-       getBidHistory("admin-bid-history",start_date,end_date,marketId,gameType).then((res)=>{
+      let start_date = moment(dateSelect).format("YYYY-MM-DD")
+      let end_date = moment(dateSelect).format("YYYY-MM-DD")
+      getBidHistory("admin-bid-history",start_date,end_date,marketId,gameName,gameValue,gameType).then((res)=>{
       setBidHistoryList(res.data?.data)
       setLoader(false)
       }).catch((err) => {
@@ -80,11 +77,17 @@ const UserBidHistory = () => {
                                 </select>
                             </div>
                             <div className='form-group col-md-3'>
-                                <select className="form-select" aria-label="Default select example" value={gameType} onChange={(e) => {
-                                   setGameType(e.target.value)
+                                <select className="form-select" aria-label="Default select example" value={gameValue} onChange={(e) => {
+                                   setGameValue(e.target.value)
                                 }}>
                                     <option selected>Select Game Type</option>
-                                  
+                                    <option value="SINGLE DIGIT">Single Digit</option>
+                                    <option value="JODI DIGIT">Jodi Digit</option>
+                                    <option value="SINGLE PANA">Single Pana</option>
+                                    <option value="DOUBLE PANA">Double Pana</option>
+                                    <option value="TRIPLE PANA">Triple Pana</option>
+                                    <option value="HALF SANGAM">Half Sangam</option>
+                                    <option value="FULL SANGAM">Full Sangam</option>
                                 </select>
                             </div>
                          
@@ -133,6 +136,16 @@ const UserBidHistory = () => {
                                   colspan="1"
                                   aria-label="Game Name: activate to sort column ascending"
                                 >
+                                  User Name
+                                </th>
+                                <th
+                                  className="sorting"
+                                  tabindex="0"
+                                  aria-controls="bidHistoryTable"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Game Name: activate to sort column ascending"
+                                >
                                   Game Name
                                 </th>
                                 <th
@@ -143,7 +156,7 @@ const UserBidHistory = () => {
                                   colspan="1"
                                   aria-label="Game Type: activate to sort column ascending"
                                 >
-                                  First Name
+                                  Game Type
                                 </th>
                                 <th
                                   className="sorting"
@@ -165,7 +178,7 @@ const UserBidHistory = () => {
                                 >
                                   Pana
                                 </th>
-                                <th
+                                {/* <th
                                   className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
@@ -174,7 +187,7 @@ const UserBidHistory = () => {
                                   aria-label="Close Digits: activate to sort column ascending"
                                 >
                                 Pana Date
-                                </th>
+                                </th> */}
                                 <th
                                   className="sorting"
                                   tabindex="0"
@@ -203,14 +216,12 @@ const UserBidHistory = () => {
                                                 return (
                                                     <tr key={index}>
                                                        
-                                                        <td>{item?.id || "NA"}</td>
+                                                        <td>{index+1}</td>
+                                                        <td>{item?.user_id__first_name}</td>
                                                         <td>{item?.market_inside_id__market_id__market_name}</td>
-                                                        <td>{item?.user_id__first_name|| "NA"}</td>
-                                                        <td>{item?.session?"Open":"Closed"}</td>
+                                                        <td>{item?.market_inside_id__name|| "NA"}</td>
+                                                        <td>{item?.session?"Open":"Close"}</td>
                                                         <td>{item?.pana || "NA"}
-                                                       
-                                                        </td>
-                                                        <td>{moment(item?.pana_date).format("DD-MM-YYYY") || "NA"}
                                                        
                                                         </td>
                                                         <td>{item?.points}</td>

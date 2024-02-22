@@ -22,6 +22,9 @@ import BidRevert from "./Pages/BidRevert";
 import UserBidHistory from "./Pages/Reports/UserBidHistory";
 import WinningReport from "./Pages/Reports/WinningReport";
 import AutoDepositHistory from "./Pages/Reports/AutoDepositHistory";
+import TransferHistory from "./Pages/Reports/TransferHistory";
+import AdminWithdrawalReports from "./Pages/Reports/WinningReport";
+import WithdrawalReports from "./Pages/Reports/WIthdrawalReports";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("access_token"))
@@ -45,7 +48,7 @@ function App() {
             <Route path="/" element={<Login />} />
           </Routes> :
           <Routes>
-            <Route path="/dashboard" element={<Dashbaord />} />
+            <Route path="/" element={<Dashbaord />} />
             <Route path="/declair-result" element={<Resultdeclare />} />
             <Route path="/game-name" element={<GameName />} />
             <Route path="/user-list" element={<Userlist />} />
@@ -60,7 +63,9 @@ function App() {
             <Route path="/bid-revert" element={<BidRevert />} />
             <Route path="/bid-history" element={<UserBidHistory />} />
             <Route path="/winning-history" element={<WinningReport />} />
+            <Route path="/transfer-history" element={<TransferHistory />} />
             <Route path="/auto-deposit-history" element={<AutoDepositHistory />} />
+            <Route path="/withdrawal-reports" element={<WithdrawalReports />} />
           </Routes>
         }
 

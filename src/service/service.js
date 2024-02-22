@@ -56,8 +56,8 @@ export const deleteImageSlider = (id) => {
 
 
 
-export const getuserList = () => {
-    let url = `${BASE_URL}/v1/user-list/`;
+export const getuserList = (search) => {
+    let url = `${BASE_URL}/v1/user-list/?filter_value=${search}`;
     return axios.get(url, {
         headers: headersApplicationJson,
     });
@@ -368,11 +368,23 @@ export const getAppSetting = () => {
     });
 }
 
-export const getBidHistory = (endpointValue,start_date,end_date,marketId,gameType) => {
+export const getBidHistory = (endpointValue,start_date,end_date,marketId,gameName,gameValue,gameType) => {
     let temp = marketId?`&filter_value=${marketId}`:"";
-    let temp2=gameType?`&filter_type=${gameType}`:""
+    let temp2= gameName?`&filter_type=${gameName}`:""
+    let temp3= gameValue?`&game_value=${gameValue}`:""
+    let temp4= gameType?`&game_type=${gameType}`:""
+    let url = `${BASE_URL}/v1/${endpointValue}?start_date=${start_date}&end_date=${end_date}${temp}${temp2}${temp3}${temp4}`;
+    return axios.get(url, {
+        headers: {
+            "accept": 'application/json',
+            "Content-Type": 'application/json',
+        }
+    });
+}
 
-    let url = `${BASE_URL}/v1/${endpointValue}?start_date=${start_date}&end_date=${end_date}${temp}${temp2}`;
+export const getTransferHistory = (endpointValue,start_date,end_date) => {
+
+    let url = `${BASE_URL}/v1/${endpointValue}?start_date=${start_date}&end_date=${end_date}`;
 
     return axios.get(url, {
         headers: {
@@ -430,6 +442,21 @@ export const getSettingInformation = () => {
 export const revertBid = (id) => {
 
     let url = `${BASE_URL}/v1/revert-bid?market_id=${id}`;
+
+    return axios.get(url, {
+        headers: {
+            "accept": 'application/json',
+
+            "Content-Type": 'application/json',
+
+        }
+    });
+
+}
+
+export const getBidRevertList = (id) => {
+
+    let url = `${BASE_URL}/v1/revert-bid-list?market_id=${id}`;
 
     return axios.get(url, {
         headers: {

@@ -1,56 +1,31 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap'
 import { Loader } from '../../Common/Loader'
-import { gameNameApi, getBidHistory } from '../../service/service'
+import { getTransferHistory } from '../../service/service'
 
 
-const AutoDepositHistory = () => {
-    const [data, setData] = useState([])
+const TransferHistory = () => {
     const [loader, setLoader] = useState(false)
     const [dateSelect, setDateSelect] = useState(moment().format("YYYY-MM-DD"))
-    const [selectedGameName, setSelectedGameName] = useState("")
-    const [marketId, setMarketId] = useState("")
-    const [resultList, setResultList] = useState([])
-    const[startDate,setStartDate]=useState(new Date())
-    const [endDate,setEndDate]=useState(new Date())
-    const[gameType,setGameType]=useState("market")
-  
-    const[bidHistoryList,setBidHistoryList]=useState([])
+
+    const[transferHistoryList,setTransferHistoryList]=useState([])
 
     useEffect(()=>{
-        handleGetBidHistory()
-        handleGetGameList()
+        handleGetTransferHistory()
     },[])
 
-    const handleGetBidHistory =()=>{
+    const handleGetTransferHistory =()=>{
       setLoader(true)
       let start_date = moment(dateSelect).format("YYYY-MM-DD")
       let end_date = moment(dateSelect).format("YYYY-MM-DD")
-       getBidHistory("admin-deposit-history",start_date,end_date).then((res)=>{
-      setBidHistoryList(res.data?.data)
+       getTransferHistory("admin-transfer-history",start_date,end_date).then((res)=>{
+      setTransferHistoryList(res.data?.data)
       setLoader(false)
       }).catch((err) => {
         setLoader(false)
         alert(err || "something went wrong ")
       })
     }
-
-   
-    const handleGetGameList = () => {
-      setLoader(true)
-      gameNameApi("normal").then((res) => {
-        
-          setData(res?.data?.data)
-          setLoader(false)
-      }).catch((err) => {
-          setLoader(false)
-          console.log("err", err)
-          alert(err?.response?.data?.message || "Internal server error")
-      })
-  }
-
-   
     return (
         <>
             {
@@ -59,20 +34,16 @@ const AutoDepositHistory = () => {
             <div className="content-wrapper">
                 <div className='container-fluid'>
                     <div className='card p-3 flex align-center space-between mb-3'>
-                        <h4 className="card-title text-left w-100 mb-4">Auto Deposit </h4>
+                        <h4 className="card-title text-left w-100">Transfer History Report</h4>
                         <div className='row w-100'>
                             <div className='form-group col-md-3'>
                                 <input type="date" id="start" className='form-control' value={dateSelect} onChange={(e) => {
                                     setDateSelect(moment(e.target.value).format("YYYY-MM-DD"))
                                 }} />
                             </div>
-                         
-                       
-                         
-                           
                             <div className='form-group col-md-2'>
                                 <button type="submit" className="btn btn-danger btn-block" id="srchBtn" name="srchBtn" onClick={()=>{
-                                  handleGetBidHistory()
+                                  handleGetTransferHistory()
                                 }}>Submit</button>
                             </div>
                         </div>
@@ -81,7 +52,7 @@ const AutoDepositHistory = () => {
                 
 
                     <div className='card p-3 flex align-center space-between'>
-                        <h4 className="card-title text-left w-100 mb-4">Auto Deposit History</h4>
+                        <h4 className="card-title text-left w-100">Transfer History List</h4>
                         <div className='row w-100'>
 
                            
@@ -106,7 +77,36 @@ const AutoDepositHistory = () => {
                                   ID
                                 </th>
                                
-                              
+                                <th
+                                  className="sorting"
+                                  tabindex="0"
+                                  aria-controls="bidHistoryTable"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Game Name: activate to sort column ascending"
+                                >
+                                  Sender Name
+                                </th>
+                                <th
+                                  className="sorting"
+                                  tabindex="0"
+                                  aria-controls="bidHistoryTable"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Game Name: activate to sort column ascending"
+                                >
+                                  Receiver Name
+                                </th>
+                                <th
+                                  className="sorting"
+                                  tabindex="0"
+                                  aria-controls="bidHistoryTable"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Game Name: activate to sort column ascending"
+                                >
+                                  Note
+                                </th>
                                 <th
                                   className="sorting"
                                   tabindex="0"
@@ -115,7 +115,7 @@ const AutoDepositHistory = () => {
                                   colspan="1"
                                   aria-label="Game Type: activate to sort column ascending"
                                 >
-                                  First Name
+                                  Amount
                                 </th>
                                 <th
                                   className="sorting"
@@ -125,30 +125,20 @@ const AutoDepositHistory = () => {
                                   colspan="1"
                                   aria-label="Session: activate to sort column ascending"
                                 >
-                                  Amount
-                                </th>
-                               
-                              
-                              
-                                <th
-                                  className="sorting"
-                                  tabindex="0"
-                                  aria-controls="bidHistoryTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Date: activate to sort column ascending"
-                                >
                                   Date
                                 </th>
                               </tr>
                             </thead>
                                     <tbody>
                                         {
-                                            bidHistoryList?.map((item, index) => {
+                                            transferHistoryList?.map((item, index) => {
                                                 return (
                                                     <tr key={index}>
+                                                       
                                                         <td>{index+1}</td>
                                                         <td>{item?.user_id__first_name|| "NA"}</td>
+                                                        <td>{item?.transfer_name|| "NA"}</td>
+                                                        <td>{item?.transaction_type}</td>
                                                         <td>{item?.amount}</td>
                                                         <td>{moment(item?.created_at).format("DD-MM-YYYY") || "NA"}</td>
 
@@ -169,7 +159,6 @@ const AutoDepositHistory = () => {
     )
 }
 
-export default AutoDepositHistory
-
+export default TransferHistory
 
 

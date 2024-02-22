@@ -112,10 +112,10 @@ const Navbar = () => {
                   <a href="/winning-history">Winning Report</a>
                 </li>
                 <li>
-                  <a href="#">Transfer Point Report</a>
+                  <a href="/transfer-history">Transfer Point Report</a>
                 </li>
                 <li>
-                  <a href="/withdrawal_report">Withdraw Report</a>
+                  <a href="/withdrawal-reports">Withdraw Report</a>
                 </li>
                 <li>
                   <a href="/auto-deposit-history">Auto Deposit History</a>

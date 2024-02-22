@@ -192,8 +192,9 @@ const UserDetails = () => {
     handleWinBidHistory();
   }, []);
   const [transaction_history, setTransactionHistory] = useState([]);
-  const handleTransactionHistory = () => {
-    getUserTransaction(state?.id, type)
+  const handleTransactionHistory = (value) => {
+    let temp = value||"ALL"
+    getUserTransaction(state?.id, temp)
       .then((res) => {
         setTransactionHistory(res?.data?.data);
       })
@@ -925,17 +926,7 @@ const UserDetails = () => {
                                   aria-sort="descending"
                                   aria-label="#: activate to sort column ascending"
                                 >
-                                  ID
-                                </th>
-                                <th
-                                  className="sorting"
-                                  tabindex="0"
-                                  aria-controls="bidHistoryTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Game Name: activate to sort column ascending"
-                                >
-                                  User Id
+                                  #
                                 </th>
                                 <th
                                   className="sorting"
@@ -953,9 +944,9 @@ const UserDetails = () => {
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
                                   colspan="1"
-                                  aria-label="Game Type: activate to sort column ascending"
+                                  aria-label="Game Name: activate to sort column ascending"
                                 >
-                                  First Name
+                                  Game Type
                                 </th>
                                 <th
                                   className="sorting"
@@ -963,7 +954,7 @@ const UserDetails = () => {
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
                                   colspan="1"
-                                  aria-label="Session: activate to sort column ascending"
+                                  aria-label="Game Type: activate to sort column ascending"
                                 >
                                   Session
                                 </th>
@@ -973,10 +964,20 @@ const UserDetails = () => {
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
                                   colspan="1"
+                                  aria-label="Session: activate to sort column ascending"
+                                >
+                                  Bid Digit
+                                </th>
+                                {/* <th
+                                  className="sorting"
+                                  tabindex="0"
+                                  aria-controls="bidHistoryTable"
+                                  rowspan="1"
+                                  colspan="1"
                                   aria-label="Digits: activate to sort column ascending"
                                 >
-                                  Pana
-                                </th>
+                                  Close Digit
+                                </th> */}
                                 <th
                                   className="sorting"
                                   tabindex="0"
@@ -984,16 +985,6 @@ const UserDetails = () => {
                                   rowspan="1"
                                   colspan="1"
                                   aria-label="Close Digits: activate to sort column ascending"
-                                >
-                                  Pana Date
-                                </th>
-                                <th
-                                  className="sorting"
-                                  tabindex="0"
-                                  aria-controls="bidHistoryTable"
-                                  rowspan="1"
-                                  colspan="1"
-                                  aria-label="Points: activate to sort column ascending"
                                 >
                                   Points
                                 </th>
@@ -1003,29 +994,39 @@ const UserDetails = () => {
                                   aria-controls="bidHistoryTable"
                                   rowspan="1"
                                   colspan="1"
-                                  aria-label="Date: activate to sort column ascending"
+                                  aria-label="Points: activate to sort column ascending"
                                 >
                                   Date
                                 </th>
+                                {/* <th
+                                  className="sorting"
+                                  tabindex="0"
+                                  aria-controls="bidHistoryTable"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Date: activate to sort column ascending"
+                                >
+                                  Date
+                                </th> */}
                               </tr>
                             </thead>
                             <tbody>
-                              <tr className="odd">
                                 {bidHistoryList?.length > 0 ? (
                                   bidHistoryList?.map((item, index) => {
                                     return (
+                                    <tr className="odd" key={index}> 
                                       <>
-                                        <td>{item?.id}</td>
-                                        <td>{item?.user_id}</td>
+                                        <td>{index+1}</td>
+                                        <td>{item?.market_name}</td>
                                         <td>
                                           {
-                                            item?.market_inside__market_id__market_name
+                                            item?.market_inside_name
                                           }
                                         </td>
-                                        <td>{item?.first_name}</td>
-                                        <td>{item?.session}</td>
+                                        <td>
+                                          {item?.session === true ? "Open" : "Close"}
+                                        </td>
                                         <td>{item?.pana}</td>
-                                        <td>{item?.pana_date}</td>
                                         <td>{item?.points}</td>
                                         <td>
                                           {moment(item?.created_at).format(
@@ -1033,14 +1034,16 @@ const UserDetails = () => {
                                           )}
                                         </td>
                                       </>
+                                    </tr>
                                     );
                                   })
                                 ) : (
-                                  <td valign="top" className="dataTables_empty">
-                                    No data available in table
-                                  </td>
+                                  <tr>
+                                    <td valign="top" className="dataTables_empty">
+                                      No data available in table
+                                    </td>
+                                  </tr>
                                 )}
-                              </tr>
                             </tbody>
                           </table>
                         </div>
@@ -1123,6 +1126,7 @@ const UserDetails = () => {
                         role="tab"
                         aria-controls="top-allr"
                         aria-selected="true"
+                        onClick={() => handleTransactionHistory()}
                       >
                         All
                       </a>
@@ -1136,6 +1140,7 @@ const UserDetails = () => {
                         role="tab"
                         aria-controls="top-inr"
                         aria-selected="false"
+                        onClick={() => handleTransactionHistory("CREDIT")}
                       >
                         Credit
                       </a>
@@ -1149,6 +1154,7 @@ const UserDetails = () => {
                         role="tab"
                         aria-controls="top-outr"
                         aria-selected="false"
+                        onClick={() => handleTransactionHistory("DEBIT")}
                       >
                         Debit
                       </a>
@@ -1466,18 +1472,22 @@ const UserDetails = () => {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr role="row" className="odd">
-                                    {transaction_history.map((item, index) => {
-                                      <>
-                                        <td className="sorting_1">{item?.id}</td>
+                                {transaction_history?.map((item, index) => {
+                                    return (
+                                      <tr role="row" className="odd" key={index}>
+                                        <td>{item?.id}</td>
                                         <td>{item?.amount}</td>
-                                        <td>{item?.user_id__first_name}</td>
-                                        <td>N/A</td>
-                                        <td>20 Sep 2023 09:18:50 PM</td>
-                                        <td>7437706</td>
-                                      </>;
-                                    })}
-                                  </tr>
+                                        <td className="sorting_1">
+                                          {item?.transaction_type}
+                                        </td>
+                                        <td>
+                                          {moment(item?.created_at).format(
+                                            "YYYY-MM-DD"
+                                          )}
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
                                 </tbody>
                               </table>
                             </div>
@@ -1669,15 +1679,22 @@ const UserDetails = () => {
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr className="odd">
-                                    <td
-                                      valign="top"
-                                      colspan="6"
-                                      className="dataTables_empty"
-                                    >
-                                      No data available in table
-                                    </td>
-                                  </tr>
+                                {transaction_history?.map((item, index) => {
+                                    return (
+                                      <tr role="row" className="odd" key={index}>
+                                        <td>{item?.id}</td>
+                                        <td>{item?.amount}</td>
+                                        <td className="sorting_1">
+                                          {item?.transaction_type}
+                                        </td>
+                                        <td>
+                                          {moment(item?.created_at).format(
+                                            "YYYY-MM-DD"
+                                          )}
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
                                 </tbody>
                               </table>
                             </div>
@@ -1803,25 +1820,28 @@ const UserDetails = () => {
                           <tr>
                             <th>Amount(₹)</th>
                             <th>Game Name</th>
-                            <th>Tx Id</th>
                             <th>Tx Date</th>
                           </tr>
                         </thead>
                         <tbody id="result_data">
-                          <tr role="row" className="odd">
+                          
                             {winHistoryList.map((item, index) => {
                               return(
+                              <tr role="row" className="odd" key={index}>
                                 <>
-                                  <td className="sorting_1">{item?.id}</td>
-                                <td>{item?.amount}</td>
-                                <td>{item?.user_id__first_name}</td>
-                                <td>N/A</td>
-                                <td>20 Sep 2023 09:18:50 PM</td>
-                                <td>7437706</td>
+                                  <td>{index+1}</td>
+                                  <td>{item?.points}</td>
+                                  <td>
+                                          {moment(item?.created_at).format(
+                                            "YYYY-MM-DD"
+                                          )}
+                                  </td>
                                 </>
-                              )
+                              
+                              </tr>
+                              );
                             })}
-                          </tr>
+                          
                         </tbody>
                       </table>
                     </div>

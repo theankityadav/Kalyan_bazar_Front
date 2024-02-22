@@ -11,10 +11,9 @@ const WinningReport = () => {
     const [dateSelect, setDateSelect] = useState(moment().format("YYYY-MM-DD"))
     const [selectedGameName, setSelectedGameName] = useState("")
     const [marketId, setMarketId] = useState("")
-    const [resultList, setResultList] = useState([])
-    const[startDate,setStartDate]=useState(new Date())
-    const [endDate,setEndDate]=useState(new Date())
-    const[gameType,setGameType]=useState("market")
+    const [gameValue, setGameValue] = useState("")
+    const[gameName]=useState("market")
+    const[gameType]=useState("game_type")
   
     const[bidHistoryList,setBidHistoryList]=useState([])
 
@@ -25,9 +24,9 @@ const WinningReport = () => {
 
     const handleGetBidHistory =()=>{
       setLoader(true)
-      let start_date = moment(startDate).format("YYYY-MM-DD")
-      let end_date = moment(startDate).format("YYYY-MM-DD")
-       getBidHistory("admin-win-history",start_date,end_date,marketId,gameType).then((res)=>{
+      let start_date = moment(dateSelect).format("YYYY-MM-DD")
+      let end_date = moment(dateSelect).format("YYYY-MM-DD")
+       getBidHistory("admin-win-history",start_date,end_date,marketId,gameName,gameValue,gameType).then((res)=>{
       setBidHistoryList(res.data?.data)
       setLoader(false)
       }).catch((err) => {
@@ -59,7 +58,7 @@ const WinningReport = () => {
             <div className="content-wrapper">
                 <div className='container-fluid'>
                     <div className='card p-3 flex align-center space-between mb-3'>
-                        <h4 className="card-title text-left w-100">Win History Report</h4>
+                        <h4 className="card-title text-left w-100">Withdraw History Report</h4>
                         <div className='row w-100'>
                             <div className='form-group col-md-3'>
                                 <input type="date" id="start" className='form-control' value={dateSelect} onChange={(e) => {
@@ -80,13 +79,20 @@ const WinningReport = () => {
                                 </select>
                             </div>
                             <div className='form-group col-md-3'>
-                                <select className="form-select" aria-label="Default select example" value={gameType} onChange={(e) => {
-                                   setGameType(e.target.value)
+                                <select className="form-select" aria-label="Default select example" value={gameValue} onChange={(e) => {
+                                   setGameValue(e.target.value)
                                 }}>
                                     <option selected>Select Game Type</option>
-                                  
+                                    <option value="SINGLE DIGIT">Single Digit</option>
+                                    <option value="JODI DIGIT">Jodi Digit</option>
+                                    <option value="SINGLE PANA">Single Pana</option>
+                                    <option value="DOUBLE PANA">Double Pana</option>
+                                    <option value="TRIPLE PANA">Triple Pana</option>
+                                    <option value="HALF SANGAM">Half Sangam</option>
+                                    <option value="FULL SANGAM">Full Sangam</option>
                                 </select>
                             </div>
+                         
                          
                            
                             <div className='form-group col-md-2'>
@@ -100,7 +106,7 @@ const WinningReport = () => {
                 
 
                     <div className='card p-3 flex align-center space-between'>
-                        <h4 className="card-title text-left w-100">Win History List</h4>
+                        <h4 className="card-title text-left w-100">Withdraw History List</h4>
                         <div className='row w-100'>
 
                            
@@ -133,6 +139,16 @@ const WinningReport = () => {
                                   colspan="1"
                                   aria-label="Game Name: activate to sort column ascending"
                                 >
+                                  User Name
+                                </th>
+                                <th
+                                  className="sorting"
+                                  tabindex="0"
+                                  aria-controls="bidHistoryTable"
+                                  rowspan="1"
+                                  colspan="1"
+                                  aria-label="Game Name: activate to sort column ascending"
+                                >
                                   Game Name
                                 </th>
                                 <th
@@ -143,7 +159,7 @@ const WinningReport = () => {
                                   colspan="1"
                                   aria-label="Game Type: activate to sort column ascending"
                                 >
-                                  First Name
+                                  Game Type
                                 </th>
                                 <th
                                   className="sorting"
@@ -173,7 +189,7 @@ const WinningReport = () => {
                                   colspan="1"
                                   aria-label="Close Digits: activate to sort column ascending"
                                 >
-                                Pana Date
+                                Amount
                                 </th>
                                 <th
                                   className="sorting"
@@ -203,14 +219,15 @@ const WinningReport = () => {
                                                 return (
                                                     <tr key={index}>
                                                        
-                                                        <td>{item?.id || "NA"}</td>
-                                                        <td>{item?.market_inside_id__market_id__market_name}</td>
+                                                        <td>{index+1}</td>
                                                         <td>{item?.user_id__first_name|| "NA"}</td>
+                                                        <td>{item?.market_inside_id__market_id__market_name}</td>
+                                                        <td>{item?.market_inside_id__name|| "NA"}</td>
                                                         <td>{item?.session?"Open":"Closed"}</td>
                                                         <td>{item?.pana || "NA"}
                                                        
                                                         </td>
-                                                        <td>{moment(item?.pana_date).format("DD-MM-YYYY") || "NA"}
+                                                        <td>{item?.amount || "NA"}
                                                        
                                                         </td>
                                                         <td>{item?.points}</td>
