@@ -164,10 +164,18 @@ export const changePin = (data) => {
 }
 
 export const gameRate = () => {
-
-
     let url = `${BASE_URL}/v1/get-normal-game-rate`;
+    return axios.get(url, {
+        headers: {
+            "accept": 'application/json',
 
+            "Content-Type": 'application/json',
+
+        }
+    });
+}
+export const gameRateStarline = () => {
+    let url = `${BASE_URL}/v1/get-normal-game-rate?game_type=STARLINE`;
     return axios.get(url, {
         headers: {
             "accept": 'application/json',
@@ -530,4 +538,25 @@ export const getUserTransaction = (id,type) => {
         }
     });
 
+}
+
+export const getPointCountMarket = (market_id) => {
+    let url = `${BASE_URL}/v1/point-count-by-market?market_id=${market_id}`;
+    return axios.get(url, {
+        headers: headersApplicationJson,
+    });
+}
+
+export const updateGameRate = (data) => {
+
+    let url = `${BASE_URL}/v1/update-game-rate`;
+
+    return axios.put(url, data, {
+        headers: {
+            "accept": 'application/json',
+
+            "Content-Type": 'application/json',
+
+        }
+    });
 }

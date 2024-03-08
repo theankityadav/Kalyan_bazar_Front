@@ -1,11 +1,57 @@
-import React, { useState } from 'react'
-import { Button } from 'react-bootstrap';
-import Modal from 'react-bootstrap/Modal';
+import React, { useState, useEffect } from 'react'
+import { gameRateStarline, updateGameRate } from '../../service/service';
+
 const GameRate = () => {
-    
-    const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const[data,setData]=useState()
+    const[single_digit_value_2,setSingleDigit]=useState()
+    const[single_pana_value_2,setSinglePana]=useState()
+    const[double_pana_value_2,setDoublePana]=useState()
+    const[triple_pana_value_2,setTriplePana]=useState()
+
+    useEffect(()=>{
+        hanldeGetGameRate()
+    },[])
+
+    const hanldeGetGameRate =()=>{
+        gameRateStarline().then((res)=>{
+            setData(res?.data?.data[0])
+            setSingleDigit(res?.data?.data[0]?.single_digit_value_2)
+            setSinglePana(res?.data?.data[0]?.single_pana_value_2)
+            setDoublePana(res?.data?.data[0]?.double_pana_value_2)
+            setTriplePana(res?.data?.data[0]?.triple_pana_value_2)
+        }).catch((err)=>{
+            console.log('error',err)
+        })
+    }
+
+    const hanldeUpdateGameRate = () => {
+        let reqBody = {
+            "id": 2,
+            "game_type": "STARLINE",
+            "single_digit_value_1": 10,
+            "single_digit_value_2": Number(single_digit_value_2),
+            "jodi_digit_value_1": 10,
+            "jodi_digit_value_2": 950,
+            "single_pana_value_1": 10,
+            "single_pana_value_2": Number(single_pana_value_2),
+            "double_pana_value_1": 10,
+            "double_pana_value_2": Number(double_pana_value_2),
+            "triple_pana_value_1": 10,
+            "triple_pana_value_2": Number(triple_pana_value_2),
+            "half_sangam_value_1": 10,
+            "half_sangam_value_2": 10000,
+            "full_sangam_value_1": 10,
+            "full_sangam_value_2": 100000
+        };
+        updateGameRate(reqBody)
+          .then((res) => {
+            console.log("Rate Update Successfully");
+          })
+          .catch((err) => {
+            alert("something went wrong");
+            console.log("error", err);
+          });
+    };
 
     return (
         <>
@@ -23,42 +69,42 @@ const GameRate = () => {
                                                 <div className="row">
                                                     <div className="form-group col-md-6">
                                                         <label className="col-form-label">Single Digit Value 1</label>
-                                                        <input className="form-control" type="number" name="single_digit_1" id="single_digit_1" value="10" placeholder="Enter Single Digit Value" />
+                                                        <input className="form-control" type="number" name="single_digit_1" id="single_digit_1" value={data?.single_digit_value_1} placeholder="Enter Single Digit Value" />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <label className="col-form-label">Single Digit Value 2</label>
-                                                        <input className="form-control" type="number" name="single_digit_2" id="single_digit_2" value="95" placeholder="Enter Single Digit Value" />
+                                                        <input className="form-control" type="number" name="single_digit_2" id="single_digit_2" onChange={(e) => setSingleDigit(e.target.value)} value={single_digit_value_2} placeholder="Enter Single Digit Value" />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <label className="col-form-label">Single Pana Value 1</label>
-                                                        <input className="form-control" type="number" name="double_pana_1" id="double_pana_1" value="10" placeholder="Enter Double Pana Value" />
+                                                        <input className="form-control" type="number" name="double_pana_1" id="double_pana_1" value={data?.single_pana_value_1} placeholder="Enter Double Pana Value" />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <label className="col-form-label">Single Pana Value 2</label>
-                                                        <input className="form-control" type="number" name="double_pana_2" id="double_pana_2" value="2800" placeholder="Enter Double Pana Value" />
+                                                        <input className="form-control" type="number" name="double_pana_2" id="double_pana_2" onChange={(e) => setSinglePana(e.target.value)} value={single_pana_value_2} placeholder="Enter Double Pana Value" />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <label className="col-form-label">Double Pana Value 1</label>
-                                                        <input className="form-control" type="number" name="jodi_digit_1" id="jodi_digit_1" value="10" placeholder="Enter Jodi Digit Value" />
+                                                        <input className="form-control" type="number" name="jodi_digit_1" id="jodi_digit_1" value={data?.double_pana_value_1} placeholder="Enter Jodi Digit Value" />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <label className="col-form-label">Double Pana Value 2</label>
-                                                        <input className="form-control" type="number" name="jodi_digit_2" id="jodi_digit_2" value="950" placeholder="Enter Jodi Digit Value" />
+                                                        <input className="form-control" type="number" name="jodi_digit_2" id="jodi_digit_2" onChange={(e) => setDoublePana(e.target.value)} value={double_pana_value_2} placeholder="Enter Jodi Digit Value" />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <label className="col-form-label">Tripple Pana Value 1</label>
-                                                        <input className="form-control" type="number" name="single_pana_1" id="single_pana_1" value="10" placeholder="Enter Tripple Pana Value" />
+                                                        <input className="form-control" type="number" name="single_pana_1" id="single_pana_1" value={data?.triple_pana_value_1} placeholder="Enter Tripple Pana Value" />
                                                     </div>
                                                     <div className="form-group col-md-6">
                                                         <label className="col-form-label">Tripple Pana Value 2</label>
-                                                        <input className="form-control" type="number" name="single_pana_2" id="single_pana_2" value="1400" placeholder="Enter Tripple Pana Value" />
+                                                        <input className="form-control" type="number" name="single_pana_2" id="single_pana_2" onChange={(e) => setTriplePana(e.target.value)} value={triple_pana_value_2} placeholder="Enter Tripple Pana Value" />
                                                     </div>
 
 
                                                 </div>
                                                 <div className="form-group">
                                                     <button type="button" className="btn btn-primary waves-light m-t-10" id="submitBtn" name="buysubmitBtn" onClick={()=>{
-                                                        handleShow()
+                                                        hanldeUpdateGameRate()
                                                     }}>Submit</button>
                                                 </div>
                                                 <div className="form-group">
@@ -74,20 +120,6 @@ const GameRate = () => {
                     </div>
                 </div>
             </div>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Woohoo, you are reading this text in a modal!</Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
-            </Modal>
         </>
     )
 }
