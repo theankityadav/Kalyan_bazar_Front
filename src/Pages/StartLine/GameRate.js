@@ -42,7 +42,7 @@ const GameRate = () => {
             "half_sangam_value_2": 10000,
             "full_sangam_value_1": 10,
             "full_sangam_value_2": 100000
-        };
+        }
         updateGameRate(reqBody)
           .then((res) => {
             console.log("Rate Update Successfully");
