@@ -23,7 +23,7 @@ import UserBidHistory from "./Pages/Reports/UserBidHistory";
 import WinningReport from "./Pages/Reports/WinningReport";
 import AutoDepositHistory from "./Pages/Reports/AutoDepositHistory";
 import TransferHistory from "./Pages/Reports/TransferHistory";
-import AdminWithdrawalReports from "./Pages/Reports/WinningReport";
+// import AdminWithdrawalReports from "./Pages/Reports/WinningReport";
 import WithdrawalReports from "./Pages/Reports/WIthdrawalReports";
 
 function App() {
