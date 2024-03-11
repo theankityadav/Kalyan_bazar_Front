@@ -548,13 +548,10 @@ export const getPointCountMarket = (market_id) => {
 }
 
 export const updateGameRate = (data) => {
-
     let url = `${BASE_URL}/v1/update-game-rate`;
-
     return axios.put(url, data, {
         headers: {
             "accept": 'application/json',
-
             "Content-Type": 'application/json',
 
         }
