@@ -15,7 +15,7 @@ const Login = () => {
     }
     useEffect(()=>{
    if(localStorage.getItem("access_token")){
-    navigate("/dashboard")
+    navigate("/")
    }
     },[])
 
@@ -26,7 +26,7 @@ const Login = () => {
         loginApi(data).then((res)=>{
 
             localStorage.setItem("access_token",res?.data?.access_token)
-            window.location.href="/dashboard"
+            window.location.href="/"
             setLoader(false)
         }).catch((err)=>{
             setLoader(false)

@@ -1,6 +1,6 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap'
+// import { Button } from 'react-bootstrap'
 import { Loader } from '../../Common/Loader'
 import { gameNameApi, getBidHistory } from '../../service/service'
 
@@ -9,12 +9,12 @@ const AutoDepositHistory = () => {
     const [data, setData] = useState([])
     const [loader, setLoader] = useState(false)
     const [dateSelect, setDateSelect] = useState(moment().format("YYYY-MM-DD"))
-    const [selectedGameName, setSelectedGameName] = useState("")
-    const [marketId, setMarketId] = useState("")
-    const [resultList, setResultList] = useState([])
-    const[startDate,setStartDate]=useState(new Date())
-    const [endDate,setEndDate]=useState(new Date())
-    const[gameType,setGameType]=useState("market")
+    // const [selectedGameName, setSelectedGameName] = useState("")
+    // const [marketId, setMarketId] = useState("")
+    // const [resultList, setResultList] = useState([])
+    // const[startDate,setStartDate]=useState(new Date())
+    // const [endDate,setEndDate]=useState(new Date())
+    // const[gameType,setGameType]=useState("market")
   
     const[bidHistoryList,setBidHistoryList]=useState([])
 
