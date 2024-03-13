@@ -5,7 +5,7 @@ import { Loader } from '../../Common/Loader'
 import { gameNameApi, getBidHistory } from '../../service/service'
 
 
-const WinningReport = () => {
+const StarWinReport = () => {
     const [data, setData] = useState([])
     const [loader, setLoader] = useState(false)
     const [dateSelect, setDateSelect] = useState(moment().format("YYYY-MM-DD"))
@@ -38,7 +38,7 @@ const WinningReport = () => {
    
     const handleGetGameList = () => {
       setLoader(true)
-      gameNameApi("normal").then((res) => {
+      gameNameApi("starline").then((res) => {
         
           setData(res?.data?.data)
           setLoader(false)
@@ -84,12 +84,9 @@ const WinningReport = () => {
                                 }}>
                                     <option selected>Select Game Type</option>
                                     <option value="SINGLE DIGIT">Single Digit</option>
-                                    <option value="JODI DIGIT">Jodi Digit</option>
                                     <option value="SINGLE PANA">Single Pana</option>
                                     <option value="DOUBLE PANA">Double Pana</option>
                                     <option value="TRIPLE PANA">Triple Pana</option>
-                                    <option value="HALF SANGAM">Half Sangam</option>
-                                    <option value="FULL SANGAM">Full Sangam</option>
                                 </select>
                             </div>
                          
@@ -250,6 +247,6 @@ const WinningReport = () => {
     )
 }
 
-export default WinningReport
+export default StarWinReport
 
 

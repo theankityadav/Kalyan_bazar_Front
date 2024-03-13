@@ -244,10 +244,10 @@ const Navbar = () => {
                   <a href="/startline/game_rate">Game Rates</a>
                 </li>
                 <li>
-                  <a href="#">Bid History</a>
+                  <a href="/startline/star_bid">Bid History</a>
                 </li>
                 <li>
-                  <a href="#">Decleare Result</a>
+                  <a href="#">Declare Result</a>
                 </li>
                 <li>
                   <a href="#">Result History</a>
@@ -256,7 +256,7 @@ const Navbar = () => {
                   <a href="#">Starline Sell report</a>
                 </li>
                 <li>
-                  <a href="#">Starline Winning report</a>
+                  <a href="/startline/star_win">Starline Winning report</a>
                 </li>
               </ul>
             </li>

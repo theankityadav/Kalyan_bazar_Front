@@ -1,32 +1,31 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-
+import { Button } from 'react-bootstrap'
 import { Loader } from '../../Common/Loader'
 import { gameNameApi, getBidHistory } from '../../service/service'
 
 
-const WinningReport = () => {
+const StarBidHistory = () => {
     const [data, setData] = useState([])
     const [loader, setLoader] = useState(false)
     const [dateSelect, setDateSelect] = useState(moment().format("YYYY-MM-DD"))
     const [selectedGameName, setSelectedGameName] = useState("")
     const [marketId, setMarketId] = useState("")
-    const [gameValue, setGameValue] = useState("")
     const[gameName]=useState("market")
     const[gameType]=useState("game_type")
-  
+    const[gameValue, setGameValue]=useState("")
     const[bidHistoryList,setBidHistoryList]=useState([])
 
     useEffect(()=>{
         handleGetBidHistory()
         handleGetGameList()
     },[])
-
+    
     const handleGetBidHistory =()=>{
       setLoader(true)
       let start_date = moment(dateSelect).format("YYYY-MM-DD")
       let end_date = moment(dateSelect).format("YYYY-MM-DD")
-       getBidHistory("admin-win-history",start_date,end_date,marketId,gameName,gameValue,gameType).then((res)=>{
+      getBidHistory("admin-bid-history",start_date,end_date,marketId,gameName,gameValue,gameType).then((res)=>{
       setBidHistoryList(res.data?.data)
       setLoader(false)
       }).catch((err) => {
@@ -38,8 +37,7 @@ const WinningReport = () => {
    
     const handleGetGameList = () => {
       setLoader(true)
-      gameNameApi("normal").then((res) => {
-        
+      gameNameApi("starline").then((res) => {
           setData(res?.data?.data)
           setLoader(false)
       }).catch((err) => {
@@ -58,7 +56,7 @@ const WinningReport = () => {
             <div className="content-wrapper">
                 <div className='container-fluid'>
                     <div className='card p-3 flex align-center space-between mb-3'>
-                        <h4 className="card-title text-left w-100">Winning Report</h4>
+                        <h4 className="card-title text-left w-100">Bid History Report</h4>
                         <div className='row w-100'>
                             <div className='form-group col-md-3'>
                                 <input type="date" id="start" className='form-control' value={dateSelect} onChange={(e) => {
@@ -84,15 +82,11 @@ const WinningReport = () => {
                                 }}>
                                     <option selected>Select Game Type</option>
                                     <option value="SINGLE DIGIT">Single Digit</option>
-                                    <option value="JODI DIGIT">Jodi Digit</option>
                                     <option value="SINGLE PANA">Single Pana</option>
                                     <option value="DOUBLE PANA">Double Pana</option>
                                     <option value="TRIPLE PANA">Triple Pana</option>
-                                    <option value="HALF SANGAM">Half Sangam</option>
-                                    <option value="FULL SANGAM">Full Sangam</option>
                                 </select>
                             </div>
-                         
                          
                            
                             <div className='form-group col-md-2'>
@@ -106,7 +100,7 @@ const WinningReport = () => {
                 
 
                     <div className='card p-3 flex align-center space-between'>
-                        <h4 className="card-title text-left w-100">Winning List</h4>
+                        <h4 className="card-title text-left w-100">Bid History List</h4>
                         <div className='row w-100'>
 
                            
@@ -181,7 +175,7 @@ const WinningReport = () => {
                                 >
                                   Pana
                                 </th>
-                                <th
+                                {/* <th
                                   className="sorting"
                                   tabindex="0"
                                   aria-controls="bidHistoryTable"
@@ -189,8 +183,8 @@ const WinningReport = () => {
                                   colspan="1"
                                   aria-label="Close Digits: activate to sort column ascending"
                                 >
-                                Amount
-                                </th>
+                                Pana Date
+                                </th> */}
                                 <th
                                   className="sorting"
                                   tabindex="0"
@@ -220,14 +214,11 @@ const WinningReport = () => {
                                                     <tr key={index}>
                                                        
                                                         <td>{index+1}</td>
-                                                        <td>{item?.user_id__first_name|| "NA"}</td>
+                                                        <td>{item?.user_id__first_name}</td>
                                                         <td>{item?.market_inside_id__market_id__market_name}</td>
                                                         <td>{item?.market_inside_id__name|| "NA"}</td>
-                                                        <td>{item?.session?"Open":"Closed"}</td>
+                                                        <td>{item?.session?"Open":"Close"}</td>
                                                         <td>{item?.pana || "NA"}
-                                                       
-                                                        </td>
-                                                        <td>{item?.amount || "NA"}
                                                        
                                                         </td>
                                                         <td>{item?.points}</td>
@@ -250,6 +241,4 @@ const WinningReport = () => {
     )
 }
 
-export default WinningReport
-
-
+export default StarBidHistory
