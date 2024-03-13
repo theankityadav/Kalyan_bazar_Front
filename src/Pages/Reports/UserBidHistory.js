@@ -20,6 +20,7 @@ const UserBidHistory = () => {
         handleGetBidHistory()
         handleGetGameList()
     },[])
+    
     const handleGetBidHistory =()=>{
       setLoader(true)
       let start_date = moment(dateSelect).format("YYYY-MM-DD")
@@ -37,7 +38,6 @@ const UserBidHistory = () => {
     const handleGetGameList = () => {
       setLoader(true)
       gameNameApi("normal").then((res) => {
-        
           setData(res?.data?.data)
           setLoader(false)
       }).catch((err) => {
