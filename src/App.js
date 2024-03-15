@@ -27,6 +27,7 @@ import TransferHistory from "./Pages/Reports/TransferHistory";
 import WithdrawalReports from "./Pages/Reports/WIthdrawalReports";
 import StarBidHistory from "./Pages/StartLine/StarBidHistory";
 import StarWinReport from "./Pages/StartLine/StarWinReport";
+import StarResultDeclare from "./Pages/StartLine/StarResultDeclare";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("access_token"))
@@ -61,6 +62,7 @@ function App() {
             <Route path="/startline/game_rate" element={<GameRate2 />} />
             <Route path="/startline/star_bid" element={<StarBidHistory />} />
             <Route path="/startline/star_win" element={<StarWinReport/>} />
+            <Route path="/startline/star_result" element={<StarResultDeclare/>} />
             <Route path="/withdrawal_report" element={<WithdrawalReport />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/image-slider" element={<ImageSlider />} />
