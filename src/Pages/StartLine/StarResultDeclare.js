@@ -1,13 +1,13 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { Loader } from '../Common/Loader'
-import { gameNameApi, getAddNumbers, getNumbers, resultDeclareAPi, getresultList, deleteGameResult } from '../service/service'
+import { Loader } from '../../Common/Loader'
+import { gameNameApi, getAddNumbers, getNumbers, resultDeclareAPi, deleteGameResult, getstarresultList } from '../../service/service'
 
-const Resultdeclare = () => {
+const StarResultDeclare = () => {
     const [data, setData] = useState([])
     const [loader, setLoader] = useState(false)
-    const [selectsession, setSelectSession] = useState("0")
+    const [selectsession, setSelectSession] = useState("1")
     const [numberSum, setNumberSum] = useState("")
     const [numberList, setNumberList] = useState([])
     const [showResultDeclare, setShowResultDeclare] = useState(false)
@@ -16,7 +16,7 @@ const Resultdeclare = () => {
     const [selectedGameName, setSelectedGameName] = useState("")
     const [marketId, setMarketId] = useState("")
     const [resultList, setResultList] = useState([])
-
+    const [market_type] = useState("NORMAL")
     const [selectedNumberOpen, setselectedNumberOpen] = useState("")
     const [selectedNumberClose, setselectedNumberClose] = useState("")
 
@@ -28,7 +28,7 @@ const Resultdeclare = () => {
    
     const handleGetGameList = () => {
         setLoader(true)
-        gameNameApi("normal").then((res) => {
+        gameNameApi("starline").then((res) => {
             setData(res?.data?.data)
             setLoader(false)
         }).catch((err) => {
@@ -121,9 +121,9 @@ const Resultdeclare = () => {
         setselectedNumberClose("")
         setselectedNumberOpen("")
         setNumberSum({open:"",close:""})
-        let start_date = moment(filterDate).format("YYYY-MM-DD")
-        let end_date = moment(filterDate).format("YYYY-MM-DD")
-        getresultList(start_date,end_date).then((res) => {
+        let start_date = moment(dateSelect).format("YYYY-MM-DD")
+        let end_date = moment(dateSelect).format("YYYY-MM-DD")
+        getstarresultList(start_date,end_date,market_type).then((res) => {
             setResultList(res?.data?.data)
             setLoader(false)
         }).catch((err) => {
@@ -149,7 +149,7 @@ const handlefilterTable = (e) => {
     let end_date = moment(filterDate).format("YYYY-MM-DD")
     setTimeout(() => {
         handleGetResultList(start_date,end_date)
-      }, "1000");
+    }, "1000");
 }
 console.log("selectedNumberOpen",numberSum)
     return (
@@ -175,16 +175,16 @@ console.log("selectedNumberOpen",numberSum)
                                     <option selected>Select Game Name</option>
                                     {data?.map((item, index) => {
                                         return (
-                                            <option key={index} value={item?.market_name + "|" + item?.id}>{`${item?.market_name || ""} (${item?.market_opening_time}-${item?.market_closing_time})`}</option>
+                                            <option key={index} value={item?.market_name + "|" + item?.id}>{`${item?.market_name || ""} (${item?.market_opening_time})`}</option>
                                         )
                                     })}
                                 </select>
                             </div>
                             <div className='form-group col-md-3'>
                                 <select className="form-select" value={selectsession} aria-label="Default select example" onChange={(e) => setSelectSession(e.target.value)}>
-                                    <option value="0" >Both Session</option>
-                                    <option value="1">open</option>
-                                    <option value="2">close</option>
+                                    {/* <option value="0" >Both Session</option> */}
+                                    <option value="1">Starline</option>
+                                    {/* <option value="2">close</option> */}
                                 </select>
                             </div>
                             <div className='form-group col-md-2'>
@@ -319,9 +319,9 @@ console.log("selectedNumberOpen",numberSum)
                                             <th>Game Name</th>
                                             <th>Result Date</th>
                                             <th>Open Declare Date</th>
-                                            <th>Close Declare Date</th>
+                                            {/* <th>Close Declare Date</th> */}
                                             <th>Open Pana</th>
-                                            <th>Close Pana</th>
+                                            {/* <th>Close Pana</th> */}
 
                                         </tr>
                                     </thead>
@@ -334,7 +334,7 @@ console.log("selectedNumberOpen",numberSum)
                                                         <td>{item?.game_name || "NA"}</td>
                                                         <td>{moment(item?.result_date).format("DD-MM-YYYY")}</td>
                                                         <td>{moment(item?.open_declare_date).format("ddd DD-MMM-YYYY, hh:mm A") || "NA"}</td>
-                                                        <td>{moment(item?.close_declare_date ).format("ddd DD-MMM-YYYY, hh:mm A")|| "NA"}</td>
+                                                        {/* <td>{moment(item?.close_declare_date ).format("ddd DD-MMM-YYYY, hh:mm A")|| "NA"}</td> */}
                                                         <td>{item?.open_pana_result || "NA"}
                                                         &nbsp;&nbsp;
                                                         <Button onClick={()=>{
@@ -342,12 +342,12 @@ console.log("selectedNumberOpen",numberSum)
                                                         }} style={{fontSize:"12px"}} className='btn btn-sm btn-danger'>Delete</Button>
                                                        
                                                         </td>
-                                                        <td>{item?.close_pana_result || "NA"}
+                                                        {/* <td>{item?.close_pana_result || "NA"}
                                                         &nbsp;&nbsp;
                                                         <Button onClick={()=>{
                                                             handleDelete(item?.id,true)
                                                         }} style={{fontSize:"12px"}} className='btn btn-sm btn-danger'>Delete</Button>
-                                                        </td>
+                                                        </td> */}
 
                                                     </tr>
                                                 )
@@ -366,4 +366,4 @@ console.log("selectedNumberOpen",numberSum)
     )
 }
 
-export default Resultdeclare
+export default StarResultDeclare

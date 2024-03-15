@@ -284,8 +284,8 @@ export const resultDeclareAPi = (data) => {
     });
 }
 
-export const getresultList = (data) => {
-    let url = `${BASE_URL}/v1/get-result`;
+export const getresultList = (start_date, end_date) => {
+    let url = `${BASE_URL}/v1/get-result?start_date=${start_date}&end_date=${end_date}`;
 
     return axios.get(url, {
         headers: {
@@ -296,6 +296,7 @@ export const getresultList = (data) => {
         }
     });
 }
+
 
 export const addGameApi = (data) => {
     let url = `${BASE_URL}/v1/dashboard/create/`;
@@ -552,6 +553,19 @@ export const updateGameRate = (data) => {
     return axios.put(url, data, {
         headers: {
             "accept": 'application/json',
+            "Content-Type": 'application/json',
+
+        }
+    });
+}
+
+export const getstarresultList = (start_date,end_date,market_type) => {
+    let temp = market_type?`&market_type=${market_type}`:"";
+    let url = `${BASE_URL}/v1/get-result?start_date=${start_date}&end_date=${end_date}${temp}`;
+    return axios.get(url, {
+        headers: {
+            "accept": 'application/json',
+
             "Content-Type": 'application/json',
 
         }

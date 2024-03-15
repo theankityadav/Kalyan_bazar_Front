@@ -205,12 +205,12 @@ console.log("data",formInput)
       </div>
       <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add Game</Modal.Title>
+                    <Modal.Title>Add Image Url</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <input name="image_url" type="text" value={upload_image} onWheel={(e) => e.target.blur()} onChange={(e)=>{
                       setUploadImage(e.target.value)
-                  }} placeholder="Enter Game Name " className="form-control"/><br/>
+                  }} placeholder="Paste Url Here " className="form-control"/><br/>
                 
                 
                 </Modal.Body>
@@ -222,7 +222,7 @@ console.log("data",formInput)
                       e.preventDefault()
                       handleUpload()
                     }}>
-                        Submit
+                        Upload
                     </Button>
                 </Modal.Footer>
             </Modal>

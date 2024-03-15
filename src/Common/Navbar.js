@@ -247,13 +247,7 @@ const Navbar = () => {
                   <a href="/startline/star_bid">Bid History</a>
                 </li>
                 <li>
-                  <a href="#">Declare Result</a>
-                </li>
-                <li>
-                  <a href="#">Result History</a>
-                </li>
-                <li>
-                  <a href="#">Starline Sell report</a>
+                  <a href="/startline/star_result">Declare Result</a>
                 </li>
                 <li>
                   <a href="/startline/star_win">Starline Winning report</a>
