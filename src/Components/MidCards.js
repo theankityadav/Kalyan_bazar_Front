@@ -52,7 +52,7 @@ const MidCards = ({ data }) => {
                 </div>
               </div>
               <a className="card-footer text-white clearfix small z-1" href="#">
-                <span className="float-left">{data?.bid_amount}</span>
+                <span className="float-left">{data?.bid_amount || "0"}</span>
                 <span className="float-right">
                   <i className="fa fa-angle-right"></i>
                 </span>

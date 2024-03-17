@@ -548,6 +548,13 @@ export const getPointCountMarket = (market_id) => {
     });
 }
 
+export const getDashboardAnk = (market_id, marketType) => {
+    let url = `${BASE_URL}/v1/current-ank?market_id=${market_id}&open=${marketType}`;
+    return axios.get(url, {
+        headers: headersApplicationJson,
+    });
+}
+
 export const updateGameRate = (data) => {
     let url = `${BASE_URL}/v1/update-game-rate`;
     return axios.put(url, data, {
