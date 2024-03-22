@@ -3,8 +3,7 @@ import Table from "../Common/Table";
 import UpperCard from "../Components/UpperCard";
 import MidCards from "../Components/MidCards";
 import SecondRightCard from "../Components/SecondRightCard";
-import SmallCards from "../Components/SmallCards";
-import { getDashboarddata, getuserList, getuserTransation } from "../service/service";
+import { getDashboarddata, getuserTransation } from "../service/service";
 const Dashbaord = () => {
   const[list,setList]=useState([])
   const[data,setData]=useState()
@@ -41,8 +40,7 @@ const getInformation =()=>{
             </div>
             <div className="col-xl-8">
                 <MidCards data={data} />
-                {/* <SecondRightCard  /> */}
-                {/* <SmallCards /> */}
+                <SecondRightCard data={data} />
             </div>
           </div>
           <Table list={list} getInformation={getInformation} head="Withdrawl Requests"/>

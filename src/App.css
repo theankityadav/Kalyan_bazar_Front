@@ -544,7 +544,7 @@ footer.sticky-footer {
   padding: 10px;
 }
 .card-body.card-body-p {
-  padding: 10px;
+  padding: 10px 10px 2px;
 }
 .btnspan{
   font-size: 10px;
