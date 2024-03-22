@@ -116,14 +116,14 @@ const StarResultDeclare = () => {
         })
     }
 
-    const handleGetResultList = () => {
+    const handleGetResultList = (start_date,end_date) => {
         setLoader(true)
         setselectedNumberClose("")
         setselectedNumberOpen("")
         setNumberSum({open:"",close:""})
-        let start_date = moment(dateSelect).format("YYYY-MM-DD")
-        let end_date = moment(dateSelect).format("YYYY-MM-DD")
-        getstarresultList(start_date,end_date,market_type).then((res) => {
+        // let start_date = moment(filterDate).format("YYYY-MM-DD")
+        // let end_date = moment(filterDate).format("YYYY-MM-DD")
+        getstarresultList(start_date || moment().format("YYYY-MM-DD"),end_date || moment().format("YYYY-MM-DD")).then((res) => {
             setResultList(res?.data?.data)
             setLoader(false)
         }).catch((err) => {
@@ -145,11 +145,11 @@ const StarResultDeclare = () => {
 }
 const handlefilterTable = (e) => {
     setFilterDate(moment(e.target.value).format("YYYY-MM-DD"))
-    let start_date = moment(filterDate).format("YYYY-MM-DD")
-    let end_date = moment(filterDate).format("YYYY-MM-DD")
+    let start_date = moment(e.target.value).format("YYYY-MM-DD")
+    let end_date = moment(e.target.value).format("YYYY-MM-DD")
     setTimeout(() => {
         handleGetResultList(start_date,end_date)
-    }, "1000");
+      }, "1000");
 }
 console.log("selectedNumberOpen",numberSum)
     return (

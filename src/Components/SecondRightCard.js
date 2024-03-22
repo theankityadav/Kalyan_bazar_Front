@@ -65,7 +65,7 @@ const SecondRightCard = () => {
                             </div>
                             <div className='form-group col-md-3'>
                                 <select className="form-select" value={marketType} aria-label="Default select example" onChange={(e) => setMarketType(e.target.value)}>
-                                    <option value="0" >Both Session</option>
+                                    {/* <option value="0" >Both Session</option> */}
                                     <option value="open">open</option>
                                     <option value="">close</option>
                                 </select>
